@@ -17,6 +17,9 @@ dap     = delete a paragraph
 Ctrl + a  对光标所在数字加 1; 10<Ctrl + a> 对光标所在数字加 10
 Ctrl + x  对光标所在数字减 1; 10<Ctrl + x> 对光标所在数字减 10
 gUaw      把当前单词转为大写
+g~ + movement   Toggle case "HellO" to "hELLo" with g~ then a movement.
+gU + movement   Uppercase "HellO" to "HELLO" with gU then a movement.
+gu + movement   Lowercase "HellO" to "hello" with gu then a movement.
 >>        增加缩进当前行
 <<        减小缩进当前行
 
@@ -34,6 +37,9 @@ V                激活面向行的可视模式
 gv               重选上次高亮选区
 viw              高亮选中一个词（相当于按v，移动光标选中一个词）
 o                切换高亮选区的活动端点
+vit              高亮选中标签内部的内容
+>                增加缩进
+<                减少缩进
 
 R 进入替换模式，相当于键盘上的insert键
 

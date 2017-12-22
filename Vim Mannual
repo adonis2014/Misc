@@ -29,6 +29,8 @@ gu + movement   Lowercase "HellO" to "hello" with gu then a movement.
 <Ctrl-u>         删除至行首
 <Ctrl-v>{code}   以10进制插入编码为code的字符，适用于非常用字符的输入      
 <Ctrl-v>u{1234}  以16进制插入编码为code的字符
+I                进入插入模式，光标到行首
+i                进入插入模式，光标在当前位置
 
 可视模式：
 v                激活面向字符的可视模式

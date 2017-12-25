@@ -47,9 +47,11 @@ Vr-              用连字符替换整一行的字符
 
 [命令行模式]：
 在按下“:”键时, Vim会切换到命令行模式。
-:2,5p            print 从第2行到第5行的内容
-:%/old/new/      %表示文件中的所有行，使得每行第1个old被替换成new
-
+:2,5p                    print 从第2行到第5行的内容
+:%/old/new/              %表示文件中的所有行，使得每行第1个old被替换成new
+:[range]copy {address}   拷贝range中的行，并粘贴到address位置. 其中，copy 可缩写为 t ( = to)
+:t$                      把当前行复制到文本末尾
+:[range]move {address}   把range中的行剪切移动到address的位置. move 可缩写为 m
 
 [替换模式]：
 R 进入替换模式，相当于键盘上的insert键

@@ -69,3 +69,11 @@ Vim的语法只有一条额外的规则，当一个操作符连续调用2次，�
 :bdelete N1 N2 N3         删除缓冲区
 :buffer N                 直接凭编号跳转到一个缓冲区
 :bdelete N1 N2 N3         删除缓冲区
+
+
+<Ctrl-w>s                 水平切分窗口
+<Ctrl-w>v                 垂直切分窗口
+:vsplit {file}            垂直切分窗口，并在新窗口中载入{file}
+<Ctrl-w>w                 在窗口间循环切换
+:close                    关闭活动窗口
+:only                     关闭除活动窗口以外的其他所有窗口

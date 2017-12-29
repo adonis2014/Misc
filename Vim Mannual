@@ -77,8 +77,9 @@ Vim的语法只有一条额外的规则，当一个操作符连续调用2次，�
 <Ctrl-w>w                 在窗口间循环切换
 :close                    关闭活动窗口
 :only                     关闭除活动窗口以外的其他所有窗口
-:tabedit {filename}       打开一个新的标签页（tabpage）
+:tabedit {filename}       打开一个新的标签页（tabpage）  可以用tab键自动补全filename
 <Ctrl-w>T                 把当前窗口移到一个新的标签页
 gt                        切换到下一个标签页
 gT                        切换到上一个标签页
-
+:edit {filename}          可以接受相对于工作目录的文件路径， tab键可以自动补全filename
+:find                     允许我们通过文件名打开文件，但必须首先配置'path'选项

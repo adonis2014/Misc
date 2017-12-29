@@ -8,10 +8,12 @@ A       命令则在当前行的结尾添加内容
 cw      删除光标位置到单词结尾的字符，并进入插入模式  cw = change one word, c3w = change 3 words 所以会进入插入模式
 c       删除指定文本，并切换到插入模式(与可视模式配合使用)
 o       在光标下方开始新的一行，并进入插入模式
-j       向下移动（普通模式）
-k       向上移动（普通模式）
+j       按实际行向下移动（普通模式）
+k       按实际行向上移动（普通模式）
 h       向左移动（普通模式）
 l       向右移动（普通模式）
+gj      按屏幕行向下移动（当一行超过屏幕宽度后会占多个屏幕行，但仍是一个实际行）
+gk      按屏幕行向上移动
 daw     = delete a word  类比 d3w = delete 3 words
 dap     = delete a paragraph
 Ctrl + a  对光标所在数字加 1; 10<Ctrl + a> 对光标所在数字加 10
@@ -85,8 +87,9 @@ gT                        切换到上一个标签页
 :edit .                   打开文件管理器，显示当前工作目录
 :find                     允许我们通过文件名打开文件，但必须首先配置'path'选项
 // netrw 可用来管理文件系统(vim自带插件)。配置好vimrc后，可以在文件夹中打开文件目录。
-:Explore                  打开文件管理器，并显示活动缓冲区所在目录
+:Explore                  打开文件管理器，并显示活动缓冲区所在目录, 可简写为:E
+<Ctrl- shift - ^>         切换回刚才编辑的文件(针对Explore这个命令)
 :Vexplore                 在垂直切分窗口中打开文件管理器
-
+// netrw = across NETwork Read and Write files 支持通过网络读写文件 (利用多种网络协议读写文件，包括:scp, ftp, curl, wget)
 
 

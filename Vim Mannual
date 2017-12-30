@@ -6,6 +6,7 @@ f{char} 命令让Vim查找下一处指定字符出现的位置,如果找到了,�
 a       命令在当前光标之后添加内容
 A       命令则在当前行的结尾添加内容
 cw      删除光标位置到单词结尾的字符，并进入插入模式  cw = change one word, c3w = change 3 words 所以会进入插入模式
+ciw     同上
 c       删除指定文本，并切换到插入模式(与可视模式配合使用)
 cit     = change inside tag 删除标签内部的内容并进入插入模式
 dit     = delete inside tag
@@ -28,6 +29,7 @@ e       正向移动到下一个单词结尾
 ge      反向移动到上一个单词结尾
 ea      在当前单词结尾后添加
 daw     = delete a word  类比 d3w = delete 3 words
+das     = delete a sentence
 dap     = delete a paragraph
 dt.     = delete till character '.' 不删除句号
 d/ge<Enter> 删除当前光标到"ge"关键词之前的所有内容 （结合了删除和查找两个指令）
@@ -39,6 +41,9 @@ gU + movement   Uppercase "HellO" to "HELLO" with gU then a movement.
 gu + movement   Lowercase "HellO" to "hello" with gu then a movement.
 >>        增加缩进当前行
 <<        减小缩进当前行
+`.        跳到上次修改的地方
+``        当前文件中上次跳转动作之前的位置
+%         可用于在匹配的{},()或[]括号间跳转 （即找到跳到与之匹配的括号）
 
 [插入模式]:
 <Ctrl-r>=3*4<CR> 会计算3*4的结果并填在对应位置   这里的r是register的意思

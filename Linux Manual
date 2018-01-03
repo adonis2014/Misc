@@ -1,0 +1,12 @@
+1. tail -f sys.log | grep niocVim
+2. ps -C (name)
+3. sudo mount -r -t nfs pa-dbc1122:/dbc/pa-dbc1122/yingyiz/ /mnt/test
+4. top                                                  #check men and cpu utilization rate
+5. allocate -l 1G 1gFile.img                            #create 1GB file
+
+9. setup NFS server
+10. use NetHogs to monitor bandwidth usage
+11. vim operation / sudo apt-get install vim
+12. sudo apt-get install openssh-server
+13. ls -lh                                              # check file and size
+14. df -h  # check disk space

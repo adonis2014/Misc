@@ -1,0 +1,8 @@
+1. git checkout -b branchName
+   git rebase master
+   git commit -a —amend
+   git cherry pick
+   git reset —-hard commit id
+   git diff HEAD^ > nioc-host.diff
+   git apply nioc-host.diff
+   git config

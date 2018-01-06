@@ -176,3 +176,8 @@ m{letter}                 在当前光标位置创建一个位置标记(lowercas
 /**********************  global命令  *********************/
 [remark]: global 命令结合了Ex命令和Vim的模式匹配，可以在某个模式的所有匹配行上运行Ex命令. 格式如下:
           :[range] global[!] /{pattern}/ [cmd]
+          range 默认是全文
+:v/href/d       只保留匹配行，删除所有不包含href的文本行 
+:g/TODO         print出所有TODO的注释行
+:g/TODO/yank A  把所有包含TODO注释的行复制到寄存器A中
+

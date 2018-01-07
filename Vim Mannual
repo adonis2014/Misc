@@ -191,3 +191,14 @@ m{letter}                 在当前光标位置创建一个位置标记(lowercas
 :g/TODO         print出所有TODO的注释行
 :g/TODO/yank A  把所有包含TODO注释的行复制到寄存器A中
 
+/**********************  Quickfix列表浏览错误信息  *********************/
+Quickfix 维护文件名，行号，列号与消息组成的注释定位信息，用于debug。
+:make           调用编译器(任意语言未必是GCC)来编译整个工程, 并自动跳转到第一个错误上
+:make!          编译整个工程，更新quickfix列表，而不跳到第一处错误
+:cnext          跳到下一项
+:cprev          跳到前一项
+:cnfile         跳到下一个文件的第一项
+:cpfile         跳到上一个文件的最后一项
+:copen          打开quickfix窗口
+:close          关闭quickfix窗口
+

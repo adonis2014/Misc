@@ -202,3 +202,13 @@ Quickfix 维护文件名，行号，列号与消息组成的注释定位信息�
 :copen          打开quickfix窗口
 :close          关闭quickfix窗口
 
+/**********************  自动补全  *********************/
+在插入模式下，<Ctrl-n> 与 <Ctrl-p> 能触发Vim的自动补全。各种补全按键总结如下。
+<Ctrl-n>              普通关键字
+<Ctrl-x><Ctrl-n>      当前缓冲区关键字
+<Ctrl-x><Ctrl-i>      包含文件关键字
+<Ctrl-x><Ctrl-]>      标签文件关键字
+<Ctrl-x><Ctrl-k>      字典查找
+<Ctrl-x><Ctrl-l>      整行补全
+<Ctrl-x><Ctrl-f>      文件名补全
+<Ctrl-x><Ctrl-o>      全能补全(Omni-completion)

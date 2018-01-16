@@ -1,0 +1,6 @@
+Frontends:  receive and route request
+Datanodes:  store the actual data. Each datanode manages a number of disks
+Cluster Managers: maintain the states of cluster including partition state, partition location, disk placement etc.
+
+Datacenter = Frontends + Datanodes + Cluster Managers (Zookeeper to coordinate)
+

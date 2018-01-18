@@ -4,3 +4,12 @@ Cluster Managers: maintain the states of cluster including partition state, part
 
 Datacenter = Frontends + Datanodes + Cluster Managers (Zookeeper to coordinate)
 
+blob: large immutable data / large media objects
+
+proxy request: forward requests to other data centers when data is not replicated in current datacenter.
+
+partition: a logical group of blobs, current size is 100GB (at first ready-write then it becomes read-only)
+
+CDN = Content Delivery Network
+
+Router Library:  choose a partition, communicate with Datanode in charge and serve the request.

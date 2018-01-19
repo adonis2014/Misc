@@ -27,5 +27,10 @@ Router Library:  choose a partition, communicate with Datanode in charge and ser
 
 (2)Datanode:     indexing of blobs
                  journals
-                 bloom filters
+                 bloom filters (reduce lookup latency for on-disk index segments)
 
+
+(3)Indexing of blobs:  Index segment1, Index segment2, Index segment3 ... 
+                       each segment:  <blob id, start offset> pairs + in-memory bloom filter
+                      
+(4)Chunking blob:

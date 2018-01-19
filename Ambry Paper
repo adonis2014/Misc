@@ -33,4 +33,6 @@ Router Library:  choose a partition, communicate with Datanode in charge and ser
 (3)Indexing of blobs:  Index segment1, Index segment2, Index segment3 ... 
                        each segment:  <blob id, start offset> pairs + in-memory bloom filter
                       
-(4)Chunking blob:
+(4)Chunking blob: (Ambry split large blob into smaller equal-size chunks with size 4~8MB. The chunks are placed on different paritions)
+                  blob metadata = # of chunks + (ChunkId1 + paritionId1 + UUID1) + (ChunkId2 + paritionId2 + UUID2) + ...
+                  (blob metadata is viewed as a normal blob and is put into Ambry)

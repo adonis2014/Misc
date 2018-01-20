@@ -36,3 +36,8 @@ Router Library:  choose a partition, communicate with Datanode in charge and ser
 (4)Chunking blob: (Ambry split large blob into smaller equal-size chunks with size 4~8MB. The chunks are placed on different paritions)
                   blob metadata = # of chunks + (ChunkId1 + paritionId1 + UUID1) + (ChunkId2 + paritionId2 + UUID2) + ...
                   (blob metadata is viewed as a normal blob and is put into Ambry)
+                  use sliding buffer of size s to retrieve the blob
+
+(5)Journal:  each partition replica has a journal. A in-memory cache of recent blobs ordered by offset
+             partition p replica r1 journal = offset + blob id (track the latest Offset)
+ 

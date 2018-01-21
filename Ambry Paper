@@ -15,7 +15,42 @@ CDN = Content Delivery Network
 
 Router Library:  choose a partition, communicate with Datanode in charge and serve the request.
 
+change capture system: capture events changes out of Ambry for offline analysis
 
+/****************************************** Components **********************************************/
+(1) Cluster Manager:
+                    Hardware Layer:
+                                   <1> arragement of datacenter, datanode, disks
+                                   <2> record raw capacity of each disk
+                                   <3> monitor healthy or failed of each disk
+                                  
+                    Logical Layer:
+                                   <1> maintain location of partition replica
+                                   <2> periodically check state of each partition: read-only / read-write
+                                   <3> partition replica can placed on multiple datacenter / multiple datanode
+                                   <4> onde disk can contain replicas of different partitions
+
+(2) Frontends (decentralized, stateless):
+                  Responsibility:
+                                  <1> Handle request (route via Router Library)
+                                  <2> Check security (authentication)
+                                  <3> Capturing Operations (change capture system)
+                                  <4> Failure detection
+                  Router Library:
+                                  <1> policy based routing: random for PUT;  retrieve blob id for GET/DELETE
+                                  <2> chunking blobs: split large blob to equal-size chunks (4 ~ 8 MB)
+                                  <3> zero-cost Failure detection leveraging request message (no more ACK/PING)
+                                  <4> proxy request handle read after write
+                                  
+(3) Datanode Layer:
+                    <1> Blob Indexing: made up of segments; per partition replica; blob id map to start offset
+                    <2> OS Caching: latest segment stays in memory. 
+                                    Flush to disk when exceed maximum size. 
+                                    Each segment has a bloom filter.
+                                    Reverse lookup index segment when reading blob
+                    <3> Batch Writes: single disk seek
+                    <4> Zero Copy: kernel directly copies data from disk to network buffer without going through the application.
+                    
 /****************************************** Data Structure **********************************************/
 (1)PUT/DELETE entry: header
                      blob id = parition id(8 bytes) + UUID(32 bytes)
@@ -91,4 +126,10 @@ Router Library:  choose a partition, communicate with Datanode in charge and ser
 (3) Failure Detection:
               Goal:  Find unavailable datanodes/disks avoid forwarding requests to them
               <1> Record # of consecutive failed requests for specific datanode/disk. (During last CHECK_PERIOD time)
-              <2> # of failed requests >= MAX_FAIL(= 2) 
+              <2> If # of failed requests >= MAX_FAIL(= 2), mark datanode as temp_down for WAIT_PERIOD time
+              <3> After WAIT_PERIOD time, another request is sent to this node: mark temp_down if fails; mark available if succeed.
+
+(4) Service API, K = 2 policy:
+            PUT: request is forwarded to all replicas, policies define the # of acknowledgements needed for a success.
+                 put is performed synchronously only in the local datacenter. Later, blob is replicated to other datacenters.
+            GET: policies define how many randomly selected replicas to contact.

@@ -77,4 +77,18 @@ Router Library:  choose a partition, communicate with Datanode in charge and ser
 
 
 (2) Replica Consistency:
-                        
+                        Features: <1> periodically synchronize replicas
+                                  <2> decentralize all-to-all fashion: each replica acts as a master and sync up with other replicas
+                                  <3> asynchronous 2-phase replication protocol
+                                  <4> dedicated threads for lagging replicas
+                                  <5> batching requests and batching blobs across datacenters
+                                  <6> use different thread pool for inter- and intra- datacenter replication respectively
+                                  
+                        Two-phase Replication Protocol:
+                                  <1> find missing blobs since last sync point (request all blob ids from others from last sync point and filter out missing ones locally)
+                                  <2> send request for missing blobs only, receive them and append to replica
+
+(3) Failure Detection:
+              Goal:  Find unavailable datanodes/disks avoid forwarding requests to them
+              <1> Record # of consecutive failed requests for specific datanode/disk. (During last CHECK_PERIOD time)
+              <2> # of failed requests >= MAX_FAIL(= 2) 

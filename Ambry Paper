@@ -41,3 +41,40 @@ Router Library:  choose a partition, communicate with Datanode in charge and ser
 (5)Journal:  each partition replica has a journal. A in-memory cache of recent blobs ordered by offset
              partition p replica r1 journal = offset + blob id (track the latest Offset)
  
+/****************************************** Mechanism **********************************************/
+(1) Load Balance: (two metrics for load balance: disk usage + request rate)
+                  (read-write partition receive all write requests and major read requests)
+                  Ideal State:  
+                                idealRW = ideal # of read-write partitions per disk = (# of R-W partitions) / (# of disks)
+                                idealRO = ideal # of read-only partition per disk = (# of RO partition) / (# of disks)
+                                idealUsed = ideal disk usage each disk should have
+                  Two-phase Rebalance:
+                                // Phase1: move extra partitions into a partition pool. 
+                                partitionPool = {}
+                                for each disk d do
+                                    // Move extra read-write partitions. 
+                                    while d.NumRW > idealRW do
+                                        partitionPool += chooseMinimumUsedRW(d) //选择这个disk中容量最小的partition，这样会最小化data movement          
+                                    // Move extra read-only partitions.
+                                    while d.NumRO > idealRO & d.used > idealUsed do //同时考虑RO partition 和 disk usage
+                                        partitionPool += chooseRandomRO(d)      //随机选一个partition
+                   
+                                 // Phase2: Move partitions to disks needing partitions.
+                                 placePartitions(read-write) 
+                                 placePartitions(read-only)
+                                 
+                                 function placePartitions(Type t)
+                                    while partitionPool contains partitions type t do
+                                        D=shuffleDisksBelowIdeal()       // shuffle 一下，使用随机round-robin方法
+                                        for disk d in D and partition p in pool do
+                                              d.addPartition(p) 
+                                              partitionPool.remove(p)
+                   Place Replica:
+                                  <1> create a new replica in the destination
+                                  <2> sync up new replica with old replica
+                                  <3> serve new write on both new and old replica
+                                  <4> delete old replica after sync
+
+
+(2) Replica Consistency:
+                        

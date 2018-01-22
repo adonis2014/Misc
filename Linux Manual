@@ -10,3 +10,23 @@
 12. sudo apt-get install openssh-server
 13. ls -lh                                              # check file and size
 14. df -h  # check disk space
+
+/****************************************** File Permission and Directory *************************************************/
+1. ls -al 列出所有文件名和相关属性
+    drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding
+    [权限]     [连接]  [所有者]     [用户组]  [大小]   [修改时间]    [文件名]
+    
+    【权限】: 第一个字符：
+                  [d] 表示目录
+                  [-] 表示文件
+                  [l] 链接文件 linkfile
+             其他字符： r = read = 4; w = write = 2; x = execute = 1
+    【连接】: 表示多少个文件名连接到同一个inode上。 文件的权限和属性记录到file system的inode上。
+
+2. chgrp （change group 改变文件所属用户组）
+   chown （change owner 改变文件所有者）
+   chmod （change mode 改变文件的权限）
+   系统所有账号记录在 /etc/passwd 中；个人密码都记录在 /etc/shadow下； 所有的用户组名都记录在 /etc/group中
+   
+   
+    

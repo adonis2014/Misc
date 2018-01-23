@@ -67,9 +67,15 @@
         /usr/sbin:  非系统正常运行所需的系统命令，比如网络服务器软件的服务命令(daemon)
    
    /var 目录下常见子目录 (/var是系统运行后，逐渐占用磁盘容量的目录，主要放置 caching，log文件)
-        /var/cache:
-        /var/log:
-        /var/run:
-        /var/lib:
+        /var/cache: 存放运行程序的暂存文件
+        /var/log: 存放登录文件
+        /var/run: 存放运行程序或进程的PID
+        /var/lib: 存放程序本身运行所需的数据文件    
         
-        
+/****************************************** File and Directory Management *************************************************/
+1. cd - 回到刚才目录
+   cd ~ 回到自己home directory
+2. mkdir -m 777 dir1   配置文件的权限，直接设置
+   mkdir -p dir1/dir2/dir3  直接递归创建多级目录
+3. 环境变量PATH
+     当执行一个命令

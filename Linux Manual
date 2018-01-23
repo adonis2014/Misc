@@ -78,4 +78,49 @@
 2. mkdir -m 777 dir1   配置文件的权限，直接设置
    mkdir -p dir1/dir2/dir3  直接递归创建多级目录
 3. 环境变量PATH
-     当执行一个命令
+     当执行一个命令，比如“ls”。系统会按照PATH定义的目录下查询文件名为ls的可执行文件。如果PATH定义的目录中含有多个文件名为ls的可执行文件，执行最先查到的那个
+     echo $PATH 查看PATH下定义的目录
+     <1> 不同身份用户默认的PATH不同，默认能够随意执行的命令也不同
+     <2> PATH是可以修改的，一般用户可以通过修改PATH来执行某些位于/sbin 或 /usr/sbin下的命令
+     <3> 使用绝对路径或相对路径直接执行某个命令的文件，比查询PATH来得正确
+4. ls -a 列出全部文件，包括隐藏文件
+   ls -d 仅列出目录本身，而不是列出目录内的文件数据
+   ls -l 列出文件的权限，属性，大小，日期等信息
+5. cp -p src dst 连同源文件属性一起复制过去
+   cp -d src dst 若src是link file，复制文件属性而非文件本身
+   cp -r src dst 递归复制，用于复制目录
+   cp -a src dst 相当于 cp -pdr src dst
+   cp -i src dst 若目标文件已存在，覆盖前会先询问
+6. rm -i file 删除前先询问
+   rm -f file 强制删除
+   rm -r file 递归删除
+7. mv -u src dst 若目标文件存在，且src较新，才会更新
+   mv file fileNew 更改文件名
+8. basename 取得路径中的文件名   basename /etc/sysconfig/network 返回network
+   dirname 取得路径中的目录名    dirname /etc/sysconfig/network 返回/etc/sysconfig
+9. cat (concatenate) 由第一行开始显示文件内容
+   cat -n file   打印出行号，连同空白行也有行号
+   cat -A file   打印出所有字符，包括各种特殊字符
+   tac (cat 倒过来) 从最后一行到第一行反向显示
+10. more (一页一页向后翻页)
+    例如 more /etc/man.config
+    space: 代表向下翻一页
+    enter: 代表向下滚动一行
+    q:     离开more
+    /字符串: 向下查找关键字"字符串"
+    
+11. less (可向前向后翻页)
+    例如 less /etc/man.config
+    space: 代表向下翻页
+    PageUp: 代表向上翻页
+    /字符串: 向下查找关键字"字符串"
+    q:      离开less这个程序
+12. head -n file 显示前n行
+    tail -n file 显示后n行
+    tail -f file 持续检测这个file是否尾部有增加内容。ctrl-c才能结束
+13. 文件时间
+    mtime = modification time
+    ctime = status time 
+    atime = access time
+    
+

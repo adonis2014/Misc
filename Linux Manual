@@ -48,3 +48,28 @@
 5. 目录树：
         / (root): 开机系统相关
         /usr (UNIX Software Resource): 软件安装/执行有关
+        /var (variable):  与系统运作过程有关
+   
+   / 根目录下的常见子目录：      
+        /bin:   存放常用命令的执行文件 比如：cat, chmod, chown, mv, cp等
+        /boot:  存放开机会使用的文件
+        /dev:   设备或接口设备以文件的形式存于此
+        /etc:   系统主要的配置文件，例如：账户密码文件，各种服务的起始文件, 特别是 /etc/init.d 可以执行类似/etc/init.d/iptables start命令
+        /home:  用户主文件夹
+        /lib:   开机时会用到的库函数
+        /sbin:  (system binary) 存放开机需要的系统执行文件
+        /tmp:   暂时存放文件的地方
+        
+   /usr 目录下常见的子目录 （/usr 会占用最多的硬盘容量）
+        /usr/bin:   存放绝大部分用户可使用的命令
+        /usr/local: 安装自己下载的软件
+        /usr/src:   放置源码
+        /usr/sbin:  非系统正常运行所需的系统命令，比如网络服务器软件的服务命令(daemon)
+   
+   /var 目录下常见子目录 (/var是系统运行后，逐渐占用磁盘容量的目录，主要放置 caching，log文件)
+        /var/cache:
+        /var/log:
+        /var/run:
+        /var/lib:
+        
+        

@@ -36,9 +36,15 @@
         w:  可新建文件/目录, 删除文件/目录, 重命名, 移动文件
         x:  可进入目录，使之成为work directory。也就是可以执行 cd dir
 
-4. linux 文件种类 与 扩展名
-    设备文件  
+4. linux 文件种类 与 扩展名 
           [b] 是block device，存储设备，可以随机在disk的不同block上写
           [c] 是character device, 串行端口的接口设备, 如键盘，鼠标
-   
-    
+          [s] 是sockets, 网络数据连接
+          [p] 是pipe， 管道文件， FIFO
+   扩展名：
+          .sh   脚本或批处理文件，因为是shell写的，所以称为sh
+          .tar  压缩文件
+
+5. 目录树：
+        / (root): 开机系统相关
+        /usr (UNIX Software Resource): 软件安装/执行有关

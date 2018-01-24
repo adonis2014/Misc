@@ -123,5 +123,16 @@
     ctime = status time       文件权限和属性最后更改时间
     atime = access time       文件最后被访问的时间
     
+    ls -l --time=atime filename  查询filename文件最后被访问的时间
+    ls -l --time=ctime filename  查询filename文件最后属性、权限被修改的时间
     
+    touch filename                  创建一个空文件filename
+    touch -t 1801241805 filename  修改文件filename的mtime和atime为2018-1-24 18:05 时间格式为[YYMMDDhhmm]
+
+14. umask 文件默认权限
+    0022 与一般权限有关的是后面三个数字，代表默认值需要减掉的权限
+    默认情况下：  新建文件的权限为666 即-rw-rw-rw-， 没有执行权限
+                新建目录的权限为777 即drwxrwxrwx， 开放所有权限
+                
+15. 文件隐藏属性    
 

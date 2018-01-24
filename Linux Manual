@@ -119,8 +119,9 @@
     tail -n file 显示后n行
     tail -f file 持续检测这个file是否尾部有增加内容。ctrl-c才能结束
 13. 文件时间
-    mtime = modification time
-    ctime = status time 
-    atime = access time
+    mtime = modification time 文件内容最后更改时间
+    ctime = status time       文件权限和属性最后更改时间
+    atime = access time       文件最后被访问的时间
+    
     
 

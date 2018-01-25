@@ -135,4 +135,12 @@
                 新建目录的权限为777 即drwxrwxrwx， 开放所有权限
                 
 15. 文件隐藏属性    
+    chattr = change attribute 更改设置文件的隐藏属性，该命令只能在Ext2/Ext3的文件系统上使用
+    命令格式： chattr [+-=] [options] file/dir 其中 + 表示增加属性；- 表示删除属性；= 表示直接设置属性
+    chattr +a file    设置后，file只能append数据，不能删除和修改数据
+    chattr +i file    设置后，file变成immutable，不能删除、改名、设置连接，不能写入和添加数据。对于系统安全性有很大帮助, 只有root才能设置
+    lsattr -a file/dir 显示所有文件(包括隐藏文件)的隐藏属性
+
+16.
+
 

@@ -159,3 +159,25 @@
     SGID = 2
     SBIT = 1
     chmod 4755 filename 相当于 -rwsr-xr-x  第一个数字是特殊权限
+
+17. which (寻找执行文件)
+    which -a ifconfig 列出PATH中可以找到的ifconfig命令
+
+18. whereis ifconfig 利用数据库查找ifconfig文件，比find要快
+    locate -i keyword 利用数据库，忽略大小写，查找keyword文件，可以输入“文件的部分名称”
+
+19. find [PATH] [options] [action]
+    find /etc -mtime n  查找/etc文件下n天之前的"一天之内"被更改的文件
+    find /etc -mtime +n 查找n天之前（不含n天本身）被更改过的文件
+    find /etc -mtime -n 查找n天之内（含n天本身）被更改的文件
+    find /etc -newer file 查找比file还要新的文件
+    
+    find /home -user zyy  查找home下属于zyy用户的文件
+    find /home -nouser    查找不属于任何人的文件
+    
+    find / -name passwd   查找文件名为“passwd”的文件，支持通配符
+    find / -type s        查找根目录下Socket类型的文件
+    find / -perm +7000    查找文件属性含有SUID或SGID或SBIT的文件
+    find / -perm -0744    查找文件权限全部包含0744的文件，例如 4755也满足，因为全部包含了0744
+
+/****************************************** Linux Disk and File System *************************************************/

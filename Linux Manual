@@ -3,7 +3,6 @@
 3. sudo mount -r -t nfs pa-dbc1122:/dbc/pa-dbc1122/yingyiz/ /mnt/test
 4. top                                                  #check men and cpu utilization rate
 5. allocate -l 1G 1gFile.img                            #create 1GB file
-
 9. setup NFS server
 10. use NetHogs to monitor bandwidth usage
 11. vim operation / sudo apt-get install vim
@@ -181,3 +180,10 @@
     find / -perm -0744    查找文件权限全部包含0744的文件，例如 4755也满足，因为全部包含了0744
 
 /****************************************** Linux Disk and File System *************************************************/
+Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单位，Sector是物理存储最小单位， 512bytes)
+第1个Sector最重要，其中内容：MBR(446bytes) + partition table(64bytes)
+<1> primary分区 + extended分区最多不超过4个（硬盘限制）
+<2> extended分区最多1个（操作系统限制）
+<3> extended分区还可以再分出logical分区
+<4> primary 和 logical分区可以格式化，extended分区不可以格式化
+

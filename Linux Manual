@@ -187,3 +187,17 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
 <3> extended分区还可以再分出logical分区
 <4> primary 和 logical分区可以格式化，extended分区不可以格式化
 
+1. inode: 记录文件的权限、属性和数据所在block的号码，一个文件占用一个inode
+   block: 存放文件的实际内容。内容过多可以占用多个block
+   superblock: 记录文件系统整体信息：inode/block的总量，使用量，剩余量，文件系统格式等信息
+
+2. 文件系统的最前面是boot sector, 后面跟着多个block group
+   每个 block group = superblock + FS description + block bitmap + inode bitmap + inode table + data block
+   <1> superblock: block和inode的总量, 已使用/未使用的inode/block数量, block和inode的大小(block为1K,2K,4K，inode为128 bytes)
+                   FS挂载时间, 最近一次写入时间，最近一次检验磁盘时间
+                   validbit 若此文件系统已挂载 则validbit=0；若未挂载 则validbit=1
+   <2> FS description: 文件系统说明。记录该block group开始和技术的block号码，以及每个区段(superblock, bitmap, inodemap, datablock)位于哪个block号码之间  kc
+   <3> block bitmap:
+   <4> inode bitmap:
+   <5> inode table:
+   <6> data block:

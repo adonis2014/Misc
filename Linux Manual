@@ -197,7 +197,12 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
                    FS挂载时间, 最近一次写入时间，最近一次检验磁盘时间
                    validbit 若此文件系统已挂载 则validbit=0；若未挂载 则validbit=1
    <2> FS description: 文件系统说明。记录该block group开始和技术的block号码，以及每个区段(superblock, bitmap, inodemap, datablock)位于哪个block号码之间  kc
-   <3> block bitmap:
-   <4> inode bitmap:
-   <5> inode table:
-   <6> data block:
+   <3> block bitmap:  记录使用和未使用的block号码， 即哪些block是空的，帮助系统快速找到可用空间存放新文件
+   <4> inode bitmap:  记录使用和未使用的inode号码
+   <5> inode table:   存放所有inode的地方。
+                      inode包含 文件权限、属性；文件大小；mtime, ctime, atime；文件flag(如SetUID)；block号码
+                      inode记录block号码分为 12个直接，1个间接，1个双间接，1个三间接
+   <6> data block:    存放所有的block的地方
+                      block 大小 1KB, 2KB, 4KB三种
+                      每个block最多只能放置一个文件的数据 (如果文件小于block，则该block剩余空间只能浪费)
+

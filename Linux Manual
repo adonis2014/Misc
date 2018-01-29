@@ -210,4 +210,21 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
 
 4. 目录的block记录 <1> 这个目录下的文件名，<2> 文件名对应的inode号码
    文件的block就记录文件的实际内容
+   被编辑过的文件在内存中设置为Dirty，可以手动用sync强迫内存中的Dirty文件写入磁盘。正常关机时，关机命令也会调用sync命令将内存数据写入磁盘
+
+5. mount point
+    将文件系统与目录树结合的操作称为挂载(mount)，挂载点一定是目录，该目录是进入该文件系统的入口
+    Linux支持的文件系统: <1>传统文件系统: ext2, FAT
+                       <2>日志文件系统: ext3, XFS, ReiserFS
+                       <3>网络文件系统: NFS
+    Linux系统通过一个名为Virtual Filesystem Switch(VFS 虚拟文件系统)的内核功能来管理所有的文件系统。
+
+6. df 列出文件系统磁盘使用量
+        df -a 列出所有系统 包括系统特有的 /proc文件系统
+        df -h 以人们容易阅读的GB,MB等形式显示
+        df -T 显示磁盘分区的文件系统名称 （例如 ext2）
+        df -i 不用硬盘容量，以inode的数量来显示
+        
+   du 列出目录所占容量
+        du 
 

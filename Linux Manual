@@ -206,3 +206,8 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
                       block 大小 1KB, 2KB, 4KB三种
                       每个block最多只能放置一个文件的数据 (如果文件小于block，则该block剩余空间只能浪费)
 
+3. dumpe2fs [-h] devicefile 列出文件系统每个区段和superblock的信息(-h会只列出superblock的信息)
+
+4. 目录的block记录 <1> 这个目录下的文件名，<2> 文件名对应的inode号码
+   文件的block就记录文件的实际内容
+

@@ -239,3 +239,11 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
    ln src target      建立hard link，src是原有文件，target是连接文件
    ln -s src target   建立symbolic link，src是原有文件，target是连接文件
 
+8. fdisk 磁盘分区
+   fdisk /dev/hdc 开始磁盘分区，这里hdc是设备名称，没有跟数字！！！
+   fdisk -l       显示当前所有设备的所有分区
+   注意： <1> fdisk只要root可以执行, <2> 使用设备名称(如/dev/hdc不要加上数字，因为分区是针对整个硬盘设备)
+9. mkfs 磁盘格式化
+   mkfs -t 文件系统格式 设备名称
+   mkfs -t ext3 /dev/hdc6
+   mke2fs [-b block大小] [-i inode大小] [-L 卷标] [-c检查，-j 日志]

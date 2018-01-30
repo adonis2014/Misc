@@ -226,5 +226,16 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
         df -i 不用硬盘容量，以inode的数量来显示
         
    du 列出目录所占容量
-        du 
+        du -s 仅列出当前目录的总量
+        du -a 列出所有文件、目录的容量
+        du -h 以人们易读的方式列出容量格式（GB/MB）
+
+7. hard link 和 symbolic link
+   <1> hard link: 只是在某个目录下新建一条文件名链接到某inode号码的关联记录
+            pros: 安全，一个个文件名删除，可以从另一个文件访问; 从任何一个文件改动，都会更新实际的文件
+            cons: 不能跨文件系统， 不能连接到目录
+   <2> symbolic link: 创建一个独立的文件，而这个文件会让数据的读取指向它连接的那个文件的文件名
+
+   ln src target      建立hard link，src是原有文件，target是连接文件
+   ln -s src target   建立symbolic link，src是原有文件，target是连接文件
 

@@ -253,4 +253,33 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
     <1> 单一文件不应该被重复挂载在不同的挂载点（目录）中；
     <2> 单一目录不应该重复挂载多个文件系统；
     <3> 作为挂载点的目录应该是空目录
- 
+    mount -a        依照配置文件/etc/fstab将所有未挂载的磁盘都挂载上来
+    mount -l        查看目前已挂载的文件系统
+    mount [-t 文件系统] 设备文件名 挂载点      实际挂载情况会写入/etc/mtab              
+12. umount [-f] 设备文件名或挂载点      将设备文件[强制]卸载
+
+13. 开机挂载/etc/fstab及/etc/mtab
+    系统挂载的限制:<1> 根目录/ 必须挂载，且一定要先于其他mount point挂载进来；
+                 <2> 其他挂载点必须是已经新建的目录；
+                 <3> 所有挂载点在同一时间内只能挂载一次；
+                 <4> 所有分区在同一时间内只能挂载一次；
+                 <5> 若要卸载，必须先将工作目录移除挂载点；
+    fstab = device + mount point + FS type + parameters + dump + fsck
+    其中 dump 表示能否被dump命令作用：0表示不要做dump备份；1表示每天进行dump操作；
+        fsck 表示对该文件系统是否以fsck来检查扇区：0不要检验; 1表示最早检验(根目录); 2表示稍后检验
+        
+   mount -o loop /root/centos.iso /mnt/centos_dvd 特殊设备loop挂载（镜像文件不刻录就挂载使用）
+
+14. 内存交换空间 swap （swap 是指使用硬盘暂时放置内存中的信息）
+    mkswap 设备文件名 能够格式化分区为swap格式
+    swapon 设备文件名 启动swap设备
+    free 查看内存的使用情况
+    swap -s 列出目前使用swap的设备
+    
+15. superblock = 1KB, bootsector = 1KB, block size = 1KB/2KB/4KB
+    bootsector 的地址总是在最前面，先于superblock；两者可能分居两个block，也可能在同一个block中
+    
+16. parted 命令可以支持大于2TB的磁盘分区（fdisk不能）
+    parted /dev/hdc mkpart [分区类型primary/extended/logical] [文件系统类型ext3等] 开始柱面 结束柱面(容量作单位)
+
+

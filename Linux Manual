@@ -247,3 +247,10 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
    mkfs -t 文件系统格式 设备名称
    mkfs -t ext3 /dev/hdc6
    mke2fs [-b block大小] [-i inode大小] [-L 卷标] [-c检查，-j 日志]
+10. fsck 磁盘校验
+    fsck [-t 文件系统类型] -aC 自动修复有问题的扇区，显示校验进度
+11. mount的注意事项：
+    <1> 单一文件不应该被重复挂载在不同的挂载点（目录）中；
+    <2> 单一目录不应该重复挂载多个文件系统；
+    <3> 作为挂载点的目录应该是空目录
+ 

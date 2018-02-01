@@ -299,3 +299,25 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
           tar -jtvf filename.tar.bz2
     解压缩：tar -zxvf filename.tar.gz  [-C 欲解压缩的目录]
            tar -jxvf filename.tar.bz2       -x 解压缩
+    例子： tar -jcvf filename.tar.bz2 --exclude=/root/etc* /root  把/root下非 etc*开头的文件打包
+5. 备份工具 dump
+   dump适合对文件系统备份，可以制定等级。 第1次备份时使用的是level0, 这个等级也是完整的备份；第2次备份时，文件系统内的数据已经和level0不一样了，而
+   level1仅比较目前文件系统与level 0 之间的差异，备份有变化的文件； level2 则是与level1比较。
+   
+   dump -W 列出/etc/fstab 中具有dump设置的分区是否备份过
+   dump [-Suvj] [-level] [-f 备份文件]  待备份的文件系统
+   dump -u -0 -f /boot.dump   /boot   将boot挂载的文件系统完整备份为boot.dump -u表示将这次dump的时间记录到/etc/dumpdateS中
+   dump -S /dev/hdc1    -S表示列出待备份文件系统需要多大的空间
+
+6. 恢复文件 restore
+   restore -t [-f dumpfile] [-h] 查看dump备份文件中含有什么重要数据
+   restore -C [-f dumpfile] [-D 挂载点] 将dump文件里的数据与实际文件系统比较，列出在dump文件中与目前文件系统中不一样的文件
+   restore -i [-f dumpfile]    进入互动模式，可以仅还原部分文件（用于dump目录时的还原）
+   restore -r [-f dumpfile]    还原整个文件系统
+7. 制作和备份文件命令 dd
+   dd 可以读取磁盘设备内容（几乎直接读取扇区），然后将整个设备备份成一个文件
+   
+   dd if="input file" of="output file" bs="block size" count="number" 其中bs是指定一个block的大小(默认512bytes)，count表示多少个bs
+   tar可以用来备份关键数据，而dd可以用来备份或复制整块分区/磁盘。
+   
+8. 可以备份任何东西的cpio

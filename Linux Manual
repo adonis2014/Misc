@@ -282,4 +282,20 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
 16. parted 命令可以支持大于2TB的磁盘分区（fdisk不能）
     parted /dev/hdc mkpart [分区类型primary/extended/logical] [文件系统类型ext3等] 开始柱面 结束柱面(容量作单位)
 
-
+/****************************************** Package up/ Zip up Files *************************************************/
+1. 常见打包压缩文件后缀名：
+    .gz 用gzip程序压缩的文件；.bz2 用bzip2压缩的文件； .tar 用tar打包的数据，没有压缩； 
+    .tar.gz 用tar打包并且gzip压缩的文件； .tar.bz2 用tar打包并且用bzip2压缩的文件
+2. gzip -v filename    压缩文件，显示压缩比
+   gzip -d zipfile.gz  解压缩文件
+   zcat zipfile.gz     显示被压缩的文本文件
+3. bzip2 -vk filename   用bzip2压缩文件[-v显示，-k保留原文件]
+   bzcat zipfile.bz2    不解压的情形下，显示文件
+   bzip2 -d zipfile.bz2 解压缩文件
+4. tar可以将多个目录或文件打包成一个大文件
+    压缩： tar -zcvf [filename.tar.gz]  [filename]   其中-c 新建打包文件，-v 显示过程，-f接打包后文件名
+          tar -jcvf [filename.tar.bz2] [filename]       -z 用gzip压缩， -j用bzip2压缩
+    查询： tar -ztvf filename.tar.gz                查看压缩后文件内容
+          tar -jtvf filename.tar.bz2
+    解压缩：tar -zxvf filename.tar.gz  [-C 欲解压缩的目录]
+           tar -jxvf filename.tar.bz2       -x 解压缩

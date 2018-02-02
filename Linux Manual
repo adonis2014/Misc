@@ -321,3 +321,15 @@ Disk = # of Cylinders, Cylinder = # of Sectors (Cylinder是partition的最小单
    tar可以用来备份关键数据，而dd可以用来备份或复制整块分区/磁盘。
    
 8. 可以备份任何东西的cpio
+   cpio要配合类似find等可以找到文件名的命令，来备份。涉及数据流重定向。
+   cpio -ovcB > [file/device] 备份      -o表示将数据copy输出到文件或设备上
+   cpio -ivcdu < [file/device] 还原     -i表示将文件复制到系统中  -u自动将新文件覆盖旧文件
+   cpio -ivct < [file/device] 查看      -t用来查看cpio新建文件或设备的内容
+   例如 find /boot | cpio -ocvB > /tmp/boot.cpio
+        cpio -idvc < /tmp/boot.cpio
+9. ~/.viminfo  是vim用来将你曾经做过的行为记录下来的地方
+   ~/.vimrc    是设置vim操作环境的文件 可以设置如 set autoindent等参数
+10. DOS与Linux系统的换行符
+    DOS 换行符 ^M$ 即CR与LF两个符号；  Linux换行符 $仅 LF一个符号
+    dos2UNIX [-kn] file [newfile]    -k表示保留源文件的mtime；  -n表示保留旧文件，转换后输出一个新文件
+    UNIX2dos [-kn] file [newfile]

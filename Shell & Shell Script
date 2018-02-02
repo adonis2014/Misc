@@ -23,3 +23,10 @@ Shell有好几个版本，一般在/etc/shells中记录：
           <8>若该变量需要在其他子进程执行，需要以export来使变量变为环境变量
           <9>取消变量用 unset var 不用带$
           
+2. env 列出所有环境变量的内容
+   set 查看所有变量（环境变量+自定义变量）
+   export 自定义变量转成环境变量
+   
+   PS1 提示符的设置  比如 ~ zhangyingyi$
+   $ 本shell的PID
+   ? 关于上个执行命令的return值

@@ -1,0 +1,25 @@
+一般用户只能通过shell来与操作系统内核通信。Shell有点像普通的应用程序，应用程序其实是在最外层，如同鸡蛋外壳一样，因此就被称为Shell。
+Shell有好几个版本，一般在/etc/shells中记录：
+  Bourne SHell = sh
+  Bourne Again SHell = bash (Linux默认的shell)
+  Kornshell = ksh  (兼容bash，商业上常用)
+  以及 tcsh, csh, zsh等
+  
+  1. Shell变量
+     环境变量 = 全局变量     通常大写字符 PATH HOME MAIL
+     自定义变量 = 局部变量
+     
+     变量被调用时要加$，变量被set时不需要$
+     echo $variable
+     variable="test"
+     
+     规则：<1>变量设置时用=连接，且不能有空格；
+          <2>变量名只能是英文字母数字，不能数字开头；
+          <3>双引号内特殊字符$，仍保有原本特性 var="lang is $LANG" 那么 echo $var 得到 lang is en_US
+          <4>单引号内特殊字符等同一般字符。    var='lang is $LANG' 那么 echo $var 得到 lang is $LANG
+          <5>可以用转义字符\ 将特殊字符转为一般字符
+          <6>命令中嵌套命令可以用 $(命令) 或者 `命令`
+          <7>若要增加变量内容(append), 可以用 "$var" 或 ${var} 比如：PATH="$PATH":/home/bin
+          <8>若该变量需要在其他子进程执行，需要以export来使变量变为环境变量
+          <9>取消变量用 unset var 不用带$
+          

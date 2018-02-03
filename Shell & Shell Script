@@ -40,3 +40,23 @@ Shell有好几个版本，一般在/etc/shells中记录：
    declare [-aixr] variable #将变量声明为 -a 数组类型；-i整数类型；-x 环境变量； -r只读类型
    declare -a var
    var[1]="first"; var[2]="second"; var[3]="third"  #设置数组的元素值
+   
+6. ulimit 限制用户的系统资源 （打开文件的数量，CPU使用时间，可使用的内存总量）
+   ulimit -a 可列出所有的限制额度
+   ulimit -f 限制用户可以创建的最大文件容量，单位是KB
+   ulimit -u 单一用户可以使用的最大进程数量
+   # 要复原ulimit的设置最简单的方法是注销再登录
+
+7. alias, unalias 别名设置
+   alias # 列出当前定义的命令别名
+   alias rm='rm -i' # 将rm -i命令命名为rm命令
+   unalias rm       # 取消命令别名
+8. history 历史命令
+   history n  列出最近n条命令行
+   history -c 将目前shell中所有的history内容全部消除
+   history -w 将目前history记忆内容写入 ~/.bash_history
+9. 命令路径的查找顺序：
+   <1> 以相对或绝对路径执行命令，例如 “/bin/ls” 或 “./ls”
+   <2> 由alias找到该命令来执行
+   <3> 由bash内置的（built-in）命令来执行
+   <4> 通过$PATH这个变量，顺序找到第一个命令来执行

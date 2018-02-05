@@ -116,3 +116,12 @@ Shell有好几个版本，一般在/etc/shells中记录：
     tee [-a] file  # -a 以累加的方式写入file文件
     last | tee last.list | cut -d " " -f 1
     ls -l | tee -a ~/homefile | more
+20. split 切割命令，可根据文件大小或行数切割文件
+    split [-bl] 被切割文件 切割后文件的名字前缀
+    split -b 300k /etc/termcap splitterm   # -b 后接单位如b,k,m 表示欲切割文件的大小
+    split -l 10 file splitfile             # -l 以行数来进行切割
+
+21. 正则表达式中特殊符号
+
+
+    

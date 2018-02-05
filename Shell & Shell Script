@@ -80,4 +80,14 @@ Shell有好几个版本，一般在/etc/shells中记录：
     【注意】： > 输出到一个已存在的文件，那么这个文件会被覆盖掉；
              >> 输出到一个已存在的文件，内容会append到已有文件；
     find /home -name tmp 2> /dev/null   # /dev/null 是黑洞设备
+    find /home -name tmp > list 2>&1    # 将标准输出和错误输出都写入同一文件list
+    cat > file < ~/.bashrc              # 用.bashrc文件作为file的输入来填充
+    cat > file << "eof"                 # 键盘内容写入file，以eof为终止符
+
+13. cmd1 && cmd2         # 若cmd1执行完且正确($?=0)，才执行cmd2；若cmd1执行错误($?≠0)，则不执行cmd2；
+    cmd1 || cmd2         # 若cmd1执行正确，则不执行cmd2； 只有当cmd1执行错误，才执行cmd2；
+14. pipe 管道命令
+    管道命令仅会处理standard output，对于standard error output会予以忽略；
+    管道命令必须要能够接受来自前一个命令的数据成为standard input继续处理才行；
+    
     

@@ -102,6 +102,7 @@ Shell有好几个版本，一般在/etc/shells中记录：
     -i  #忽略大小写
     -n  #显示行数
     -v  #反向选择，显示没有'查找字符串'的那一行
+    grep [-A] [-B] '查找字符串' filename  # -A=after，列出该行及之后的n行；-B=before，列出该行和之前的n行
     
 17. sort 可依据不同数据类型排序
     sort [-fbnruk]   [file or stdin]
@@ -122,6 +123,12 @@ Shell有好几个版本，一般在/etc/shells中记录：
     split -l 10 file splitfile             # -l 以行数来进行切割
 
 21. 正则表达式中特殊符号
-
-
+    [:alnum:]    英文大小写字符及数字
+    [:alpha:]    英文大小写字符
+    [:blank:]    空格键与tab键
+    [:digit:]    数字 0-9
+    [:lower:]    小写字符 a-z
+    [:upper:]    大写字符A-Z
+    [:xdigit:]   十六进制数字类型 包括 0-9，a-f，A-F
+    
     

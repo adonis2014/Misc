@@ -131,4 +131,13 @@ Shell有好几个版本，一般在/etc/shells中记录：
     [:upper:]    大写字符A-Z
     [:xdigit:]   十六进制数字类型 包括 0-9，a-f，A-F
     
+22. 正则表达式字符
+    ^word 
+    word$
+    .
+    \
+    *
+    [list]
+    [n1-n2]
+    [^list]
     

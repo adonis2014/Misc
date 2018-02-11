@@ -162,4 +162,13 @@ Shell有好几个版本，一般在/etc/shells中记录：
     <1> 用 #!/bin/bash 声明这个script 使用的shell的名称；
     <2> 设置PATH 比如 PATH=/bin:/sbin:/usr
     <3> exit 0 作为返回值
+    shell script 文件头部记录必要信息，养成良好风格：
+      <1> script功能
+      <2> script的版本信息
+      <3> script的作者和联系方式
+      <4> script的History
+      <5> script内特殊的指令，用绝对路径的方式来下达
+      <6> script运作时需要的环境变量预先宣告与设定
+      
+
 

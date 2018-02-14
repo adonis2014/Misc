@@ -170,5 +170,9 @@ Shell有好几个版本，一般在/etc/shells中记录：
       <5> script内特殊的指令，用绝对路径的方式来下达
       <6> script运作时需要的环境变量预先宣告与设定
       
-
-
+27. read -p "input the name: "  name   # 用read指令将用户的输入存入name变量
+    test -e filename    # 测试filename是否存在
+    test -f filename    # 测试filename是否为文档
+    test -d filename    # 测试filename是否为目录
+    test -[rwx] filename # 测试filename是否有可读、可写、可执行的属性
+    test -z string      # string 为空，则为true

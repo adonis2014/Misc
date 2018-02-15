@@ -9,6 +9,7 @@
 12. sudo apt-get install openssh-server
 13. ls -lh                                              # check file and size
 14. df -h  # check disk space
+15. ls -lrt  # -l means long format; -r means reverse order; -t means sort by time
 
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性

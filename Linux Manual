@@ -10,6 +10,11 @@
 13. ls -lh                                              # check file and size
 14. df -h  # check disk space
 15. ls -lrt  # -l means long format; -r means reverse order; -t means sort by time
+16. curl # transfer data from or to server
+    curl -i  # include the HTTP Header in the output
+    curl -X  # Specifies a custom request method to use when communicating with the HTTP server.
+    curl -H  # extra header to include in the request when sending HTTP to server
+             example:     curl -H "X-First-Name: Joe" http://example.com/
 
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性

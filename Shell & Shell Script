@@ -201,3 +201,11 @@ Shell有好几个版本，一般在/etc/shells中记录：
           不包含第一个变量内容与第二个变量内容的其它程序执行段 exit 1
           ;;
     esac
+    
+30. function fname() { 
+        程序段
+    }
+    
+31. while [ condition ]
+      do
+    done

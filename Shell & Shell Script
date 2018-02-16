@@ -176,3 +176,28 @@ Shell有好几个版本，一般在/etc/shells中记录：
     test -d filename    # 测试filename是否为目录
     test -[rwx] filename # 测试filename是否有可读、可写、可执行的属性
     test -z string      # string 为空，则为true
+    
+28. if [condition] ; then
+        ...
+    fi
+
+    if ["$yn" == "Y"] || [ "$yn" == "y" ]; then
+          echo "OK, continue"
+    elif [condition]; then
+          ...
+    else 
+          exit -1
+    fi
+
+
+29. case $变量名称 in 
+      "第一个变量内容")
+          程序段
+          ;; 
+      "第二个变量内容")
+          程序段
+          ;; 
+      *)
+          不包含第一个变量内容与第二个变量内容的其它程序执行段 exit 1
+          ;;
+    esac

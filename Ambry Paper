@@ -1,3 +1,13 @@
+An in-house solution
+
+GOALs:
+<1> Highly Available and horizontally scalable
+<2> Low operational overhead
+<3> Lower MTTR (Mean time to repair)
+<4> Active-Active Setup across multiple data centers (DCs)
+<5> Efficient for large and small media objects
+<6> Cheap
+
 /****************************************** Concepts **********************************************/
 Frontends:  receive and route request
 Datanodes:  store the actual data. Each datanode manages a number of disks

@@ -8,6 +8,8 @@ GOALs:
 <5> Efficient for large and small media objects
 <6> Cheap
 
+[remark]: Active-Active across DC is the ability to enable updates to the same object from different data centers
+          The router library is currently blocking (synchronous) but we are actively working to provide a non-blocking (async) version
 /****************************************** Concepts **********************************************/
 Frontends:  receive and route request
 Datanodes:  store the actual data. Each datanode manages a number of disks
@@ -30,7 +32,7 @@ change capture system: capture events changes out of Ambry for offline analysis
 /****************************************** Components **********************************************/
 (1) Cluster Manager:
                     Hardware Layer:
-                                   <1> arragement of datacenter, datanode, disks
+                                   <1> arrangement of datacenter, datanode, disks
                                    <2> record raw capacity of each disk
                                    <3> monitor healthy or failed of each disk
                                   

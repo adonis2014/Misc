@@ -15,7 +15,10 @@ GOALs:
 Clustermap: controls the topology, maintains resource states and helps coordinate cluster operations.
             clustermap = hardware layout + partition layout
 Frontends:  receive and route request
-Datanodes:  store the actual data. Each datanode manages a number of disks
+Datanodes (storage node):  store the actual data. Each datanode manages a number of disks
+                           hosts replicas for different partitions. Typically, 
+                           each storage node has N disks across which the replicas are distributed.
+                           
 Cluster Managers: maintain the states of cluster including partition state, partition location, disk placement etc.
 
 Datacenter = Frontends + Datanodes + Cluster Managers (Zookeeper to coordinate)
@@ -25,6 +28,9 @@ blob: large immutable data / large media objects
 proxy request: forward requests to other data centers when data is not replicated in current datacenter.
 
 partition: a logical group of blobs, current size is 100GB (at first ready-write then it becomes read-only)
+           also, partition is a logical slice of the cluster
+           a list of replicas that can span across data centers 
+           any data rebalancing across the cluster happens at the partition level.
 
 CDN = Content Delivery Network
 

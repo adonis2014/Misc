@@ -10,7 +10,10 @@ GOALs:
 
 [remark]: Active-Active across DC is the ability to enable updates to the same object from different data centers
           The router library is currently blocking (synchronous) but we are actively working to provide a non-blocking (async) version
+
 /****************************************** Concepts **********************************************/
+Clustermap: controls the topology, maintains resource states and helps coordinate cluster operations.
+            clustermap = hardware layout + partition layout
 Frontends:  receive and route request
 Datanodes:  store the actual data. Each datanode manages a number of disks
 Cluster Managers: maintain the states of cluster including partition state, partition location, disk placement etc.

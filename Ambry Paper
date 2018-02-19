@@ -30,8 +30,30 @@ High Availability:
     Replication is asynchronous
     Replicas are not binary identical
     Reconstruction a replica does not stress a single server
-    Dedicated system resouces for communication b/w a pair of DCs
+    Dedicated system resouces for communication b/w (between or within) a pair of DCs
     Eventually consistency (but GET after PUT consistency because of cross datacenter request)
+    
+Horizontal Scalability
+    Generation of IDs at the router ensures good distribution of data + requests
+    Router is stateless - adding one is easy
+    Adding partition and replicas is fairly easy
+    Cluster expansion has no effects on replication at an individual server
+    Restricted failure domains
+    Adding partitions and replicas has no side effects.
+        no rebalancing required - no data movement
+        no range/cluster metadata changes required at the Router
+    Server interactions scale perfectly
+        There is an absolute bound on the number of peer servers
+        Number of messages in the cluster don't grow exponentially 
+
+Support for small and large objects:
+    Low metadata lookup overhead at Storage tier
+    Structure of storage, help data structure and page cache minimize disk operations
+    Chunking at Router tier to support large object
+    Streaming asynchronous components keep memory usage in check
+    Easy to apply back pressure to keep memory usage in check
+    Large object support is storage agnostic (storage这层是不知道大文件还是小文件，因为chunk是在router那层做的)
+    Chunking is good for throughput, fairness, distribution, being resilient to occasional quorum failure
     
 /****************************************** Concepts **********************************************/
 Clustermap: controls the topology, maintains resource states and helps coordinate cluster operations.

@@ -17,6 +17,22 @@ GOALs:
 [remark]: Active-Active across DC is the ability to enable updates to the same object from different data centers
           The router library is currently blocking (synchronous) but we are actively working to provide a non-blocking (async) version
 
+Storage:
+    Quick writes and fewer metadata operation
+    Asynchronous batched log flush
+    Leave more room for page cache - great for read of recent data
+    Bloom filters for lookups
+    Zero copy reads
+    
+High Availability:
+    No master or slaves -  active-active setup
+    Geo-distributed
+    Replication is asynchronous
+    Replicas are not binary identical
+    Reconstruction a replica does not stress a single server
+    Dedicated system resouces for communication b/w a pair of DCs
+    Eventually consistency (but GET after PUT consistency because of cross datacenter request)
+    
 /****************************************** Concepts **********************************************/
 Clustermap: controls the topology, maintains resource states and helps coordinate cluster operations.
             clustermap = hardware layout + partition layout

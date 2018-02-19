@@ -1,3 +1,8 @@
+BACKGROUND: 
+    Downside of existing system:
+        <1> Distributed File System: Diffulty in handling large number of objects
+        <2> Database and K-V Store : Diffulty in handling large sized objects
+
 An in-house solution
 
 GOALs:
@@ -7,6 +12,7 @@ GOALs:
 <4> Active-Active Setup across multiple data centers (DCs)
 <5> Efficient for large and small media objects
 <6> Cheap
+<7> Non-blocking and stream pipeline: better throughput and latency
 
 [remark]: Active-Active across DC is the ability to enable updates to the same object from different data centers
           The router library is currently blocking (synchronous) but we are actively working to provide a non-blocking (async) version

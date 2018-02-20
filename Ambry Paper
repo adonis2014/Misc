@@ -54,7 +54,15 @@ Support for small and large objects:
     Easy to apply back pressure to keep memory usage in check
     Large object support is storage agnostic (storage这层是不知道大文件还是小文件，因为chunk是在router那层做的)
     Chunking is good for throughput, fairness, distribution, being resilient to occasional quorum failure
-    
+
+Use Helix for cluster management
+
+/******************************** Ambry Multiproducts and Services ***************************************/
+Ambry:               Library wrapper for open source code
+AmbryLI:             Deployable that includes the library and some closed source code
+ambry-migrationtool: Contains a sanity test suite
+ambry-client:        Used by clients to access Ambry
+
 /****************************************** Concepts **********************************************/
 Clustermap: controls the topology, maintains resource states and helps coordinate cluster operations.
             clustermap = hardware layout + partition layout

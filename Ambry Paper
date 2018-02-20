@@ -72,8 +72,9 @@ Datanodes (storage node):  store the actual data. Each datanode manages a number
                            each storage node has N disks across which the replicas are distributed.
                            
 Cluster Managers: maintain the states of cluster including partition state, partition location, disk placement etc.
+                  Cluster Managers are sync up by Helix
 
-Datacenter = Frontends + Datanodes + Cluster Managers (Zookeeper to coordinate)
+Datacenter = Frontends + Datanodes + Cluster Managers (Helix to coordinate)
 
 blob: large immutable data / large media objects
 
@@ -83,7 +84,12 @@ partition: a logical group of blobs, current size is 100GB (at first ready-write
            also, partition is a logical slice of the cluster
            a list of replicas that can span across data centers 
            any data rebalancing across the cluster happens at the partition level.
+           Partition 是逻辑概念，物理上的placement是另一个流程。partition是以append-only log的形式实现的，存于 pre-allocted large file中
 
+Indexing:  each Datanode maintains a light-weight in-memory indexing per replica;
+           indexing has several sorted segments (from new to old)
+           indexing is in memory, if datanode fails, it can be recovered from on-disk partition
+            
 CDN = Content Delivery Network
 
 Router Library:  choose a partition, communicate with Datanode in charge and serve the request.
@@ -189,7 +195,8 @@ change capture system: capture events changes out of Ambry for offline analysis
                                   <2> decentralize all-to-all fashion: each replica acts as a master and sync up with other replicas
                                   <3> asynchronous 2-phase replication protocol
                                   <4> dedicated threads for lagging replicas
-                                  <5> batching requests and batching blobs across datacenters
+                                  <5> batching requests and batching blobs a
+                                  datacenters
                                   <6> use different thread pool for inter- and intra- datacenter replication respectively
                                   
                         Two-phase Replication Protocol:

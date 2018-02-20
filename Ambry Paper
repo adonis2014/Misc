@@ -56,6 +56,7 @@ Support for small and large objects:
     Chunking is good for throughput, fairness, distribution, being resilient to occasional quorum failure
 
 Use Helix for cluster management
+Small objects is supported by composing it as a single simple blob ??
 
 /******************************** Ambry Multiproducts and Services ***************************************/
 Ambry:               Library wrapper for open source code

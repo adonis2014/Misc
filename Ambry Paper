@@ -61,6 +61,8 @@ Small objects is supported by composing it as a single simple blob ??
 The router will consist of a set of scaling units. A call that comes to the router will be internally assigned to one of the scaling units, 
 which will handle the request and the response for that call. The scaling units work independently of each other. 
 
+use Netty as the NIO framework.
+
 /******************************** Ambry Multiproducts and Services ***************************************/
 Ambry:               Library wrapper for open source code
 AmbryLI:             Deployable that includes the library and some closed source code

@@ -22,3 +22,5 @@
                                               （squash的作用就是把当前commit向前合并，一直合并到pick为止。）
    最后重写commit的description
    
+3. git checkout -- filename      # to discard changes in working directory
+   git branch -d branch_name     # delete branch

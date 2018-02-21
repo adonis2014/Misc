@@ -127,6 +127,15 @@ change capture system: capture events changes out of Ambry for offline analysis
                                   <3> zero-cost Failure detection leveraging request message (no more ACK/PING)
                                   <4> proxy request handle read after write
                                   
+    Interfaces in frontend
+    (2.1) Interaction enablers:  enable the different components to interact with each other in a way that is 
+                                 agnostic to the underlying implementations of each of the components. 
+    (2.2) ReadableStreamChannel: Through this interface, data can be streamed (in the form of bytes) between the 
+                                 interacting pieces as if reading it through a channel (asynchronous reads)
+    (2.3) RestRequest: extends the ReadableStreamChannel and is implemented by the NIO layer.
+    (2.4) RestResponseChannel: implemented by the NIO layer, provides a way for the remote service and 
+                               scaling layers to return processed responses to the client.
+    
 (3) Datanode Layer:
                     <1> Blob Indexing: made up of segments; per partition replica; blob id map to start offset
                     <2> OS Caching: latest segment stays in memory. 

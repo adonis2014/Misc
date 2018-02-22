@@ -136,10 +136,16 @@ change capture system: capture events changes out of Ambry for offline analysis
     (2.1.4) RestResponseChannel: implemented by the NIO layer, provides a way for the remote service and 
                                scaling layers to return processed responses to the client.
      Layers in frontend
-     (2.2.2) Remote Service Layer:  interacts with the remote service library; do pre-processing. 
-                                    This layer is usually singleton and stateless
-     (2.2.3) Scaling Layer: It enforces the non-blocking paradigm and acts as a conduit for data 
+     (2.2.1) NIO Layer:  is responsible for all network related operations including encoding/decoding HTTP.
+     (2.2.2) Scaling Layer: It enforces the non-blocking paradigm and acts as a conduit for data 
                             flowing between the remote service layer and the NIO layer.
+                            <1> RestRequestHandler: handles requests submitted by the NIO layer and hands them off to the remote service layer
+                            <2> RestResponseHandler: handles responses submitted by the remote service layer and streams the bytes to the network via the NIO layer
+                            <3> AsyncRequestResponseHandler: processes both requests and responses asynchronously.
+                                                             Requests are handled using one or more scaling units called AsyncRequestWorker.
+     (2.2.3) Remote Service Layer:  interacts with the remote service library; do pre-processing. 
+                                    This layer is usually singleton and stateless
+
     
 (3) Datanode Layer:
                     <1> Blob Indexing: made up of segments; per partition replica; blob id map to start offset

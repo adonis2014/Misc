@@ -56,12 +56,27 @@ Support for small and large objects:
     Chunking is good for throughput, fairness, distribution, being resilient to occasional quorum failure
 
 Use Helix for cluster management
+Use Netty as the NIO framework.
+
 Small objects is supported by composing it as a single simple blob ??
 
 The router will consist of a set of scaling units. A call that comes to the router will be internally assigned to one of the scaling units, 
 which will handle the request and the response for that call. The scaling units work independently of each other. 
 
-use Netty as the NIO framework.
+
+/******************************** Security ***************************************/
+1. SSL/TLS is selected protocol for authentication and encryption.
+2. Key Stores:   It stores private keys and certificates corresponding to its own public key. 
+3. Trust Stores: It stores public keys and certificates from 3rd party(CA) which is used to authenticate the server/client.
+4. SSLEnabledDataCenters: the list of colos to which the connection should be encrypted from current colo.
+5. A port dedicated to SSL connections. Two benefits: (1) SSL handshake provides message integrity; (2) clients can use standard SSL libraries to establish the connection
+6. Two cases where SSL encryption happens: (1) between ambry-server to ambry-server during replication
+                                           (2) router to ambry-server interactions during request processing
+7. SSLContext: is responsible for holding all configs like cihper suites, key sizes and so on.
+8. Create one SSLEngine object per client connection
+9. SSLTransmission : (1) drives the interactions with the connection/channel.
+                     (2) implements read(), write(), and close() methods
+                     (3) constains SSLEngine, app read buffer, network read buffer, network write buffer, handshake status and so on.
 
 /******************************** Ambry Multiproducts and Services ***************************************/
 Ambry:               Library wrapper for open source code

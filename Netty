@@ -1,0 +1,61 @@
+1. Inbound, Outbound
+   从字面意思上说，inbound即为入站，outbound为出站；
+   对于Netty通道而言，从Socket通道中read数据进入Netty Handler的方向为inbound，从Netty handler向Socket通道write数据的方向为outbound
+
+2. Channels
+   An open connection to an entity such as a hardware device, a file, a network socket.
+   The entity is capable of performing one or more distinct I/O operations.
+
+3. Callbacks
+   A callback is simply a method, a reference to which has been provided to another method. 
+   This enables another method to call original method at an appropriate time.
+   Netty uses callbacks internally when handling events.
+
+4. ChannelHandler
+   When a callback is triggered, the event can be handled by an implementation of interface ChannelHandler
+   Is used to handle event
+
+5. Futures
+   This object acts as a placeholder for the result of an asynchronous operation.
+   It will complete at some point in the future and provide access to the result. (未来可以访问这个result)
+
+6. ChannelFuture 
+   Netty 中实现的Future;
+   Provides additional methods that allow us to register one or more ChannelFutureListener instances.
+   Each of Netty’s outbound I/O operations returns a ChannelFuture
+
+7. ChannelFutureListener
+   自动监听operation是否完成;
+   含有callback method, 叫operationComplete(), it is called when the operation has completed.
+
+8. Events
+   Describe changes of state or the status of operations;
+   常见的有 inbound event：（1）Active or inactive connections；（2）Data reads；（3）User events；（4）Error events
+           outboudn event：（1）Opening or closing a connection to a remote peer；(2) Writing or flushing data to a socket
+
+9. Handlers (处理Event)
+   Every event can be dispatched to a user-implemented method of a handler class. 
+   
+10. Intercepting operations
+
+11. Transforming data
+
+12. EventLoop
+    有关event的一系列行为,包括(1)Registration of interesting events; (2)Dispatching events to ChannelHandlers; (3)Scheduling further actions
+    每个channel都会被assign一个EventLoop.
+    EventLoop itself is driven by only one thread that handles all of the I/O events for one Channel.
+    Once assigned to one channel, it does not change during the lifetime of the EventLoop
+
+13. Server 至少需要两个Component：
+      （1）ChannelHandler （至少一个）, implements the server’s processing of data and its business logic
+      （2）Bootstrapping,  it binds the server to the port on which it will listen for connection requests
+    
+14. Bootstrapping
+    The startup code that configures the server.
+
+15. ChannelPipeline
+    Every Channel has an associated ChannelPipeline.
+    ChannelPipeline holds a chain of Channel- Handler instances.
+ 
+16, Transports
+    NIO transport refers to a transport that’s mostly identical to TCP except for server-side performance enhancements.

@@ -11,6 +11,7 @@
    
 2. git remote add upstream git@github.com:linkedin/ambry.git   # set up upstream to be ambry project on github
    git fetch upstream                                          # Fetch all updates from upstream to this repo
+   git merge upstream/master                                   # Merge the changes from upstream/master into your local master branch
    git rebase upstream/master                                  # rebase any changes on top of the change in upstream
    git commit -a -m "msg"                       # commit changes: one line short description and multiline explanation of description
    git rebase -i 49687a0a646954afdf3f4dae1f914ea793341ea2(commit id) # 进入交互式

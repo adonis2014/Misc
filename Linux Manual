@@ -16,6 +16,9 @@
     curl -X  # Specifies a custom request method to use when communicating with the HTTP server.
     curl -H  # extra header to include in the request when sending HTTP to server
              example:     curl -H "X-First-Name: Joe" http://example.com/
+17. 按行拆分一个文件:
+    split -l 200 file.csv      # 以每200行拆分csv文件 (可能以x打头)
+    for i in x*; do mv "$i" "$i.csv"; done    # 将拆分后的若干x开头的文件重命名为.csv结尾
 
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性

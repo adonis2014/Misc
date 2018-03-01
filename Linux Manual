@@ -11,9 +11,22 @@
 13. ls -lh                                              # check file and size
 14. df -h  # check disk space
 15. ls -lrt  # -l means long format; -r means reverse order; -t means sort by time
-16. curl # transfer data from or to server
-    curl -i  # include the HTTP Header in the output
-    curl -X  # Specifies a custom request method to use when communicating with the HTTP server.
+16. curl is used to transfer data to/from server
+
+    curl http://example.com                      # use GET as defaul request method
+    curl -d/-F http://example.com                # use POST as request method
+    curl -T http://example.com                   # use PUT as request method
+    
+    # If for whatever reason you're not happy with these default choices that curl does for you, 
+    # you can override those request methods by specifying -X [WHATEVER]. 
+    # This way you can for example send a DELETE by doing curl -X DELETE [URL].
+    curl -X  DELETE http://example.com/file.txt   # Specifies a custom request method to use when communicating with the HTTP server.
+    
+    curl -i  # All HTTP replies contain a set of response headers that are normally hidden, 
+             # use curl's --include (-i) option to display them as well as the rest of the document
+    
+    curl -I  # (HTTP FTP FILE) Fetch the headers only! When used on an FTP or FILE file, curl displays the file size and last modification time only.
+    
     curl -H  # extra header to include in the request when sending HTTP to server
              example:     curl -H "X-First-Name: Joe" http://example.com/
 17. 按行拆分一个文件:

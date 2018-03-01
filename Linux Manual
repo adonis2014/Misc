@@ -2,8 +2,8 @@
 2. ps -C (name)
    ps -ax
 3. sudo mount -r -t nfs pa-dbc1122:/dbc/pa-dbc1122/yingyiz/ /mnt/test
-4. top                                                  #check men and cpu utilization rate
-5. allocate -l 1G 1gFile.img                            #create 1GB file
+4. top                                                   #check men and cpu utilization rate
+5. fallocate -l 1G 1gFile.img                            #create 1GB file
 9. setup NFS server
 10. use NetHogs to monitor bandwidth usage
 11. vim operation / sudo apt-get install vim

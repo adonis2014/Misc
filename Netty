@@ -23,8 +23,12 @@ Basic I/O operations:
    Netty uses callbacks internally when handling events.
 
 4. ChannelHandler
+   serves as the container for all application logic that applies to handling inbound and outbound data.
    When a callback is triggered, the event can be handled by an implementation of interface ChannelHandler
-   Is used to handle event
+   ChannelHandler can be dedicated to almost any kind of action:
+                                          <1> converting data from one format to another
+                                          <2> network triggered event
+                                          <3> handling exceptions thrown during processing
 
 5. Futures
    This object acts as a placeholder for the result of an asynchronous operation.

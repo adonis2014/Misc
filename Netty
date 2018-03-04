@@ -70,7 +70,10 @@ Basic I/O operations:
 
 15. ChannelPipeline
     Every Channel has an associated ChannelPipeline.
-    ChannelPipeline holds a chain of Channel- Handler instances.
- 
+    ChannelPipeline holds a chain of ChannelHandler instances.
+    注意两点：
+           <1> The order in which ChannelHandlers are executed is according to the order in which they are added;
+           <2> 实际上，这个 ordered arrangement of ChannelHandlers 就是我们所指的 ChannelPipeline
+           
 16, Transports
     NIO transport refers to a transport that’s mostly identical to TCP except for server-side performance enhancements.

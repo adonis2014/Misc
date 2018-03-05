@@ -256,9 +256,9 @@ change capture system: capture events changes out of Ambry for offline analysis
             GET: policies define how many randomly selected replicas to contact.
             
 (5) Compaction:
-        Each replica of a partition runs compaction independently.
-        All the "valid" data in these log segments is copied over to new log segments.
-        "Active" segment i.e. the segment that is currently being written to, is never eligible for compaction.
-        Any log segment with active entries in the Journal is not eligible for compaction and this may include more segments apart from the "active" segment.
-        Only one compaction is active per disk at any point of time.
-        
+        <1> Each replica of a partition runs compaction independently.
+        <2> All the "valid" data in these log segments is copied over to new log segments.
+        <3> "Active" segment i.e. the segment that is currently being written to, is never eligible for compaction.
+        <4> Any log segment with active entries in the Journal is not eligible for compaction and this may include more segments apart from the "active" segment.
+        <5> Only one compaction is active per disk at any point of time.
+        <6> Segmentation is a property that is set when the BlobStore is created and cannot be changed.

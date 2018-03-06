@@ -25,3 +25,7 @@
    
 3. git checkout -- filename      # to discard changes in working directory
    git branch -d branch_name     # delete branch
+
+4. How to undo “git commit --amend” done instead of “git commit” # 如何撤销 git commit -a --amend
+   Step1:  git reset --soft HEAD@{1}   # Move the current head so that it's pointing at the old commit
+   Step2:  git commit -C HEAD@{1}      # Commit the current tree using the commit details of the previous HEAD commit

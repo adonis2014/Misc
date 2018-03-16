@@ -93,6 +93,10 @@ which will handle the request and the response for that call. The scaling units 
  * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
  Flag: {Delete_Index}
 14. IndexSegment: The segment is represented by a start offset and an end offset and has the keys sorted.
+15. BlobStore: { PersistentIndex, Log, storeId, dataDir, replicaId, capacityInBytes }  
+               // controls the log and index. And Store is physical concept of replica
+16. StoreDescriptor: store descriptor stores the incarnation Id which is a unique identifier for every new incarnation of the store
+16. FileSpan: { startOffset, endOffset }   // Represents a portion of a log. Provides the start and end offset of a log
 
 /******************************** Security ***************************************/
 1. SSL/TLS is selected protocol for authentication and encryption.

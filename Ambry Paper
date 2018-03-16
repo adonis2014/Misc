@@ -63,6 +63,36 @@ Small objects is supported by composing it as a single simple blob ??
 The router will consist of a set of scaling units. A call that comes to the router will be internally assigned to one of the scaling units, 
 which will handle the request and the response for that call. The scaling units work independently of each other. 
 
+/******************************** Blob, BlobStore, Log, Message, Partition, Index, Journal, StoreKey ?= BlobId ***************************************/
+1. BlobType: { DataBlob, MetadataBlob }
+2. BlobIdType: { NATIVE, CRAFTED }
+3. BlobId:
+ * +---------+-------+--------------+-----------+-------------+-------------+----------+----------+
+ * | version | flag  | datacenterId | accountId | containerId | partitionId | uuidSize | uuid     |
+ * | (short) | (byte)| (byte)       | (short)   | (short)     | (n bytes)   | (int)    | (n bytes)|
+ * +---------+----------------------+-----------+-------------+-------------+----------+----------+
+  * Flag format: 1 Byte
+ * +--------------+-------------+---------------+
+ * |  1 to 5 bits |    6th bit  | 7 and 8th bit |
+ * |  un-assigned | IsEncrypted |  BlobIdType   |
+ * +--------------+-------------+---------------+
+4. PartitionState: { READ_WRITE, READ_ONLY }
+5. Replica  <--- {Partition + disk}
+6. Disk: { DataNode, mountPath, capacityInBytes, diskStatePolicy}
+7. DataNode: { datacenter, hostname, portNum, disks, ports, rackId ... }
+8. BlobAll: { store key(~= blobId), blob properties, user metadata, data, encryptionKey} // BlobInfo = blobProperties + userMetadata
+9. BlobProperties: { blobSize(required), serviceId(required), contentType, TTL, accountId, containerId, isEncrypted ... }
+10.BlobData: { blobType, size, stream }  // stream The {@link ByteBufferInputStream} containing the blob content
+11.CompositeBlobInfo: { chunkSize, totalSize, StoreKeys } //a composite blob is parsed from the metadata blob
+12.IndexEntry: { StoreKey,  IndexValue }
+13.IndexValue:
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * | Blob Size |   Offset  |  Flags  | Expiration Time | Orig msg  | OperationTime | ServiceId | ContainerId |
+ * | (8 bytes) | (8 bytes) | (1 byte)|   in  Secs      | offset    |   in secs     | (2 bytes) | (2 bytes)   |
+ * |           |           |         |   ( 4 bytes)    | (8 bytes) |   (4 bytes)   |           |             |
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ Flag: {Delete_Index}
+14. IndexSegment: The segment is represented by a start offset and an end offset and has the keys sorted.
 
 /******************************** Security ***************************************/
 1. SSL/TLS is selected protocol for authentication and encryption.

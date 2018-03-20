@@ -96,8 +96,24 @@ which will handle the request and the response for that call. The scaling units 
 15. BlobStore: { PersistentIndex, Log, storeId, dataDir, replicaId, capacityInBytes }  
                // controls the log and index. And Store is physical concept of replica
 16. StoreDescriptor: store descriptor stores the incarnation Id which is a unique identifier for every new incarnation of the store
-16. FileSpan: { startOffset, endOffset }   // Represents a portion of a log. Provides the start and end offset of a log
-
+17. FileSpan: { startOffset, endOffset }   // Represents a portion of a log. Provides the start and end offset of a log
+18. Journal:
+            journal is always kept in memory working for the active index segment (most recent in memory).
+19. ReplicaTokenFile: 
+          Only one per disk; record each partition residing on this disk and last checkpoints on its all peers(see following table)
+           - - - - - - - - - - - - - - - - - 
+          | Partition1 |  Replica2 : 1000   |
+          |            |  Replica3 : 20000  |
+          |            |  Replica4 : 3000   |        
+          - - - - - - - - - - - - - - - - - -
+          | Partition2 |  Replica2 : 200    |
+          |            |  Replica3 : 1500   |
+          |            |  Replica4 : 16000  |
+          - - - - - - - - - - - - - - - - - -
+          | Partition3 |  Replica2 : 21000  |
+          |            |  Replica3 : 4500   |
+          |            |  Replica4 : 11000  |
+          - - - - - - - - - - - - - - - - - -
 /******************************** Security ***************************************/
 1. SSL/TLS is selected protocol for authentication and encryption.
 2. Key Stores:   It stores private keys and certificates corresponding to its own public key. 

@@ -1,1 +1,112 @@
+1. PUT blob (in EI)
+[yinzhang@lca1-app0680 ~]$ curl -i -H "x-ambry-target-account-name:ambry-internal-store" -H "x-ambry-target-container-name:shared-files" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-ambry-um-description:gaap-online-tasks-misplaced-blobs" -H "x-li-ambry-client:Internal" http://lca1-app0680.stg.linkedin.com:15158 --data-binary @gaap-online-tasks.csv
 
+HTTP/1.1 201 Created
+Location: /AAMAAQQMAAkAAQAAAAAAAACYAAAAJGFkOWZhODkzLTc4ODAtNGJlZi1iYzdkLTg3ODZiNGI4ODM2NA.csv
+Date: Thu, 01 Mar 2018 00:31:51 GMT
+Content-Length: 0
+x-ambry-creation-time: Thu, 01 Mar 2018 00:31:33 GMT
+Access-Control-Expose-Headers: Location
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+2. PUT blob (in PROD)
+[yinzhang@lva1-app18926 ~]$ curl -i -H "x-ambry-target-account-name:ambry-internal-store" -H "x-ambry-target-container-name:shared-files" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app18926.prod.linkedin.com:15158 --data-binary @test.csv
+
+HTTP/1.1 201 Created
+Location: /AAMAAgQfAAkAAQAAAAAAAAzaAAAAJGViZDk4YWI1LWYwMDItNDZlYi05MGE1LTc3ZmEwOWVjNGJiMA.csv
+Date: Fri, 16 Mar 2018 21:52:58 GMT
+Content-Length: 0
+x-ambry-creation-time: Fri, 16 Mar 2018 21:52:56 GMT
+Access-Control-Expose-Headers: Location
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+3. DELETE blob (in PROD)
+[yinzhang@lva1-app18926 ~]$ curl -i -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app18926.prod.linkedin.com:15158/ambry/AAMAAgQfAAkAAQAAAAAAAAzaAAAAJGViZDk4YWI1LWYwMDItNDZlYi05MGE1LTc3ZmEwOWVjNGJiMA.csv
+
+HTTP/1.1 202 Accepted
+Date: Fri, 16 Mar 2018 21:55:17 GMT
+Content-Length: 0
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+4. DELETE blob (in EI)
+curli -i -H "x-li-ambry-client:Internal" -X DELETE d2://ambry/AAMAAQQMAAkAAQAAAAAAAADPAAAAJDE2NjZhNzI4LWNiZmQtNDdkNC1iZTUwLWVhN2E1NzlmZjQzYw.csv
+
+[INFO] Current profile set to default: yinzhang-mn1.linkedin.biz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.1 202 Accepted
+Date: Thu, 01 Mar 2018 22:43:12 GMT
+Content-Length: 0
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+5. GET blob (in EI)
+curli -s --no-log --fabric ei-ltx1 -i -H "x-li-ambry-client:Internal" d2://ambry/AAMA______8AAQAAAAAAAAAAAAAAJDlkNGRlMTEzLTE5MWItNDA5MC05OGUzLTQ1ZWYzY2Y4MTE2ZQ.bin
+
+[INFO] Current profile set to default: yinzhang-mn1.linkedin.biz
+HTTP/1.1 404 Not Found
+Content-Type: text/plain;charset=utf-8
+Date: Thu, 01 Mar 2018 21:40:36 GMT
+x-ambry-error-code: NotFound
+Content-Length: 0
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+6. GET blob (in PROD)
+[yinzhang@lva1-app18926 ~]$ curl -s -i -H "x-li-ambry-client:Internal" http://lva1-app18926.prod.linkedin.com:15158/AAMA______8AAQAAAAAAAAAAAAAAJDlkNGRlMTEzLTE5MWItNDA5MC05OGUzLTQ1ZWYzY2Y4MTE2ZQ.bin
+
+HTTP/1.1 404 Not Found
+date: Fri, 16 Mar 2018 21:17:33 GMT
+content-length: 0
+x-ambry-error-code: NotFound
+content-type: text/plain; charset=UTF-8
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+7. GET blobInfo (in EI)
+curli -s --no-log --fabric ei-ltx1 -I -H "x-li-ambry-client:Internal" d2://ambry/AAMA______8AAQAAAAAAAAAAAAAAJDlkNGRlMTEzLTE5MWItNDA5MC05OGUzLTQ1ZWYzY2Y4MTE2ZQ.bin
+
+[INFO] Current profile set to default: yinzhang-mn1.linkedin.biz
+HTTP/1.1 404 Not Found
+Content-Type: text/plain;charset=utf-8
+Date: Thu, 01 Mar 2018 21:40:48 GMT
+x-ambry-error-code: NotFound
+Content-Length: 0
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+7. GET blobInfo (in PROD)
+[yinzhang@lva1-app18926 ~]$ curl -s -i -H "x-li-ambry-client:Internal" http://lva1-app18926.prod.linkedin.com:15158/AAMA______8AAQAAAAAAAAAAAAAAJDlkNGRlMTEzLTE5MWItNDA5MC05OGUzLTQ1ZWYzY2Y4MTE2ZQ.bin/BlobInfo
+
+HTTP/1.1 404 Not Found
+date: Fri, 16 Mar 2018 21:18:36 GMT
+content-length: 0
+x-ambry-error-code: NotFound
+content-type: text/plain; charset=UTF-8
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+8. Bring down lva1-app6772.prod.linkedin.com which is one replica of partition 0 in prod-lva1:
+lid-client control stop -f prod-lva1 -t ambry-server-main -H lva1-app6772.prod.linkedin.com AmbryLI
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+9. Bring down lca1-app1373.stg.linkedin.com which is one replica of partition 0 in ei-lca1:
+lid-client control stop -f ei-lca1 -t ambry-server-main -H lca1-app1373.stg.linkedin.com AmbryLI
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+10. Bring back lva1-app6772.prod.linkedin.com:
+[yinzhang@lva1-app18926 ~]$ lid-client control start -f prod-lva1 -t ambry-server-main -H lva1-app6772.prod.linkedin.com AmbryLI
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
+11. Check Server status:
+
+[yinzhang@lca1-app0680 ~]$ app-status -t ambry-server-main -f ei-lca1
+
+ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:GOOD  f76d7ea9-64ca-4eee-9a7b-1d98bfe18d48

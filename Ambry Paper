@@ -99,6 +99,7 @@ which will handle the request and the response for that call. The scaling units 
 17. FileSpan: { startOffset, endOffset }   // Represents a portion of a log. Provides the start and end offset of a log
 18. Journal:
             journal is always kept in memory working for the active index segment (most recent in memory).
+            journal has fixed bound, like a sliding window, which will dequeue the old entries when it is full.
 19. ReplicaTokenFile: 
           Only one per disk; record each partition residing on this disk and last checkpoints on its all peers(see following table)
            - - - - - - - - - - - - - - - - - 

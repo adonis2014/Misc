@@ -115,6 +115,21 @@ which will handle the request and the response for that call. The scaling units 
           |            |  Replica3 : 4500   |
           |            |  Replica4 : 11000  |
           - - - - - - - - - - - - - - - - - -
+          
+20. Put Message Format
+             - - - - - - - - - - - - - -
+            |     Message Header        |
+             - - - - - - - - - - - - - -
+            |        blob key           |
+             - - - - - - - - - - - - - -
+            |  Blob Properties Record   |
+             - - - - - - - - - - - - - -
+            |   User metadata Record    |
+             - - - - - - - - - - - - - -
+            |    Crypto Key Record      |
+             - - - - - - - - - - - - - -
+            |       Blob Record         |
+             - - - - - - - - - - - - - -
 /******************************** Security ***************************************/
 1. SSL/TLS is selected protocol for authentication and encryption.
 2. Key Stores:   It stores private keys and certificates corresponding to its own public key. 

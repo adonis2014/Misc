@@ -110,3 +110,6 @@ lid-client control stop -f ei-lca1 -t ambry-server-main -H lca1-app1373.stg.link
 [yinzhang@lca1-app0680 ~]$ app-status -t ambry-server-main -f ei-lca1
 
 ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:GOOD  f76d7ea9-64ca-4eee-9a7b-1d98bfe18d48
+
+12. check versions for mp
+[yinzhang-mn1:~ yinzhang]$ mint describe oauth-filter

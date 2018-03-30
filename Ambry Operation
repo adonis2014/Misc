@@ -116,3 +116,7 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
 
 13. check the dependency for Multiproduct by ligradle.
 [yinzhang-mn1:ambryli_trunk yinzhang]$ ligradle :ambry-impl:dependencyInsight --configuration compile --dependency depo-rest-api
+
+14. git push ambryli-utils and ambryli_trunk override
+    PCLOVERRIDE            # ambryli-utils
+    PCVALIDATIONOVERRIDE   # ambryli_trunk

@@ -124,3 +124,14 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
 15. ssh eng-portal  # log into lca1-eng-portal02
 
 16. [yinzhang@lca1-eng-portal02 ~]$ app-status -fg prod -t ambry-server-main --use-intended | grep -i CANARY  # check which servers are in canary
+
+17. Hadoop SQL query (go/reportal, perform these queries)
+    (1) use tracking;
+        select blobUrn, blobProperties from AmbryOperationEvent 
+        where datepartition >= '2017-12-01-00' and datepartition < '2018-01-31-00' and 
+        blobProperties.appName = "gaap-online-tasks" and blobProperties.accountId != 209 and operationType = "PUT";
+        
+    (2) use tracking;
+        select blobUrn, blobProperties from AmbryOperationEvent 
+        where datepartition >= '2017-12-01-00' and datepartition < '2018-01-31-00' and 
+        blobProperties.appName = "gaap-engine" and blobProperties.accountId != 315 and operationType = "PUT";

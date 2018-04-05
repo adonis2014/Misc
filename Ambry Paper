@@ -81,7 +81,8 @@ which will handle the request and the response for that call. The scaling units 
 6. Disk: { DataNode, mountPath, capacityInBytes, diskStatePolicy}
 7. DataNode: { datacenter, hostname, portNum, disks, ports, rackId ... }
 8. BlobAll: { store key(~= blobId), blob properties, user metadata, data, encryptionKey} // BlobInfo = blobProperties + userMetadata
-9. BlobProperties: { blobSize(required), serviceId(required), contentType, TTL, accountId, containerId, isEncrypted ... }
+9. BlobInfo: {BlobProperties, userMetadata}
+   BlobProperties: { blobSize(required), serviceId(required), contentType, TTL, accountId, containerId, isEncrypted ... }
 10.BlobData: { blobType, size, stream }  // stream The {@link ByteBufferInputStream} containing the blob content
 11.CompositeBlobInfo: { chunkSize, totalSize, StoreKeys } //a composite blob is parsed from the metadata blob
 12.IndexEntry: { StoreKey,  IndexValue }

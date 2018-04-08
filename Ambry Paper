@@ -139,7 +139,7 @@ which will handle the request and the response for that call. The scaling units 
        | <--------------- ByteBufferAWC
        | <--------------- CopyingAsyncWritableChannel
 
-22. ReadableStreamChannel
+22. ReadableStreamChannel        (ReadableStreamChannel cannot be read more than once)
        | <--------------- RestRequest
        |                     | <--------------- NettyRequest
        |                     | <--------------- NettyMultipartRequest

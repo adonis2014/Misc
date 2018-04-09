@@ -9,9 +9,6 @@ Basic I/O operations:
    read()
    write()
 
-![alt text](https://github.com/jsjtzyy/Misc/blob/master/Netty%20Inbound%20and%20Outbound.png)
-
-
 1. Inbound, Outbound
    从字面意思上说，inbound即为入站，outbound为出站；
    对于Netty通道而言，从Socket通道中read数据进入Netty Handler的方向为inbound，从Netty handler向Socket通道write数据的方向为outbound

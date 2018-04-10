@@ -147,6 +147,19 @@ which will handle the request and the response for that call. The scaling units 
        | <--------------- ByteBufferReadableStreamChannel
        |
 
+23. Helix Upgrade Tool:
+    (1)Partitions are grouped under resources in Helix.
+    (2)Helix Instances -> ambry server instances.
+    (3)there is a 1:1 mapping between a Helix Partition and an Ambry Partition.
+    (4)there is a 1:1 mapping between a Helix Replica and an Ambry Replica.
+    (5)Each Helix instance has an associated InstanceConfig (instance specific details)
+    (6)Each Resource has an associated Resource IdealState (what partitions are under the resource and what are the instances for each of these partitions.)
+    (7)Instances are assigned with “preferences” to a partition. (the Master selection uses that preference list.)
+
+24. the instance to partition association for Ambry is in two places in Helix:
+    (1) Within the InstanceConfig (stores details about the partition, replicas, capacities and sealed states)
+    (2) Within the Resource IdealState (state model can automatically choose master instances for a partition)
+    
 /******************************** Security ***************************************/
 1. SSL/TLS is selected protocol for authentication and encryption.
 2. Key Stores:   It stores private keys and certificates corresponding to its own public key. 

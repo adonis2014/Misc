@@ -31,3 +31,12 @@
 4. How to undo “git commit --amend” done instead of “git commit” # 如何撤销 git commit -a --amend
    Step1:  git reset --soft HEAD@{1}   # Move the current head so that it's pointing at the old commit
    Step2:  git commit -C HEAD@{1}      # Commit the current tree using the commit details of the previous HEAD commit
+
+5. checkout pull request to local repo
+(1) edit .git/config
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = git@github.com:joyent/node.git
+	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+(2) run command   
+git fetch origin pull/7324/head:pr-7324 # pr-7324 is your local branch name

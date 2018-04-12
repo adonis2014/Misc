@@ -135,3 +135,15 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
         select blobUrn, blobProperties from AmbryOperationEvent 
         where datepartition >= '2017-12-01-00' and datepartition < '2018-01-31-00' and 
         blobProperties.appName = "gaap-engine" and blobProperties.accountId != 315 and operationType = "PUT";
+        
+18. The log segments and indexing segments directory on production machine:
+    [yinzhang@lca1-app1373 ambrydata]$ pwd
+    /mnt/u001/ambrydata
+    [yinzhang@lca1-app1373 ambrydata]$ ls 101/
+    0_0_18_index  0_0_log  cleanuptoken  StoreDescriptor
+    
+19. The error log on production machine is located at: /export/content/lid/apps/ambry-server/i001/
+    Example:
+    [yinzhang@lca1-app1373 ambrydata]$ ls /export/content/lid/apps/ambry-server/i001/
+    agents  appsConfig  bin  boot  components  conf  containerConfig  hooks  lib  logs  predeploy  resources  tmp  var  war  webapps
+    [yinzhang@lca1-app1373 i001]$ cd logs/

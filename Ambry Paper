@@ -159,6 +159,10 @@ which will handle the request and the response for that call. The scaling units 
 24. the instance to partition association for Ambry is in two places in Helix:
     (1) Within the InstanceConfig (stores details about the partition, replicas, capacities and sealed states)
     (2) Within the Resource IdealState (state model can automatically choose master instances for a partition)
+25. Server acts as both PARTICIPANT and SPECTATOR
+    Frontent only acts as SPECTATOR
+    Server only registers on local datacenter cluster Manager as PARTICIPANT
+    (Server, FE can reside on the same machine running as two processes with two binded different ports)
     
 /******************************** Security ***************************************/
 1. SSL/TLS is selected protocol for authentication and encryption.

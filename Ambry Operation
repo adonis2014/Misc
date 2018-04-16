@@ -147,3 +147,49 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
     [yinzhang@lca1-app1373 ambrydata]$ ls /export/content/lid/apps/ambry-server/i001/
     agents  appsConfig  bin  boot  components  conf  containerConfig  hooks  lib  logs  predeploy  resources  tmp  var  war  webapps
     [yinzhang@lca1-app1373 i001]$ cd logs/
+    
+#----------------------------------------------------------------------------------------------------------------------------#
+20. deploy to qei:
+    mint build && mint build-cfg --fabric qei-lca1 && mint deploy -a ambry-frontend --fabric qei-lca1 --skip-qei-routes --debug-app
+ 
+21. deploy locally:
+    mint build && mint build-cfg && mint release && mint release-cfg && mint deploy
+    
+#----------------------------------------------------------------------------------------------------------------------------#
+22. upload to unencrypted container locally.
+    [zemao@zemao-mn2]:~ $ curli -s -i --fabric ei-lca1 -H "x-ambry-target-account-name:ambryClientUnitTest" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:ambry-test" -H "x-ambry-content-type:text" -H "x-ambry-um-description:static upload" -H "x-li-ambry-client:Internal" http://zemao-mn2.linkedin.biz:15158 --data-binary @1m.bin
+    get BlobInfo.
+    [zemao@zemao-mn2]:~ $ curl -i "http://zemao-mn2.linkedin.biz:15158/AAMAAQBoAAIAAQAAAAAAAAAAAAAAJGY4ZjllMThiLTI3YzctNGIwNy05Nzc5LTEyMTY1YWE3N2M0Yg.bin/BlobInfo" -H "x-li-ambry-client: Internal"
+    HTTP/1.1 200 OK
+    Date: Mon, 16 Apr 2018 19:10:19 GMT
+    Last-Modified: Mon, 16 Apr 2018 19:09:47 GMT
+    x-ambry-blob-size: 10
+    x-ambry-service-id: CUrlUpload
+    x-ambry-creation-time: Mon, 16 Apr 2018 19:09:47 GMT
+    x-ambry-encrypted-in-storage: false
+    x-ambry-content-type: text
+    x-ambry-owner-id: ambry-test
+    x-ambry-target-account-name: ambryClientUnitTest
+    x-ambry-target-container-name: container-a
+    x-ambry-private: false
+    x-ambry-um-description: static upload
+    Content-Length: 0
+    
+#----------------------------------------------------------------------------------------------------------------------------#
+ 23. upload to encrypted container locally.
+     [zemao@zemao-mn2]:~ $ curli -s -i --fabric ei-lca1 -H "x-ambry-target-account-name:ambryClientUnitTest" -H "x-ambry-target-container-name:public-enc" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:ambry-test" -H "x-ambry-content-type:text" -H "x-ambry-um-description:static upload" -H "x-li-ambry-client:Internal" http://zemao-mn2.linkedin.biz:15158 --data-binary @1m.bin
+     [zemao@zemao-mn2]:~ $ curl -i "http://zemao-mn2.linkedin.biz:15158/AAMAAQBoAAgAAQAAAAAAAAAAAAAAJGQxMWNmOWMxLWZmNWYtNDAxOC1hYmY1LTAzNmI1MzhkNWU4Yw.bin/BlobInfo" -H "x-li-ambry-client: Internal"
+      HTTP/1.1 200 OK
+      Date: Mon, 16 Apr 2018 19:07:56 GMT
+      Last-Modified: Mon, 16 Apr 2018 19:06:26 GMT
+      x-ambry-blob-size: 1048576
+      x-ambry-service-id: CUrlUpload
+      x-ambry-creation-time: Mon, 16 Apr 2018 19:06:26 GMT
+      x-ambry-encrypted-in-storage: true
+      x-ambry-content-type: text
+      x-ambry-owner-id: ambry-test
+      x-ambry-target-account-name: ambryClientUnitTest
+      x-ambry-target-container-name: public-enc
+      x-ambry-private: false
+      x-ambry-um-description: static upload
+      Content-Length: 0

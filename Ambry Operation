@@ -193,3 +193,75 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
       x-ambry-private: false
       x-ambry-um-description: static upload
       Content-Length: 0
+
+[Conditional Delete Test]
+
+// PUT a blob
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
+HTTP/1.1 201 Created
+Location: /AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
+Date: Mon, 16 Apr 2018 20:46:33 GMT
+Content-Length: 0
+x-ambry-creation-time: Mon, 16 Apr 2018 20:46:32 GMT
+Access-Control-Expose-Headers: Location
+
+// DELETE a blob with incorrect account name
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:IncorrectCUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
+HTTP/1.1 412 Precondition Failed
+date: Mon, 16 Apr 2018 20:50:04 GMT
+content-length: 0
+x-ambry-error-code: PreconditionFailed
+content-type: text/plain; charset=UTF-8
+
+// DELETE a blob with incorrect container name
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-b" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
+HTTP/1.1 412 Precondition Failed
+date: Mon, 16 Apr 2018 20:50:52 GMT
+content-length: 0
+x-ambry-error-code: PreconditionFailed
+content-type: text/plain; charset=UTF-8
+
+// DELETE a blob with both correct account name and container name
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
+HTTP/1.1 202 Accepted
+Date: Mon, 16 Apr 2018 20:51:14 GMT
+Content-Length: 0
+
+// PUT a blob again
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
+HTTP/1.1 201 Created
+Location: /AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
+Date: Mon, 16 Apr 2018 20:54:48 GMT
+Content-Length: 0
+x-ambry-creation-time: Mon, 16 Apr 2018 20:54:46 GMT
+Access-Control-Expose-Headers: Location
+
+//DELETE a blob with only container name specified
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
+HTTP/1.1 400 Bad Request
+date: Mon, 16 Apr 2018 20:56:57 GMT
+content-length: 0
+x-ambry-failure-reason: Only container name is set in request with no corresponding account name is not allowed.
+x-ambry-error-code: BadRequest
+content-type: text/plain; charset=UTF-8
+
+// DELETE a blob with only correct account name
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
+HTTP/1.1 202 Accepted
+Date: Mon, 16 Apr 2018 20:58:07 GMT
+Content-Length: 0
+
+// PUT the blob again
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
+HTTP/1.1 201 Created
+Location: /AAMAAgCAAAIAAQAAAAAAAAwgAAAAJDExMWNiNGE5LWM0ZWUtNDEwNy1iY2MwLThhY2VkNTlmYzIzNw.csv
+Date: Mon, 16 Apr 2018 20:58:35 GMT
+Content-Length: 0
+x-ambry-creation-time: Mon, 16 Apr 2018 20:58:34 GMT
+Access-Control-Expose-Headers: Location
+
+// DELETE the blob with blobId only
+[yinzhang@lva1-app8938 ~]$ curl -i -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAwgAAAAJDExMWNiNGE5LWM0ZWUtNDEwNy1iY2MwLThhY2VkNTlmYzIzNw.csv
+HTTP/1.1 202 Accepted
+Date: Mon, 16 Apr 2018 20:59:51 GMT
+Content-Length: 0

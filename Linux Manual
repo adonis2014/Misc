@@ -38,6 +38,8 @@
     tcpdump -i eth0  # Listen on the eth0 interface.
     tcpdump -D       # Show the list of available interfaces
     
+20. /usr/libexec/java_home  -V # check Java home for all the versions
+
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

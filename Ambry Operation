@@ -265,3 +265,15 @@ Access-Control-Expose-Headers: Location
 HTTP/1.1 202 Accepted
 Date: Mon, 16 Apr 2018 20:59:51 GMT
 Content-Length: 0
+
+#----------------------------------------------------------------------------------------------------------------------------#
+Perf test for dynamic seal and unseal store:
+
+keep the dumping the blob until the store is sealed
+
+forcely wipe out: log in and delete and reboot the machine . ---> store should be unsealed
+set the blob's TTL and wait for compaction to reclaim the space. (change the frequency of compaction)
+
+AmbryLI_trunk/config/app/ambry-server-war/ei-lca1/     # change the threshold in config files on the perf machine
+lid-client deploy --config AmbryLI -f ei-lca1 -t ambry-server-perf --skip-hooks --host-concurrency 6 # deploy the changed config
+ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin.com  # check the state of store (whether in)

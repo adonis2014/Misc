@@ -267,6 +267,14 @@ Date: Mon, 16 Apr 2018 20:59:51 GMT
 Content-Length: 0
 
 #----------------------------------------------------------------------------------------------------------------------------#
+// restart server in perf
+[yinzhang@lca1-eng-portal02 ~]$ lid-client control restart -f ei-ltx1 -t ambry-server-perf AmbryLI
+
+// change the version of server in perf  (version 16.1.42)
+[yinzhang@lca1-eng-portal02 ~]$ lid-client deploy AmbryLI -f ei-lca1 -t ambry-server-perf -v 16.1.42 --skip-hooks --host-concurrency 6
+
+#----------------------------------------------------------------------------------------------------------------------------#
+
 Perf test for dynamic seal and unseal store:
 
 keep the dumping the blob until the store is sealed
@@ -277,3 +285,5 @@ set the blob's TTL and wait for compaction to reclaim the space. (change the fre
 AmbryLI_trunk/config/app/ambry-server-war/ei-lca1/     # change the threshold in config files on the perf machine
 lid-client deploy --config AmbryLI -f ei-lca1 -t ambry-server-perf --skip-hooks --host-concurrency 6 # deploy the changed config
 ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin.com  # check the state of store (whether in)
+
+/export/content/lid/logs/ambry-frontend/i001 # vim ambry-frontend.log to check exception and errors

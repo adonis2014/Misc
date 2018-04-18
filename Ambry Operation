@@ -152,9 +152,11 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
 20. deploy to qei:
     mint build && mint build-cfg --fabric qei-lca1 && mint deploy -a ambry-frontend --fabric qei-lca1 --skip-qei-routes --debug-app
  
-21. deploy locally:
+21.1 deploy locally:
     mint build && mint build-cfg && mint release && mint release-cfg && mint deploy
     
+21.2 undeploy locally:
+    mint undeploy
 #----------------------------------------------------------------------------------------------------------------------------#
 22. upload to unencrypted container locally.
     [zemao@zemao-mn2]:~ $ curli -s -i --fabric ei-lca1 -H "x-ambry-target-account-name:ambryClientUnitTest" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:ambry-test" -H "x-ambry-content-type:text" -H "x-ambry-um-description:static upload" -H "x-li-ambry-client:Internal" http://zemao-mn2.linkedin.biz:15158 --data-binary @1m.bin

@@ -287,3 +287,7 @@ lid-client deploy --config AmbryLI -f ei-lca1 -t ambry-server-perf --skip-hooks 
 ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin.com  # check the state of store (whether in)
 
 /export/content/lid/logs/ambry-frontend/i001 # vim ambry-frontend.log to check exception and errors
+
+#----------------------------------------------------------------------------------------------------------------------------#
+svn st # 等同于 git status
+svin review # create a rb for review

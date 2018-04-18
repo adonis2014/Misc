@@ -291,3 +291,4 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 #----------------------------------------------------------------------------------------------------------------------------#
 svn st # 等同于 git status
 svin review # create a rb for review
+svin commit # when the rb is approved by at least one review on ACL

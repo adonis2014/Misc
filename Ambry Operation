@@ -294,3 +294,8 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 svn st # 等同于 git status
 svin review # create a rb for review
 svin commit # when the rb is approved by at least one review on ACL
+
+#----------------------------------------------------------------------------------------------------------------------------#
+// 查看 accountId, containerId 根据 blobId
+yinzhang-mn1:~ yinzhang$ curl http://cgetz-ld2:6789/ambry-account-admin/resources/blobIdMetadata/AAMAAQCfAAMAAQAAAAAAAAB4AAAAJDQwNDE3OGI0LWRjNzYtNDRlYi05ODMyLTliYjFjODYyZjE3ZQ.bin
+{"accountId":159,"crafted":false,"containerId":3,"version":3}

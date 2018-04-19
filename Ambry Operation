@@ -296,6 +296,6 @@ svin review # create a rb for review
 svin commit # when the rb is approved by at least one review on ACL
 
 #----------------------------------------------------------------------------------------------------------------------------#
-// 查看 accountId, containerId 根据 blobId
-yinzhang-mn1:~ yinzhang$ curl http://cgetz-ld2:6789/ambry-account-admin/resources/blobIdMetadata/AAMAAQCfAAMAAQAAAAAAAAB4AAAAJDQwNDE3OGI0LWRjNzYtNDRlYi05ODMyLTliYjFjODYyZjE3ZQ.bin
-{"accountId":159,"crafted":false,"containerId":3,"version":3}
+// 根据 blobId 查看 account and container 信息
+[yinzhang-mn1:~ yinzhang]$ curl 'http://cgetz-ld2:6789/ambry-account-admin/resources/blobIdMetadata/fg=ei&id=AAMAAQCfAAMAAQAAAAAAAAB4AAAAJDQwNDE3OGI0LWRjNzYtNDRlYi05ODMyLTliYjFjODYyZjE3ZQ.bin'
+{"accountId":159,"accountName":"tscp-assets-war","containerName":"default-public-container","crafted":false,"containerId":3,"version":3}

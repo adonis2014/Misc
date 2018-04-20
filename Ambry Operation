@@ -299,3 +299,20 @@ svin commit # when the rb is approved by at least one review on ACL
 // 根据 blobId 查看 account and container 信息
 [yinzhang-mn1:~ yinzhang]$ curl 'http://cgetz-ld2:6789/ambry-account-admin/resources/blobIdMetadata/fg=ei&id=AAMAAQCfAAMAAQAAAAAAAAB4AAAAJDQwNDE3OGI0LWRjNzYtNDRlYi05ODMyLTliYjFjODYyZjE3ZQ.bin'
 {"accountId":159,"accountName":"tscp-assets-war","containerName":"default-public-container","crafted":false,"containerId":3,"version":3}
+#----------------------------------------------------------------------------------------------------------------------------#
+部署jar包到某一台server上
+./gradlew allJar
+scp ambry-clustermap/build/libs/ambry-clustermap-0.1.0.jar ltx1-app1440.stg.linkedin.com:
+[yinzhang@ltx1-app1440 ~]$ cd /export/content/lid/apps/ambry-server/i001/webapps/
+[yinzhang@ltx1-app1440 webapps]$ cp ambry-server-war.war ~/
+[yinzhang@ltx1-app1440 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/jar -xvf ambry-server-war.war 
+[yinzhang@ltx1-app1440 ~]$ cp ambry-clustermap-0.1.0.jar WEB-INF/lib/ambry-clustermap-0.2.180.jar 
+[yinzhang@ltx1-app1440 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/jar -cvf ambry-server-war.war META-INF WEB-INF
+[yinzhang@ltx1-app1440 ~]$ cd /export/content/lid/apps/ambry-server/i001/webapps
+[yinzhang@ltx1-app1440 webapps]$ cp ~/ambry-server-war.war /tmp/
+[yinzhang@ltx1-app1440 webapps]$ sudo -u app cp /tmp/ambry-server-war.war ./ambry-server-war.war 
+[yinzhang@ltx1-app1440 webapps]$ cd ../bin/
+[yinzhang@ltx1-app1440 bin]$ ./container-jettyctl.sh stop
+[yinzhang@ltx1-app1440 bin]$ sudo -u app ./container-jettyctl.sh start
+[yinzhang@ltx1-app1440 bin]$ cd ../logs
+[yinzhang@ltx1-app1440 logs]$ tail -f ambry-server.log

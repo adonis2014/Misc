@@ -290,6 +290,8 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 
 /export/content/lid/logs/ambry-frontend/i001 # vim ambry-frontend.log to check exception and errors
 
+# wipe out the log segment on a single server
+[yinzhang@ltx1-app1440 0]$ sudo -u app rm 0_0_log
 #----------------------------------------------------------------------------------------------------------------------------#
 svn st # 等同于 git status
 svin review # create a rb for review

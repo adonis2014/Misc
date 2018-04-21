@@ -292,10 +292,12 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 
 # wipe out the log segment on a single server
 [yinzhang@ltx1-app1440 0]$ sudo -u app rm 0_0_log
+
 #----------------------------------------------------------------------------------------------------------------------------#
-svn st # 等同于 git status
-svin review # create a rb for review
-svin commit # when the rb is approved by at least one review on ACL
+# cd to config directory
+[yinzhang-mn1:config yinzhang]$ svn st # 等同于 git status
+[yinzhang-mn1:config yinzhang]$ svin review # create a rb for review
+[yinzhang-mn1:config yinzhang]$ svin commit # when the rb is approved by at least one review on ACL
 
 #----------------------------------------------------------------------------------------------------------------------------#
 // 根据 blobId 查看 account and container 信息

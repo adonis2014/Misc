@@ -297,7 +297,7 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 # cd to config directory
 [yinzhang-mn1:config yinzhang]$ svn st # 等同于 git status
 [yinzhang-mn1:config yinzhang]$ svin review # create a rb for review
-[yinzhang-mn1:config yinzhang]$ svin commit # when the rb is approved by at least one review on ACL
+[yinzhang-mn1:config yinzhang]$ svin commit # when the rb is approved by at least one reviewer on ACL
 
 #----------------------------------------------------------------------------------------------------------------------------#
 // 根据 blobId 查看 account and container 信息
@@ -320,3 +320,17 @@ scp ambry-clustermap/build/libs/ambry-clustermap-0.1.0.jar ltx1-app1440.stg.link
 [yinzhang@ltx1-app1440 bin]$ sudo -u app ./container-jettyctl.sh start
 [yinzhang@ltx1-app1440 bin]$ cd ../logs
 [yinzhang@ltx1-app1440 logs]$ tail -f ambry-server.log
+
+#----------------------------------------------------------------------------------------------------------------------------#
+# List application slices matching the ambryLi
+[yinzhang@lca1-eng-portal02 ~]$ topology-v3 slice list --product ambryLi                           
+App Name        Instance    Created By                Created At           Product Tag           Config Tags    ID                                    State
+--------------  ----------  ------------------------  -------------------  --------------------  -------------  ------------------------------------  -------
+ambry-server    i001        urn:li:corpuser:dnikifor  2016-07-27 21:43:54  ambry-server-main                    f76d7ea9-64ca-4eee-9a7b-1d98bfe18d48  ACTIVE
+ambry-server    i001        urn:li:corpuser:dnikifor  2016-07-27 21:44:21  ambry-server-perf                    3bb7f4c4-d29e-4c85-ba4e-0a1aa0a382f8  ACTIVE
+ambry-frontend  i001        urn:li:corpuser:dnikifor  2016-07-27 22:32:24  ambry-frontend-perf                  494f76c0-6574-416d-8fb2-3dbd4ff6a35e  ACTIVE
+ambry-frontend  i001        urn:li:corpuser:dnikifor  2016-07-27 22:32:46  ambry-frontend-main                  8cd2b15d-22eb-413f-8716-a2c1e282d54a  ACTIVE
+ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry-server-reserve                 ab5e3baf-a709-4297-8827-9e1fdd4b13a2  ACTIVE
+
+#----------------------------------------------------------------------------------------------------------------------------#
+# check ACL for particular Account/Container on Nuage

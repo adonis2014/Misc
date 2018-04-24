@@ -40,6 +40,8 @@
     
 20. /usr/libexec/java_home  -V                                      # check Java home for all the versions
 21. which -a python python2 python2.7 python3 python3.3 python3.5   # check all versions of installed python
+
+22. ls -ltrS  # -S(sort by size) -r(reverse order) -t(sort by modification time)
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

@@ -296,8 +296,9 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 #----------------------------------------------------------------------------------------------------------------------------#
 # cd to config directory
 [yinzhang-mn1:config yinzhang]$ svn st # 等同于 git status
-[yinzhang-mn1:config yinzhang]$ svin review # create a rb for review
-[yinzhang-mn1:config yinzhang]$ svin commit # when the rb is approved by at least one reviewer on ACL
+[yinzhang-mn1:config yinzhang]$ svin review            # create a rb for review
+[yinzhang-mn1:config yinzhang]$ svin review --update   # update the new changes to rb
+[yinzhang-mn1:config yinzhang]$ svin commit            # when the rb is approved by at least one reviewer on ACL
 
 #----------------------------------------------------------------------------------------------------------------------------#
 // 根据 blobId 查看 account and container 信息

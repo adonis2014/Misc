@@ -332,5 +332,12 @@ ambry-frontend  i001        urn:li:corpuser:dnikifor  2016-07-27 22:32:24  ambry
 ambry-frontend  i001        urn:li:corpuser:dnikifor  2016-07-27 22:32:46  ambry-frontend-main                  8cd2b15d-22eb-413f-8716-a2c1e282d54a  ACTIVE
 ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry-server-reserve                 ab5e3baf-a709-4297-8827-9e1fdd4b13a2  ACTIVE
 
+#--------------------------------------------- HOW TO CHECK TRACE INFO IN LOG ------------------------------------------------------------------------------#
+(1) [yinzhang-mn1:~ yinzhang]$ ssh -L 15151:localhost:15151 ltx1-app1440.stg.linkedin.com   # run this command with correct host and port
+(2) go to http://localhost:15151/ambry-server/jmx/serverbydomain  # replace serverdomain with frontendbydomain if necessary
+(3) click on "ambry-server.log4j:name=admin"
+(4) Name of the logger: 填写class的名字 比如： com.github.ambry.store.CompactAllPolicyFactory
+(5) new level: 填写log lever的名字 比如 TRACE
+
 #----------------------------------------------------------------------------------------------------------------------------#
 # check ACL for particular Account/Container on Nuage

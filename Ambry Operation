@@ -340,5 +340,9 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
 (4) Name of the logger: 填写class的名字 比如： com.github.ambry.store.CompactAllPolicyFactory
 (5) new level: 填写log lever的名字 比如 TRACE
 
+# also we can use the script from Casey to set log level
+./set-log-level.sh lor1-app0179.prod ambry-frontend com.linkedin.ambry.frontend.AccessFilter INFO
+(source code of set-log-level.sh is stored at https://gitli.corp.linkedin.com/cgetz-scratch/cgetz-scripts/source/set-log-level.sh)
+
 #----------------------------------------------------------------------------------------------------------------------------#
 # check ACL for particular Account/Container on Nuage

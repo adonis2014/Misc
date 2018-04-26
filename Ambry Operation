@@ -275,6 +275,8 @@ Content-Length: 0
 // change the version of server in perf  (version 16.1.42)
 [yinzhang@lca1-eng-portal02 ~]$ lid-client deploy AmbryLI -f ei-lca1 -t ambry-server-perf -v 16.1.42 --skip-hooks --host-concurrency 6
 
+// cancel the deploy request 
+lid-client request cancel  -f <FABRIC> --request-ids <Request ID> --message "Deployment stuck for Nuage"
 #----------------------------------------------------------------------------------------------------------------------------#
 
 Perf test for dynamic seal and unseal store:
@@ -344,6 +346,6 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
 ./set-log-level.sh lor1-app0179.prod ambry-frontend com.linkedin.ambry.frontend.AccessFilter INFO
 (source code of set-log-level.sh is stored at https://gitli.corp.linkedin.com/cgetz-scratch/cgetz-scripts/source/set-log-level.sh)
 #----------------------------------------------------------------------------------------------------------------------------#
- ./gradlew build && ./gradlew idea
+ ./gradlew build && ./gradlew idea  # update lib import in idea
 #----------------------------------------------------------------------------------------------------------------------------#
 # check ACL for particular Account/Container on Nuage

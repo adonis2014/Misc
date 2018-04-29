@@ -63,6 +63,8 @@ Small objects is supported by composing it as a single simple blob ??
 The router will consist of a set of scaling units. A call that comes to the router will be internally assigned to one of the scaling units, 
 which will handle the request and the response for that call. The scaling units work independently of each other. 
 
+`AmbryBlobStorageService`: achieves the mapping b/w the user desired name and the Ambry UUID.
+
 /******************************** Blob, BlobStore, Log, Message, Partition, Index, Journal, StoreKey ?= BlobId ***************************************/
 1. BlobType: { DataBlob, MetadataBlob }
 2. BlobIdType: { NATIVE, CRAFTED }

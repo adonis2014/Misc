@@ -304,9 +304,18 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 [yinzhang-mn1:config yinzhang]$ svin commit            # when the rb is approved by at least one reviewer on ACL
 
 #----------------------------------------------------------------------------------------------------------------------------#
-// 根据 blobId 查看 account and container 信息
+// (1) 根据 blobId 查看 account and container 信息, using Casey's command
 [yinzhang-mn1:~ yinzhang]$ curl 'http://cgetz-ld2:6789/ambry-account-admin/resources/blobIdMetadata/fg=ei&id=AAMAAQCfAAMAAQAAAAAAAAB4AAAAJDQwNDE3OGI0LWRjNzYtNDRlYi05ODMyLTliYjFjODYyZjE3ZQ.bin'
 {"accountId":159,"accountName":"tscp-assets-war","containerName":"default-public-container","crafted":false,"containerId":3,"version":3}
+// (2) use the account and container to determine prod on Nuage
+// (3) click the "fast access" on Nuage for a particular account
+// (4)then use the following cmd to query via Blob Id
+[yinzhang@lva1-app23942 ~]$ curli -s --no-log --fabric prod-lor1 --dv-auth self -i -H "x-li-ambry-client:Internal" d2://ambry/AAMB_wC9AAkAAQAAAAAAAAUWAAAAJGRmYjQwMmU0LWIzNWMtNGQwMy1hZjk3LTU5YWJjODgzOGZkZA.pdf/BlobInfo
+// if cannot find, we can go to go/reportal to query ambry event for specific blob id on Hadoop (a example is as follows)
+    use tracking;
+    select * from AmbryOperationEvent where datepartition >= '2015-04-01-00' and datepartition < '2015-04-03-00' and bloburn='AAEAAQAAAAAAAAJdAAAAJDcyYjg2ZTcyLTBmZWUtNGQ0ZC1hZTU1LTJmMzJjNzQxODc1OA';  
+    *** you might need to remove suffix from BlobID to get bloburn ***
+
 #----------------------------------------------------------------------------------------------------------------------------#
 部署jar包到某一台server上
 ./gradlew allJar

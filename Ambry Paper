@@ -188,7 +188,19 @@ which will handle the request and the response for that call. The scaling units 
     Frontent only acts as SPECTATOR
     Server only registers on local datacenter cluster Manager as PARTICIPANT
     (Server, FE can reside on the same machine running as two processes with two binded different ports)
-    
+
+/******************************** More about Bucketing ***************************************/
+With bucketing, incoming requests will not always walk through the entire index to collect the requested stats. 
+Best effort will be made to serve incoming requests with readily available data structures created from bucketing. 
+Requests that are outside of the forecast range of bucketing will be served in the old way by walking through the entire index. 
+However, if the construction of new buckets is in progress and the newly created data structures will eventually have the requested stats, 
+then the request will wait for the construction to complete.
+
+One adjustment is made temporarily to simplify the implementation of bucketing for log segment valid data size. 
+The expiration reference time will no longer be now (time of the request). Instead it will be same as deletion reference time 
+which is defined based on the given time range. As a consequence, reported valid data size for log segment will be more than 
+the actual valid data size. However, if the system stops changing it the reported stats will be consistent eventually.
+
 /******************************** Security ***************************************/
 1. SSL/TLS is selected protocol for authentication and encryption.
 2. Key Stores:   It stores private keys and certificates corresponding to its own public key. 

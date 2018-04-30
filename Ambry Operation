@@ -309,7 +309,7 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 {"accountId":159,"accountName":"tscp-assets-war","containerName":"default-public-container","crafted":false,"containerId":3,"version":3}
 // (2) use the account and container to determine prod on Nuage
 // (3) click the "fast access" on Nuage for a particular account
-// (4)then use the following cmd to query via Blob Id
+// (4)then use the following cmd to query via Blob Id on a prod machine
 [yinzhang@lva1-app23942 ~]$ curli -s --no-log --fabric prod-lor1 --dv-auth self -i -H "x-li-ambry-client:Internal" d2://ambry/AAMB_wC9AAkAAQAAAAAAAAUWAAAAJGRmYjQwMmU0LWIzNWMtNGQwMy1hZjk3LTU5YWJjODgzOGZkZA.pdf/BlobInfo
 // if cannot find, we can go to go/reportal to query ambry event for specific blob id on Hadoop (a example is as follows)
     use tracking;

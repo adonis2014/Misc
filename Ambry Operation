@@ -315,6 +315,7 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
     use tracking;
     select * from AmbryOperationEvent where datepartition >= '2015-04-01-00' and datepartition < '2015-04-03-00' and bloburn='AAEAAQAAAAAAAAJdAAAAJDcyYjg2ZTcyLTBmZWUtNGQ0ZC1hZTU1LTJmMzJjNzQxODc1OA';  
     *** you might need to remove suffix from BlobID to get bloburn ***
+// if the blob id is crafted, we can go to go/pqr to retrieve the original blob id.
 
 #----------------------------------------------------------------------------------------------------------------------------#
 部署jar包到某一台server上

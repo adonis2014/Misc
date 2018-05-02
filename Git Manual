@@ -6,6 +6,7 @@
    git cherry pick
    git reset —-hard commit id
    git diff HEAD^ > nioc-host.diff
+   git diff commitId1 commitId2 > file.diff
    git apply nioc-host.diff
    git config
    git rebase master     # when you are on your branch and rebase master first.

@@ -44,6 +44,13 @@
 22. ls -ltrS             # -S(sort by size) -r(reverse order) -t(sort by modification time)
 23. du -h --max-depth=1  # only show the size of each directory with depth = 1 (in current path) Linux适用，Mac不适用
     du -hd1              # same command for Mac
+24. screen 
+       When screen is called, it creates a single window with a shell in it (or the specified command) and then gets out of your way so that
+       you can use the program as you normally would. Then, at any time, you can create new (full-screen) windows with other programs in them
+       (including more shells), kill existing windows, view a list of windows, turn output logging on and off, copy-and-paste text between
+       windows, view the scrollback history, switch between windows in whatever manner you wish, etc.
+    screen -r  # resumes a detached screen session.
+    
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

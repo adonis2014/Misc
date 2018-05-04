@@ -197,6 +197,17 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
       x-ambry-um-description: static upload
       Content-Length: 0
 
+[zemao@lca1-eng-portal02 ~]$ curli --fabric prod-lva1 d2://ambry/p/7/005/025/22b/1963b30.png -I -H "x-li-ambry-client:Internal"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+HTTP/1.1 403 Forbidden
+Content-Type: text/plain;charset=utf-8
+Date: Thu, 03 May 2018 23:55:55 GMT
+x-ambry-error-code: AccessDenied
+x-ambry-failure-reason: (Principal:Principal: {type: SERVICE_PRINCIPAL, applicationName: d2-proxy, instance: i001, fabric: prod-lva1}, Operation:READ) denied by non-compliant ID lix; x-li-ambry-mapped-compliant-id:/AAMB_wQWAAgAAQAAAAAAAAD5AAAAJDM4MjVkZmViLWQ5NGYtNDY2OS1hNDRkLTQ0MjQwM2EwM2ViYw.png
+Content-Length: 0
+
 [Conditional Delete Test]
 
 // PUT a blob

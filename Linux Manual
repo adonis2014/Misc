@@ -1,6 +1,13 @@
 1. tail -f sys.log | grep niocVim
-2. ps -C (name)
-   ps -ax
+2. ps -C (cmdlist) # Select by command name.
+                   # This selects the processes whose executable name is given in cmdlist.
+                   # 比如 vim 打开一个文件，用ps -C vim 可以显示vim的进程
+   ps -ax # Display information about other users' processes as well as your own.  This will skip any processes which do not 
+          # have a controling terminal, unless the -x option is also specified
+   ps -u  # Display the processes belonging to the specified usernames
+   ps -ef # -e display information about other users' processes, including those without controlling terminals
+          # -f display the uid, pid, parent pid, recent CPU usage, process start time, controlling tty etc.
+          
 3. sudo mount -r -t nfs pa-dbc1122:/dbc/pa-dbc1122/yingyiz/ /mnt/test
 4. top                                                   #check men and cpu utilization rate
 5. fallocate -l 1G 1gFile.img                            #create 1GB file

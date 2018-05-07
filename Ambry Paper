@@ -86,7 +86,13 @@ which will handle the request and the response for that call. The scaling units 
 [StatsEvent]:    this class is used for the purpose of handling new puts and deletes during a scan.
                  StatsEvent captures/buffers all needed information of PUTs/DELETEs that happen while a scan is in progress. 
                  Once scan is finished these buffered StatsEvent will then be processed and added to the data structures accordingly.
-                 
+
+[participantHealthReport.reportLatency]: the time interval by which the datanode transmits quota report to Helix
+
+[publishPeriodInSecs]: The time period in seconds that configures how often stats are published
+
+[serverQuotaStatsAggregateIntervalInMinutes]: The frequency in mins at which cluster wide quota stats will be aggregated.
+
 /******************************** Blob, BlobStore, Log, Message, Partition, Index, Journal, StoreKey ?= BlobId ***************************************/
 1. BlobType: { DataBlob, MetadataBlob }
 2. BlobIdType: { NATIVE, CRAFTED }

@@ -89,7 +89,7 @@ which will handle the request and the response for that call. The scaling units 
 
 [participantHealthReport.reportLatency]: the time interval by which the datanode transmits quota report to Helix
 
-[publishPeriodInSecs]: The time period in seconds that configures how often stats are published
+[publishPeriodInSecs]: The time period in seconds that configures how often stats are published to local file in JSON format.
 
 [serverQuotaStatsAggregateIntervalInMinutes]: The frequency in mins at which cluster wide quota stats will be aggregated.
 

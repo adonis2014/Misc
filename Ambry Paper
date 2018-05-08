@@ -92,7 +92,10 @@ which will handle the request and the response for that call. The scaling units 
 [publishPeriodInSecs]: The time period in seconds that configures how often stats are published to local file in JSON format.
 
 [serverQuotaStatsAggregateIntervalInMinutes]: The frequency in mins at which cluster wide quota stats will be aggregated.
-
+                                              This variable is configured in command as follows:
+                                                    HelixClusterWideAggregationTool --zkLayoutPath PATH_TO_ZK_LAYOUT --clusterName CLUSTER_NAME 
+                                                    --workflowName WORKFLOW_NAME --recurrentIntervalInMinutes 1440
+                                                    
 /******************************** Blob, BlobStore, Log, Message, Partition, Index, Journal, StoreKey ?= BlobId ***************************************/
 1. BlobType: { DataBlob, MetadataBlob }
 2. BlobIdType: { NATIVE, CRAFTED }

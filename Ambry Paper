@@ -96,6 +96,9 @@ which will handle the request and the response for that call. The scaling units 
                                                     HelixClusterWideAggregationTool --zkLayoutPath PATH_TO_ZK_LAYOUT --clusterName CLUSTER_NAME 
                                                     --workflowName WORKFLOW_NAME --recurrentIntervalInMinutes 1440
                                                     
+Cluster-wide aggregation only aggregates the stats within a datacenter. For example, the perf aggregation will execute separately 
+in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result from servers in ltx1. 
+                                                    
 /******************************** Blob, BlobStore, Log, Message, Partition, Index, Journal, StoreKey ?= BlobId ***************************************/
 1. BlobType: { DataBlob, MetadataBlob }
 2. BlobIdType: { NATIVE, CRAFTED }

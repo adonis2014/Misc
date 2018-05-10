@@ -384,3 +384,17 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
 
 #----------------------------------------------------------------------------------------------------------------------------#
 # check ACL for particular Account/Container on Nuage
+
+#---------------------------------------- Add/Change the dependency in gradle --------------------------------------------#
+# This is used to import external libraries/pacakges. 
+1. Make changes in build.gradle
+2. an example is as follows:
+    project(':ambry-api') {
+    dependencies {
+        compile project(':ambry-utils')
+        compile "com.codahale.metrics:metrics-core:$metricsVersion"
+        compile "org.codehaus.jackson:jackson-core-asl:$jacksonVersion"          # new added dependency
+        compile "org.codehaus.jackson:jackson-mapper-asl:$jacksonVersion"        # new added dependency
+        testCompile project(':ambry-utils').sourceSets.test.output
+    }
+   }

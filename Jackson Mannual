@@ -1,0 +1,71 @@
+#-------------------  Jackson Annotation Examples -----------------------#
+# for more details, refer to this url: http://www.baeldung.com/jackson-annotations
+
+1. @JsonAnyGetter
+The @JsonAnyGetter annotation allows the flexibility of using a Map field as standard properties.
+
+Here’s a quick example – the ExtendableBean entity has the name property and a set of extendable attributes in the form of key/value pairs:
+
+public class ExtendableBean {
+    public String name;
+    private Map<String, String> properties;
+ 
+    @JsonAnyGetter
+    public Map<String, String> getProperties() {
+        return properties;
+    }
+}
+When we serialize an instance of this entity, we get all the key-values in the Map as standard, plain properties:
+{
+    "name":"My bean",
+    "attr2":"val2",
+    "attr1":"val1"
+}
+And here how the serialization of this entity looks like in practice:
+@Test
+public void whenSerializingUsingJsonAnyGetter_thenCorrect()
+  throws JsonProcessingException {
+  
+    ExtendableBean bean = new ExtendableBean("My bean");
+    bean.add("attr1", "val1");
+    bean.add("attr2", "val2");
+ 
+    String result = new ObjectMapper().writeValueAsString(bean);
+  
+    assertThat(result, containsString("attr1"));
+    assertThat(result, containsString("val1"));
+}
+
+2. @JsonAnySetter
+@JsonAnySetter allows you the flexibility of using a Map as standard properties. On de-serialization, the properties from JSON will simply be added to the map.
+Let’s see how this works – we’ll use @JsonAnySetter to deserialize the entity ExtendableBean:
+
+public class ExtendableBean {
+    public String name;
+    private Map<String, String> properties;
+ 
+    @JsonAnySetter
+    public void add(String key, String value) {
+        properties.put(key, value);
+    }
+}
+This is the JSON we need to deserialize:
+{
+    "name":"My bean",
+    "attr2":"val2",
+    "attr1":"val1"
+}
+And here’s how this all ties in together:
+@Test
+public void whenDeserializingUsingJsonAnySetter_thenCorrect()
+  throws IOException {
+    String json
+      = "{\"name\":\"My bean\",\"attr2\":\"val2\",\"attr1\":\"val1\"}";
+ 
+    ExtendableBean bean = new ObjectMapper()
+      .readerFor(ExtendableBean.class)
+      .readValue(json);
+     
+    assertEquals("My bean", bean.name);
+    assertEquals("val2", bean.getProperties().get("attr2"));
+}

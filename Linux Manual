@@ -61,6 +61,13 @@
 25. rsync -e ssh --times *.txt 目标机器:  # -e 指定使用rsh、ssh方式进行数据同步。--times 保持文件时间信息
     # 是一个数据镜像及备份工具，具有可使本地和远程两台主机的文件，目录之间，快速同步镜像，远程数据备份等功能。
     # 在同步过程中，rsync是根据自己独特的算法，只同步有变化的文件，甚至在一个文件里只同步有变化的部分，所以可以实现快速的同步数据的功能。
+    
+26. 做2次grep，利用 grep -o 只打印出匹配的部分，而不是整一行。第2次grep在第1次grep的结果里再过滤，找出receive PutRequest的partitionId
+[yinzhang@lva1-app30165 i001]$ grep PutRequest ambry-server_public_access.log | grep -o 'Partition\[...'
+Partition[87]
+Partition[133
+Partition[79]
+
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

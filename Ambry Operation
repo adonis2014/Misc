@@ -382,8 +382,10 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
 (5) check the description if it is public or not.  (if the content is not public but user chooses the cached, we need to double check with the user)
 (6) also check the blob size and write QPS making sure they are normal value.
 
-#----------------------------------------------------------------------------------------------------------------------------#
+#------------------------------------------------ Manage ACL for app ---------------------------------------------------------------#
 # check ACL for particular Account/Container on Nuage
+Approach 1:  manage ACL on Nuage
+Approach 2:  manage ACL using acl-tool
 
 #---------------------------------------- Add/Change the dependency in gradle --------------------------------------------#
 # This is used to import external libraries/pacakges. 

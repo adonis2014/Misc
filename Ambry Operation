@@ -401,7 +401,7 @@ Approach 2:  manage ACL using acl-tool
     }
    }
    
-#---------------------------------------- Test Stop/Start BlobStore in Perf --------------------------------------------#
+#---------------------------------------- Test Stop/Start BlobStore in Perf (use local machine) --------------------------------------------#
 1. modify 3 files to keep only one partition we are interested in PartitionLayout (change datacenter name, hardware layout)
        config/HardwareLayout.json
        config/PartitionLayout.json
@@ -413,3 +413,17 @@ Approach 2:  manage ACL using acl-tool
 5. Restart the blobstore by ServerAdminTool.java 
 6. Kill the process of frontend once the testing is done:
    [yinzhang-mn1:target yinzhang]$ kill -15 3962(PID)
+
+#---------------------------- How to create a new cluster and register participant to new cluster ---------------------------#
+1. Create new cluster:
+   use HelixBootstrapUpgradeTool.  Here is a example of creating a new example with different perfix name: (Run configuration)
+   --hardwareLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/HardwareLayoutPerf.json --partitionLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/PartitionLayoutPerf.json --zkLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/zkLayoutPerf.json --clusterNamePrefix AmbryTestStopped- --clusterName Perf
+   
+2. Register one server to the new cluster 
+   recommend to read AmbryLIServer.java code and change the clusterName in server's config file. (see following example)
+   <property name="ambry.clusterName" value="Perf" />
+
+3. Drop the custom cluster:
+   use --DropCluster option in HelixBootstrapUpgradeTool to delete the cluster created by us.
+
+   

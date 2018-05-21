@@ -424,6 +424,6 @@ Approach 2:  manage ACL using acl-tool
    <property name="ambry.clusterName" value="Perf" />
 
 3. Drop the custom cluster:
-   use --DropCluster option in HelixBootstrapUpgradeTool to delete the cluster created by us.
-
+   use --DropCluster option in HelixBootstrapUpgradeTool to delete the cluster created by us. Following is the example:
+   --dropCluster --clusterName AmbryTestStopped-Perf --zkLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/zkLayoutPerf.json
    

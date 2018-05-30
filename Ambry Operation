@@ -409,6 +409,7 @@ Approach 2:  manage ACL using acl-tool
 2. deploy frontend only by using commend on wiki of ambry github:
   [yinzhang-mn1:target yinzhang]$ nohup java -Dlog4j.configuration=file:../config/log4j.properties -cp "*" com.github.ambry.frontend.AmbryFrontendMain --serverPropsFilePath ../config/frontend.properties --hardwareLayoutFilePath ../config/HardwareLayout.json --partitionLayoutFilePath ../config/PartitionLayout.json > logs/frontend.log &
 3. PUT a blobstore using curl command
+  [yinzhang-mn1:target yinzhang]$ curl url -i -H "x-ambry-service-id : CUrlUpload" -H "x-ambry-content-type : text/csv" -H "x-ambry-um-description : Demonstration Text" http://localhost:1174/ --data-binary @test.csv
 4. Stop the blobstore by ServerAdminTool.java (参考 ServerAdminToolConfig 文件)
 5. Restart the blobstore by ServerAdminTool.java 
 6. Kill the process of frontend once the testing is done:

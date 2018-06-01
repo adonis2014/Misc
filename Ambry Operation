@@ -327,9 +327,13 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
     select * from AmbryOperationEvent where datepartition >= '2015-04-01-00' and datepartition < '2015-04-03-00' and bloburn='AAEAAQAAAAAAAAJdAAAAJDcyYjg2ZTcyLTBmZWUtNGQ0ZC1hZTU1LTJmMzJjNzQxODc1OA';  
     *** you might need to remove suffix from BlobID to get bloburn ***
 // if the blob id is crafted, we can go to go/pqr to retrieve the original blob id.
-Here is an example:
-SELECT ALT_ID_02, ID, ALT_ID_01 from ambry.AMBRY_ID_MAPPER_2 WHERE ALT_ID_01 in ('AAMB_wC9AAkAAQAAAAAAAAUWAAAAJGRmYjQwMmU0LWIzNWMtNGQwMy1hZjk3LTU5YWJjODgzOGZkZA')
-
+[Here is an example]:
+SELECT ALT_ID_02, ID, ALT_ID_01 from ambry.AMBRY_ID_MAPPER_2 WHERE ALT_ID_01 in 
+( 'AAMB_wC9AAkAAQAAAAAAAAMSAAAAJDNiZDFhZTdjLWYxYjYtNGYwMi1iMWE3LTdkYWViN2FkMWQ5Ng', 
+  'AAMB_wC9AAkAAQAAAAAAAAM1AAAAJDY0Y2I0NDk1LTRjMWQtNDRhYi05ZGJkLTNhNjMzNmNlOGRjMQ', 
+  'AAMB_wC9AAkAAQAAAAAAAAMdAAAAJDU2YzBkMmU5LTM1NDQtNDMwYi1iMjNkLTE5OTI1MTZkNDgwYw', 
+  'AAMB_wC9AAkAAQAAAAAAAAVLAAAAJGM4M2U3Y2ZiLWFjYjMtNDk0MC1hNTU4LWFlZjRhYTI2ODEzNQ' )
+  
 #----------------------------------------------------------------------------------------------------------------------------#
 部署jar包到某一台server上
 ./gradlew allJar

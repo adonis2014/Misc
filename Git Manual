@@ -43,3 +43,8 @@
 	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 (2) run command   
 git fetch upstream pull/7324/head:pr-7324 # pr-7324 is your local branch name
+
+6. git stash       // if you want to switch branch but don't want to commit current changes. Use git stash to save working directory.
+   git stash list  // to see which stashes you’ve stored.
+   git stash apply // reapply the one you just stashed 
+   

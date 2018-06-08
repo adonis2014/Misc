@@ -434,3 +434,12 @@ Approach 2:  manage ACL using acl-tool
    use --DropCluster option in HelixBootstrapUpgradeTool to delete the cluster created by us. Following is the example:
    --dropCluster --clusterName AmbryTestStopped-Perf --zkLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/zkLayoutPerf.json
    
+#----------------------------- How to disbale some graphs on ingraphs -----------------------------------------#
+1. on local machine use following command to checkout yaml file.
+[yinzhang-mn1:dashboards yinzhang]$ ingraphs dashboards checkout ambry-dynamic-clustermanager-dashboard
+Make the current working directory an ingraphs-api checkout? [y/N]: y
+2. edit the file and comment the graphs related to Static Cluster
+[yinzhang-mn1:dashboards yinzhang]$ vim ambry-dynamic-clustermanager-dashboard
+3. after modification is done, commit the changes
+[yinzhang-mn1:dashboards yinzhang]$ ingraphs dashboards commit ambry-dynamic-clustermanager-dashboard 
+

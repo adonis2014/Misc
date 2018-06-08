@@ -446,3 +446,9 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 3. after modification is done, commit the changes
 [yinzhang-mn1:dashboards yinzhang]$ ingraphs dashboards commit ambry-dynamic-clustermanager-dashboard 
 
+#----------------------------- Trigger Stats Aggregation in Prod -----------------------------------------#
+1. ./gradlew allJar
+2. go to /Users/yinzhang/Documents/ambry/target, copy ambry.jar to one prod machine
+3. copy zkLayoutPROD.json to prod machine
+3. log into one machine and run following command:
+[yinzhang@lsg1-app14841 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/java -cp ambry.jar com.github.ambry.clustermap.HelixClusterWideAggregationTool --zkLayoutPath zkLayoutPROD.json --clusterName Ambry-prod --workflowName triggerRecurrent --recurrentIntervalInMinutes 1440

@@ -307,6 +307,8 @@ ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin
 # wipe out the log segment on a single server
 [yinzhang@ltx1-app1440 0]$ sudo -u app rm 0_0_log
 
+[yinzhang@lca1-eng-portal03 ~]$ lid-client deploy --config AmbryLI -f prod-lsg1 -t ambry-server-main --exclude-hosts lsg1-app9847.prod.linkedin.com
+
 #----------------------------------------------------------------------------------------------------------------------------#
 # cd to config directory
 [yinzhang-mn1:config yinzhang]$ svn st # 等同于 git status

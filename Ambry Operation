@@ -125,6 +125,7 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
 15. ssh eng-portal  # log into lca1-eng-portal02
 
 16. [yinzhang@lca1-eng-portal02 ~]$ app-status -fg prod -t ambry-server-main --use-intended | grep -i CANARY  # check which servers are in canary
+    [yinzhang@lca1-eng-portal03 ~]$ app-status -fg prod -t ambry-server-main | grep -v 16.1.98 #find node whose version is NOT 16.1.98
 
 17. Hadoop SQL query (go/reportal, perform these queries)
     (1) use tracking;

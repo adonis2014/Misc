@@ -452,3 +452,7 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 3. copy zkLayoutPROD.json to prod machine
 3. log into one machine and run following command:
 [yinzhang@lsg1-app14841 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/java -cp ambry.jar com.github.ambry.clustermap.HelixClusterWideAggregationTool --zkLayoutPath zkLayoutPROD.json --clusterName Ambry-prod --workflowName triggerRecurrent --recurrentIntervalInMinutes 1440
+
+#----------------------------- Read Stats Aggregation report in a pretty way -----------------------------------------#
+1. copy the String in json report from go/reflection or ZKInspector
+2. In shell "echo string | jq .", then we can get the report in a nice view.

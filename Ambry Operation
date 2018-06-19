@@ -440,6 +440,9 @@ Approach 2:  manage ACL using acl-tool
 4. Validate the existing cluster:
    --validateOnly --hardwareLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/HardwareLayoutPerf.json --partitionLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/PartitionLayoutPerf.json --zkLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/zkLayoutPerf.json --clusterNamePrefix Ambry-
 
+5. Upload cluster configs to PROPERTYSTORE
+   --uploadConfig --hardwareLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/HardwareLayoutPerf.json --partitionLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/PartitionLayoutPerf.json --zkLayoutPath /Users/yinzhang/Documents/ambryli_trunk/ambry-clustermapresource/resources/zkLayoutPerf.json --clusterNamePrefix Ambry-
+
 #----------------------------- How to disbale some graphs on ingraphs -----------------------------------------#
 1. on local machine use following command to checkout yaml file.
 [yinzhang-mn1:dashboards yinzhang]$ ingraphs dashboards checkout ambry-dynamic-clustermanager-dashboard

@@ -378,6 +378,8 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
 (source code of set-log-level.sh is stored at https://gitli.corp.linkedin.com/cgetz-scratch/cgetz-scripts/source/set-log-level.sh)
 #----------------------------------------------------------------------------------------------------------------------------#
  ./gradlew build && ./gradlew idea  # update lib import in idea
+ ./gradlew assemble                 # only compile not run unit tests
+ ./gradlew build && ./gradlew test  # run both unit tests and integration tests
  
 #---------------------------------------- How to Connect ZookInspector to Prod ZK -------------------------------------------#
 // we should tunnel to a prod zookeeper  (这里 lva1-app23942 是任意一台可以access的frontend), following cmd is to run in foreground      

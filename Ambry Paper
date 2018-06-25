@@ -234,39 +234,41 @@ ambry-migrationtool: Contains a sanity test suite
 ambry-client:        Used by clients to access Ambry
 
 /****************************************** Concepts **********************************************/
-Clustermap: controls the topology, maintains resource states and helps coordinate cluster operations.
+1.mmap (IndexSegment.java) = mmap from "memory map", mmap is how you refer to memory mapping, because the Linux system call is mmap()
+
+2.Clustermap: controls the topology, maintains resource states and helps coordinate cluster operations.
             clustermap = hardware layout + partition layout
-Frontends:  receive and route request
-Datanodes (storage node):  store the actual data. Each datanode manages a number of disks
+3.Frontends:  receive and route request
+4.Datanodes (storage node):  store the actual data. Each datanode manages a number of disks
                            hosts replicas for different partitions. Typically, 
                            each storage node has N disks across which the replicas are distributed.
                            
-Cluster Managers: maintain the states of cluster including partition state, partition location, disk placement etc.
+5.Cluster Managers: maintain the states of cluster including partition state, partition location, disk placement etc.
                   Cluster Managers are sync up by Helix
 
-Datacenter = Frontends + Datanodes + Cluster Managers (Helix to coordinate)
+6.Datacenter = Frontends + Datanodes + Cluster Managers (Helix to coordinate)
 
-blob: large immutable data / large media objects
+7.blob: large immutable data / large media objects
 
-proxy request: forward requests to other data centers when data is not replicated in current datacenter.
+8.proxy request: forward requests to other data centers when data is not replicated in current datacenter.
 
-partition: a logical group of blobs, current size is 100GB (at first ready-write then it becomes read-only)
+9.partition: a logical group of blobs, current size is 100GB (at first ready-write then it becomes read-only)
            also, partition is a logical slice of the cluster
            a list of replicas that can span across data centers 
            any data rebalancing across the cluster happens at the partition level.
            Partition 是逻辑概念，物理上的placement是另一个流程。partition是以append-only log的形式实现的，存于 pre-allocted large file中
 
-Indexing:  each Datanode maintains a light-weight in-memory indexing per replica;
+10.Indexing:  each Datanode maintains a light-weight in-memory indexing per replica;
            indexing has several sorted segments (from new to old)
            indexing is in memory, if datanode fails, it can be recovered from on-disk partition
             
-CDN = Content Delivery Network
+11.CDN = Content Delivery Network
 
-Router Library:  choose a partition, communicate with Datanode in charge and serve the request.
+12.Router Library:  choose a partition, communicate with Datanode in charge and serve the request.
 
-change capture system: capture events changes out of Ambry for offline analysis
+13.change capture system: capture events changes out of Ambry for offline analysis
 
-/****************************************** Components **********************************************/
+/***************************************** Components **********************************************/
 (1) Cluster Manager:
                     Hardware Layer:
                                    <1> arrangement of datacenter, datanode, disks

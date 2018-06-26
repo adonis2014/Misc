@@ -426,6 +426,30 @@ Approach 2:  manage ACL using acl-tool
 6. Kill the process of frontend once the testing is done:
    [yinzhang-mn1:target yinzhang]$ kill -15 3962(PID)
 
+#----------------------------------- Test Stop/Start BlobStore in Prod (need to ssh prod machine!!!!!!) --------------------------------------------#
+1. on local machine ./gradlew allJar
+2. copy ambry.jar, log4j.properties to prod machine
+[yinzhang-mn1:ambry yinzhang]$ scp target/ambry.jar config/log4j.properties lsg1-app9856.prod.linkedin.com:
+3. copy ServerAdminTooConfig to prod machine
+[yinzhang-mn1:ambry yinzhang]$ scp ~/ServerAdminToolConfig lsg1-app9856.prod.linkedin.com:
+4. edit ServerAdminTooConfig as follows (modify if necessary)
+5. run the command:
+[yinzhang@lsg1-app9856 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/java -Dlog4j.configuration=file:log4j.properties -cp ambry.jar com.github.ambry.tools.admin.ServerAdminTool --propsFile ServerAdminToolConfig
+
+################################## ServerAdminTooConfig (on prod machine) #########################################
+type.of.operation=BlobStoreControl                                                                                #
+hardware.layout.file.path=/export/content/lid/data/ambry-clustermap/ambry-clustermap/HardwareLayoutProd.json      #
+partition.layout.file.path=/export/content/lid/data/ambry-clustermap/ambry-clustermap/PartitionLayoutProd.json    #
+hostname=lsg1-app9856.prod.linkedin.com                                                                           #
+port=15088                                                                                                        #
+partition.ids=2448                                                                                                #
+enable.state=true                                                                                                 #
+num.replicas.caught.up.per.partition=1                                                                            #
+clustermap.datacenter.name=prod-lsg1                                                                              #
+clustermap.host.name=lsg1-app9856.prod.linkedin.com                                                               #
+clustermap.cluster.name=ambry-prod                                                                                #
+###################################################################################################################
+
 #---------------------------- How to create a new cluster and register participant to new cluster ---------------------------#
 1. Create new cluster:
    use HelixBootstrapUpgradeTool.  Here is a example of creating a new example with different perfix name: (Run configuration)

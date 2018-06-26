@@ -120,7 +120,7 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
 
 14. git push ambryli-utils and ambryli_trunk override
     PCLOVERRIDE            # ambryli-utils
-    PCVALIDATIONOVERRIDE   # ambryli_trunk
+    PCVALIDATIONOVERRIDE   # ambryli_trunk  (also used when there is circular dependency)
     
 15. ssh eng-portal  # log into lca1-eng-portal02
 

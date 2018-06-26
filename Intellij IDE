@@ -1,0 +1,9 @@
+1. move the file from one module to another module:
+   cut and paste and chooose "refactor" the entire project
+
+2. rename the file:
+   find "Refactor" button in tool window, in the dropdown menu select "rename file"
+   
+3. replace in all files:
+    Ctrl + Shift + R
+    

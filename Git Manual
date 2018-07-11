@@ -11,6 +11,7 @@
    git config
    git rebase master     # when you are on your branch and rebase master first.
    git merge yourBranch  # when you are on master branch and trying to merge changes on your branch into master branch.
+   git show commit id    # 显示这个commit的改动部分
    
 2. git remote add upstream git@github.com:linkedin/ambry.git   # set up upstream to be ambry project on github
    git fetch upstream                                          # Fetch all updates from upstream to this repo

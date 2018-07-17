@@ -7,3 +7,5 @@
 3. replace in all files:
     Ctrl + Shift + R
     
+4. review code:
+   click the right-bottom "git" tab, choose the "master" branch and click the compare. We can compare it with our own local branch

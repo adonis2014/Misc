@@ -496,3 +496,4 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 
 #--------- set up periodic task on server machine ----------------#
 sudo -u app crontab -e
+install kazoo:  /export/apps/python/3.6/bin/pip3 install --user kazoo

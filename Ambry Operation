@@ -488,3 +488,8 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 #----------------------------- Read Stats Aggregation report in a pretty way -----------------------------------------#
 1. copy the String in json report from go/reflection or ZKInspector
 2. In shell "echo string | jq .", then we can get the report in a nice view.
+   following is an example (pay attention to the backslash '\'):
+[yinzhang-mn1:~ yinzhang]$ echo "{\"a\" : 1}" | jq .
+{
+  "a": 1
+}

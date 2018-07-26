@@ -398,6 +398,10 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
 Approach 1:  manage ACL on Nuage
 Approach 2:  manage ACL using acl-tool
 
+#------------------------------------------------ Upload/Download URL ---------------------------------------------------------------#
+upload might need signed url; # l1proxy-ats should be included in ACL rules when trying to use cdn url (make sure the content is public first)
+download doesn't need signed url; 
+
 #---------------------------------------- Add/Change the dependency in gradle --------------------------------------------#
 # This is used to import external libraries/pacakges. 
 1. Make changes in build.gradle

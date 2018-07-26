@@ -495,5 +495,7 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 }
 
 #--------- set up periodic task on server machine ----------------#
+Stats report script for EI/Perf is running on lca1-app0680.stg.linkedin.com
+
 sudo -u app crontab -e
 install kazoo:  /export/apps/python/3.6/bin/pip3 install --user kazoo

@@ -397,6 +397,9 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
 # check ACL for particular Account/Container on Nuage
 Approach 1:  manage ACL on Nuage
 Approach 2:  manage ACL using acl-tool
+use following command to edit acl rules:
+    acl-tool edit --fabric corp-lva1 'urn:li:ambryAcl:(Ambry-corp,ContainerBlobs,1030_8)'
+
 
 #------------------------------------------------ Upload/Download URL ---------------------------------------------------------------#
 upload might need signed url; # l1proxy-ats should be included in ACL rules when trying to use cdn url (make sure the content is public first)

@@ -1,0 +1,20 @@
+1. Gradle concepts:
+   (1) Project: A project is either something we build (e.g. a jar file) or do (deploy our application to production environment). 
+                A project consists of one or more tasks.
+   (2) Task: A task is an atomic unit work which is performed our build (e.g. compiling our project or running tests).
+   
+   (3) Build: every Gradle build contains one or more projects.
+   
+2. Gradle config files:
+   (1) build.gradle:       specifies a project and its tasks
+   (2) gradle.properties:  is used to configure the properties of the build
+   (3) settings.gradle:    for only one project, it's optional. For multiple projects, it is mandatory 
+                           because it describes which projects participate to our build. 
+                           Every multi-project build must have a settings file in the root project of the project hierarchy.
+                           
+3. Gradle plugin:
+   All useful features are provided by Gradle plugins. A Gradle plugin can:
+   (1) Add new tasks to the project.
+   (2) Provide a default configuration for the added tasks.
+   (3) Add new properties which are used to override the default configuration.
+   (4) Add new dependencies to the project.

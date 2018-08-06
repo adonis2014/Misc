@@ -18,3 +18,14 @@
    (2) Provide a default configuration for the added tasks.
    (3) Add new properties which are used to override the default configuration.
    (4) Add new dependencies to the project.
+   
+   Types of plugin: <1> script plugins;  <2> binary plugins
+   
+   apply a Gradle plugin = add a plugin to a project  (by using either its name or type)
+   e.g. adding plugin to build.gradle:
+       apply plugin: 'com.bar.foo'
+
+
+4. Create a Java project:
+    
+   

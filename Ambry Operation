@@ -512,3 +512,7 @@ install kazoo:  /export/apps/python/3.6/bin/pip3 install --user kazoo
 
 # run report script background and ignore the output
 nohup /scheduledTask.sh > /dev/null 2>&1 &
+
+#----------------  ingraph dashboards commands  ----------------#
+1. commit the your own ambry-dashboards:
+[yinzhang-mn1:~ yinzhang]$ ingraphs dashboards commit -m "update ingraph" ambry-stats-aggregation-dashboard

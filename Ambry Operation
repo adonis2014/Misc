@@ -385,6 +385,9 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
 (1)// we should tunnel to a prod zookeeper  (这里 lva1-app23942 是任意一台可以access的frontend), following cmd is to run in foreground      
 [yinzhang-mn1:~ yinzhang]$ ssh -M -S zk-lva1-shared-ctrl-socket -fN -L 12913:zk-lva1-shared.prod.linkedin.com:12913 lva1-app23942.prod.linkedin.com
 (2)// Now, you can use the various zookeeper tooling with localhost:12913 to contact the prod zookeeper.
+   // Also, we can you use another port for different zookeeper
+[yinzhang-mn1:~ yinzhang]$ ssh -M -S zk-lsg1-shared-ctrl-socket -fN -L 12914:zk-lsg1-shared.prod.linkedin.com:12913 lsg1-app0075.prod.linkedin.com
+   // Then, we can use localhost:12914 to talk to zookeeper in prod-lsg1
 (3)// When connection is no longer needed, to kill the tunnel, use the control socket set up in the previous command:
 [yinzhang-mn1:~ yinzhang]$ ssh -S zk-lva1-shared-ctrl-socket -O exit lva1-app23942.prod.linkedin.com
 

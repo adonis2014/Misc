@@ -413,3 +413,20 @@ ambry-client:        Used by clients to access Ambry
         <4> Any log segment with active entries in the Journal is not eligible for compaction and this may include more segments apart from the "active" segment.
         <5> Only one compaction is active per disk at any point of time.
         <6> Segmentation is a property that is set when the BlobStore is created and cannot be changed.
+
+
+/******************** container fabric.src for lsg1 (for backup) ***********************/
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="urn:com:linkedin:ns:configuration:source:1.0" name="ambry-server">
+  <configuration-source>
+    <property name="jvm_xtra_args">
+      <list>
+        <value>-Djava.awt.headless=true</value>
+        <value>-Dhelixmanager.participantHealthReport.reportLatency=518400000</value>
+        <value>-XX:+HeapDumpOnOutOfMemoryError</value>
+        <!-- where to store the file -->
+        <value>-XX:HeapDumpPath=logs/ambry-server.bin</value>
+      </list>
+    </property>
+  </configuration-source>
+</application>

@@ -69,6 +69,9 @@ Partition[87]
 Partition[133
 Partition[79]
 
+27. grep 一个目录下的所有文件
+[yinzhang-mn1:~ yinzhang]$ grep -r serverStatsPublishLocalEnabled *
+
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

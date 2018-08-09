@@ -8,6 +8,7 @@
    git reset —-hard commit id
    git diff HEAD^ > nioc-host.diff
    git diff commitId1 commitId2 > file.diff   # commitId1是旧的，commitId2是新的, commitId2领先于commitId1
+   git diff --stat HEAD^1        # 显示前一个commit改动的数据
    git apply nioc-host.diff
    git config
    git rebase master     # when you are on your branch and rebase master first.

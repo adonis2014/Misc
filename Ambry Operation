@@ -380,7 +380,9 @@ ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry
  ./gradlew build && ./gradlew idea  # update lib import in idea
  ./gradlew assemble                 # only compile not run unit tests
  ./gradlew build && ./gradlew test  # run both unit tests and integration tests
- 
+In closed source, we can run:
+ ligradle build && ligradle idea    # update lib import in idea
+用idea打开后缀是.ipr的工程文件
 #---------------------------------------- How to Connect ZookInspector to Prod ZK -------------------------------------------#
 (1)// we should tunnel to a prod zookeeper  (这里 lva1-app23942 是任意一台可以access的frontend), following cmd is to run in foreground      
 [yinzhang-mn1:~ yinzhang]$ ssh -M -S zk-lva1-shared-ctrl-socket -fN -L 12913:zk-lva1-shared.prod.linkedin.com:12913 lva1-app23942.prod.linkedin.com

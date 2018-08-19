@@ -9,3 +9,7 @@
     
 4. review code:
    click the right-bottom "git" tab, choose the "master" branch and click the compare. We can compare it with our own local branch
+
+5. indent/unindent
+   Indent Selection (Tab)
+   Unindent Selection (Shift+Tab)

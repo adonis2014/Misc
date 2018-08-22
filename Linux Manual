@@ -17,6 +17,8 @@
 11. vim operation / sudo apt-get install vim
 12. sudo apt-get install openssh-server
 13. ls -lh                                              # check file and size
+    ls *.log -lh                                        # 仅列出符合regex的文件和大小
+    
 14. df -h  # check disk space
 15. ls -lrt  # -l means long format; -r means reverse order; -t means sort by time
 16. curl is used to transfer data to/from server

@@ -87,35 +87,27 @@ content-type: text/plain; charset=UTF-8
 lid-client control stop -f prod-lva1 -t ambry-server-main -H lva1-app6772.prod.linkedin.com AmbryLI
 #----------------------------------------------------------------------------------------------------------------------------#
 
-9. Bring down lca1-app1373.stg.linkedin.com which is one replica of partition 0 in ei-lca1:
-lid-client control stop -f ei-lca1 -t ambry-server-main -H lca1-app1373.stg.linkedin.com AmbryLI
-#----------------------------------------------------------------------------------------------------------------------------#
-
-10. Bring back lva1-app6772.prod.linkedin.com:
+9. Bring back lva1-app6772.prod.linkedin.com:
 [yinzhang@lva1-app18926 ~]$ lid-client control start -f prod-lva1 -t ambry-server-main -H lva1-app6772.prod.linkedin.com AmbryLI
 #----------------------------------------------------------------------------------------------------------------------------#
 
-11. Check Server status:
+10. Check Server status:
 [yinzhang@lca1-app0680 ~]$ app-status -t ambry-server-main -f ei-lca1
 
-ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:GOOD  f76d7ea9-64ca-4eee-9a7b-1d98bfe18d48
-
-12. check versions for mp
+11. check versions for mp
 [yinzhang-mn1:~ yinzhang]$ mint describe oauth-filter
 
-13. check the dependency for Multiproduct by ligradle.
+12. check the dependency for Multiproduct by ligradle.
 [yinzhang-mn1:ambryli_trunk yinzhang]$ ligradle :ambry-impl:dependencyInsight --configuration compile --dependency depo-rest-api
 
-14. git push ambryli-utils and ambryli_trunk override
+13. git push ambryli-utils and ambryli_trunk override
     PCLOVERRIDE            # ambryli-utils
     PCVALIDATIONOVERRIDE   # ambryli_trunk  (also used when there is circular dependency)
     
-15. ssh eng-portal  # log into lca1-eng-portal02
-
-16. [yinzhang@lca1-eng-portal02 ~]$ app-status -fg prod -t ambry-server-main --use-intended | grep -i CANARY  # check which servers are in canary
+14. [yinzhang@lca1-eng-portal02 ~]$ app-status -fg prod -t ambry-server-main --use-intended | grep -i CANARY  # check which servers are in canary
     [yinzhang@lca1-eng-portal03 ~]$ app-status -fg prod -t ambry-server-main | grep -v 16.1.98 #find node whose version is NOT 16.1.98
 
-17. Hadoop SQL query (go/reportal, perform these queries)
+15. Hadoop SQL query (go/reportal, perform these queries)
     (1) use tracking;
         select blobUrn, blobProperties from AmbryOperationEvent 
         where datepartition >= '2017-12-01-00' and datepartition < '2018-01-31-00' and 
@@ -126,7 +118,7 @@ ambry-server lca1-app1373.stg.linkedin.com i001 ambry-server-main 16.1.1 15151:G
         where datepartition >= '2017-12-01-00' and datepartition < '2018-01-31-00' and 
         blobProperties.appName = "gaap-engine" and blobProperties.accountId != 315 and operationType = "PUT";
         
-18. The log segments and indexing segments directory on production machine:
+16. The log segments and indexing segments directory on production machine:
     [yinzhang@lca1-app1373 ambrydata]$ pwd
     /mnt/u001/ambrydata
     [yinzhang@lca1-app1373 ambrydata]$ ls 101/
@@ -197,7 +189,6 @@ x-ambry-failure-reason: (Principal:Principal: {type: SERVICE_PRINCIPAL, applicat
 Content-Length: 0
 
 [Conditional Delete Test]
-
 // PUT a blob
 [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
 HTTP/1.1 201 Created
@@ -487,7 +478,7 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 3. log into one machine and run following command:
 [yinzhang@lsg1-app14841 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/java -cp ambry.jar com.github.ambry.clustermap.HelixClusterWideAggregationTool --zkLayoutPath zkLayoutPROD.json --clusterName Ambry-prod --workflowName triggerRecurrent --recurrentIntervalInMinutes 1440
 
-#----------------------------- Read Stats Aggregation report in a pretty way -----------------------------------------#
+#----------------------------- Read quota report in a pretty way -----------------------------------------#
 1. copy the String in json report from go/reflection or ZKInspector
 2. In shell "echo string | jq .", then we can get the report in a nice view.
    following is an example (pay attention to the backslash '\'):
@@ -496,7 +487,7 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
   "a": 1
 }
 
-#--------- set up periodic task on server machine ----------------#
+#--------- stats report scripts on server machine ----------------#
 Stats report script for EI/Perf is running on lca1-app0680.stg.linkedin.com
 Fetch report from each node and aggregate stats script is running on lsg1-app14841.prod.linkedin.com 
 The latest version of stats report script is kzooTest.py on lsg1-app14841.prod.linkedin.com
@@ -517,3 +508,27 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 
 #--------------------------- grep POST status=503 from zip file -----------------------------------#
 [yinzhang@lca1-app0680 i001]$ zgrep POST.*503 ambry-frontend_public_access.log.2018-08-23-16.gz 
+
+#--------------------------- Use mssh to grep on multiple servers (on eng-portal)-----------------------------------#
+[yinzhang@lca1-eng-portal03 ~]$ mssh -t 60 -T 600 -r %%ambry-frontend "zgrep '-GZ9-' /export/content/lid/apps/ambry-frontend/i001/logs/ambry-frontend_public_access.log.2018-08-{17,18}-*" | tee grep-log-accesses.txt
+                 # -r : range query; -n : node query; -t : server timeout; -T : global timeou
+
+#--------------------------- download from media url (on local machine)-----------------------------------#
+[yinzhang-mn1:~ yinzhang]$ curl https://www.linkedin.com/ambry/?x-li-ambry-ep=AQHgFOBximSeJwAAAWVtqzBirzdpM5lrJaW3ihZs5jXOQAtYdEvzapIJ77bEudtvw3Rk > /tmp/video.bin
+
+#--------------------------- check ambry availability metrics -----------------------------------#
+1. go to /Users/yinzhang/Documents/ambryli_trunk/ambry-tools/scripts
+2. run following command:
+   ./availability_metrics.py -cp ../../ambry-clustermapresource/resources/ -v -d 14 # will show last 14 days ambry availability metrics
+3. example result:
+  prod-lva1
+  availability: 99.8759920635, uptime windows: 4027; downtime windows: 5
+  Availability dipped below targeted SLO during the following windows
+    ('Thu Aug 23 17:59:00 2018', 'Thu Aug 23 18:04:00 2018')
+    ('Thu Aug 23 18:29:00 2018', 'Thu Aug 23 18:34:00 2018')
+    ('Thu Aug 23 18:59:00 2018', 'Thu Aug 23 19:04:00 2018')
+    ('Thu Aug 23 19:29:00 2018', 'Thu Aug 23 19:34:00 2018')
+    ('Thu Aug 23 19:59:00 2018', 'Thu Aug 23 20:04:00 2018')
+  ==============================================================
+4. go to ingraph to check each downtime window (check all types of error code)
+  

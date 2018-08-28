@@ -531,4 +531,6 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
     ('Thu Aug 23 19:59:00 2018', 'Thu Aug 23 20:04:00 2018')
   ==============================================================
 4. go to ingraph to check each downtime window (check all types of error code)
-  
+
+#--------------------------- compute total used capacity of partition -----------------------------------#
+[yinzhang@lva1-app19540 3466]$ total=0; for size in $(ls -l *_log | tr -s ' ' | cut -d ' ' -f 5) ; do   total=$(( ${total} + ${size} )); done; echo ${total}

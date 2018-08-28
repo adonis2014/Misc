@@ -534,3 +534,5 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 
 #--------------------------- compute total used capacity of partition -----------------------------------#
 [yinzhang@lva1-app19540 3466]$ total=0; for size in $(ls -l *_log | tr -s ' ' | cut -d ' ' -f 5) ; do   total=$(( ${total} + ${size} )); done; echo ${total}
+
+mssh -t 900 -T 9000 -n lva1-app23942.prod.linkedin.com,lva1-app23943.prod.linkedin.com,lva1-app23957.prod.linkedin.com,lva1-app23958.prod.linkedin.com,lva1-app23959.prod.linkedin.com,lva1-app23960.prod.linkedin.com,lva1-app23961.prod.linkedin.com,lva1-app23968.prod.linkedin.com,lva1-app24692.prod.linkedin.com,lva1-app24693.prod.linkedin.com,lva1-app24694.prod.linkedin.com,lva1-app24695.prod.linkedin.com,lva1-app24709.prod.linkedin.com,lva1-app24710.prod.linkedin.com,lva1-app24711.prod.linkedin.com 'zgrep AAQABAQzAAgAAQAAAAAAABGJAAAAJGFjNzliMThkLTIyY2EtNGNlMi05ZmJkLTE2OGM0NzA3ZmIyMw /export/content/lid/apps/ambry-frontend/i001/logs/ambry-frontend_public_access.log.2018-08-23-*' | tee gcn-27304.txt

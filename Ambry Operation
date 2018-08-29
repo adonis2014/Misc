@@ -512,7 +512,10 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 #--------------------------- Use mssh to grep on multiple servers (on eng-portal)-----------------------------------#
 [yinzhang@lca1-eng-portal03 ~]$ mssh -t 60 -T 600 -r %%ambry-frontend "zgrep '-GZ9-' /export/content/lid/apps/ambry-frontend/i001/logs/ambry-frontend_public_access.log.2018-08-{17,18}-*" | tee grep-log-accesses.txt
                  # -r : range query; -n : node query; -t : server timeout; -T : global timeou
-
+[yinzhang@lca1-eng-portal03 ~]$ eh -e %prod-lva1.ambry-server.1 # this could display what the prod-lva1.ambry-server.1 stands for what machines
+[yinzhang@lca1-eng-portal03 ~]$ mssh -t 600 -T 6000 -r %prod-lva1.ambry-server.1 "zgrep AAUQAgB9AAIAAQAAAAAAABEvAAAAJDBkZTEwYTQ2LWYzMjMtNDQ3Ny04ZDEwLTcxOTA1NjBkOTJiMg /export/content/lid/apps/ambry-server/i001/logs/ambry-server_public_access.log"
+                                # range request for one datacenter
+                                
 #--------------------------- download from media url (on local machine)-----------------------------------#
 [yinzhang-mn1:~ yinzhang]$ curl https://www.linkedin.com/ambry/?x-li-ambry-ep=AQHgFOBximSeJwAAAWVtqzBirzdpM5lrJaW3ihZs5jXOQAtYdEvzapIJ77bEudtvw3Rk > /tmp/video.bin
 
@@ -535,4 +538,3 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 #--------------------------- compute total used capacity of partition -----------------------------------#
 [yinzhang@lva1-app19540 3466]$ total=0; for size in $(ls -l *_log | tr -s ' ' | cut -d ' ' -f 5) ; do   total=$(( ${total} + ${size} )); done; echo ${total}
 
-mssh -t 900 -T 9000 -n lva1-app23942.prod.linkedin.com,lva1-app23943.prod.linkedin.com,lva1-app23957.prod.linkedin.com,lva1-app23958.prod.linkedin.com,lva1-app23959.prod.linkedin.com,lva1-app23960.prod.linkedin.com,lva1-app23961.prod.linkedin.com,lva1-app23968.prod.linkedin.com,lva1-app24692.prod.linkedin.com,lva1-app24693.prod.linkedin.com,lva1-app24694.prod.linkedin.com,lva1-app24695.prod.linkedin.com,lva1-app24709.prod.linkedin.com,lva1-app24710.prod.linkedin.com,lva1-app24711.prod.linkedin.com 'zgrep AAQABAQzAAgAAQAAAAAAABGJAAAAJGFjNzliMThkLTIyY2EtNGNlMi05ZmJkLTE2OGM0NzA3ZmIyMw /export/content/lid/apps/ambry-frontend/i001/logs/ambry-frontend_public_access.log.2018-08-23-*' | tee gcn-27304.txt

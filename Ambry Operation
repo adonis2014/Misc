@@ -108,7 +108,7 @@ lid-client control stop -f prod-lva1 -t ambry-server-main -H lva1-app6772.prod.l
     [yinzhang@lca1-eng-portal03 ~]$ app-status -fg prod -t ambry-server-main | grep -v 16.1.98 #find node whose version is NOT 16.1.98
 
 15. Hadoop SQL query (go/reportal, perform these queries)
-    (1) use tracking;
+    (1) use tracking;   # (use ei_tracking if it's in EI)
         select blobUrn, blobProperties from AmbryOperationEvent 
         where datepartition >= '2017-12-01-00' and datepartition < '2018-01-31-00' and 
         blobProperties.appName = "gaap-online-tasks" and blobProperties.accountId != 209 and operationType = "PUT";
@@ -386,7 +386,6 @@ Approach 2:  manage ACL using acl-tool
 use following command to edit acl rules:
     acl-tool edit --fabric corp-lva1 'urn:li:ambryAcl:(Ambry-corp,ContainerBlobs,1030_8)'
 
-
 #------------------------------------------------ Upload/Download URL ---------------------------------------------------------------#
 upload might need signed url; # l1proxy-ats should be included in ACL rules when trying to use cdn url (make sure the content is public first)
 download doesn't need signed url; 
@@ -404,7 +403,6 @@ download doesn't need signed url;
         testCompile project(':ambry-utils').sourceSets.test.output
     }
    }
-   
 #---------------------------------------- Test Stop/Start BlobStore in Perf (use local machine) --------------------------------------------#
 1. modify 3 files to keep only one partition we are interested in PartitionLayout (change datacenter name, hardware layout)
        config/HardwareLayout.json
@@ -538,3 +536,4 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 #--------------------------- compute total used capacity of partition -----------------------------------#
 [yinzhang@lva1-app19540 3466]$ total=0; for size in $(ls -l *_log | tr -s ' ' | cut -d ' ' -f 5) ; do   total=$(( ${total} + ${size} )); done; echo ${total}
 
+[Metrics]: Replica_Unavailable is found by specify ambry-server as container on ingraphs.

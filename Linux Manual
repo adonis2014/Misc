@@ -76,6 +76,8 @@ Partition[79]
 
 28. 查看total size of certain files
     find ./ -type f -name '*_log' -exec du -ch {} + | grep total$
+29. 统计文件的字符数 （不含文件名）
+    wc -m < abc.txt 
     
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性

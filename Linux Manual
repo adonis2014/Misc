@@ -54,6 +54,8 @@
 22. ls -ltrS             # -S(sort by size) -r(reverse order) -t(sort by modification time)
 23. du -h --max-depth=1  # only show the size of each directory with depth = 1 (in current path) Linux适用，Mac不适用
     du -hd1              # same command for Mac
+    du -sh               # --summarize display only a total for each argument
+    du -Sh               # --separate-dirs do not include size of subdirectories
 24. screen 
        When screen is called, it creates a single window with a shell in it (or the specified command) and then gets out of your way so that
        you can use the program as you normally would. Then, at any time, you can create new (full-screen) windows with other programs in them

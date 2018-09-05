@@ -537,3 +537,23 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 [yinzhang@lva1-app19540 3466]$ total=0; for size in $(ls -l *_log | tr -s ' ' | cut -d ' ' -f 5) ; do   total=$(( ${total} + ${size} )); done; echo ${total}
 
 [Metrics]: Replica_Unavailable is found by specify ambry-server as container on ingraphs.
+
+#--------------------------- Check AntiVirus Service or Mediascan Service availability -----------------------------------#
+1. log into one ei ambry-frontend machine. (for example: lca1-app0785.stg.linkedin.com)
+[cgetz@lca1-app0785 logs]$ curli --dv-auth self --fabric ei-lca1 d2://d2Clusters/AntivirusServices
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+169   169  169   169    0     0   1080      0 --:--:-- --:--:-- --:--:-- 33800
+{
+    "partitionConfiguration": {
+        "type": "NONE"
+    },
+    "name": "AntivirusServices",
+    "created": 1458755306756,
+    "lastModified": 1531333125984,
+    "services": [
+        "antivirus",
+        "mediaScan"
+    ],
+    "uris": []
+}

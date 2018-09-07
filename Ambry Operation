@@ -537,7 +537,7 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 [yinzhang@lva1-app19540 3466]$ total=0; for size in $(ls -l *_log | tr -s ' ' | cut -d ' ' -f 5) ; do   total=$(( ${total} + ${size} )); done; echo ${total}
 
 [Metrics]: Replica_Unavailable is found by specify ambry-server as container on ingraphs.
-[Metrics]: check "Show OS metrics" box on ingraph can get more OS related metrics. 
+[Metrics]: check "Show OS metrics" box on ingraph can get more OS related metrics like cpu, memory, network. 
 
 #--------------------------- Check AntiVirus Service or Mediascan Service availability -----------------------------------#
 1. log into one ei ambry-frontend machine. (for example: lca1-app0785.stg.linkedin.com)

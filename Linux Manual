@@ -80,7 +80,8 @@ Partition[79]
     find ./ -type f -name '*_log' -exec du -ch {} + | grep total$
 29. 统计文件的字符数 （不含文件名）
     wc -m < abc.txt 
-    
+30. cal  # print out the calendar
+    date # print out the date
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

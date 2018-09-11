@@ -476,6 +476,13 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 3. log into one machine and run following command:
 [yinzhang@lsg1-app14841 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/java -cp ambry.jar com.github.ambry.clustermap.HelixClusterWideAggregationTool --zkLayoutPath zkLayoutPROD.json --clusterName Ambry-prod --workflowName triggerRecurrent --recurrentIntervalInMinutes 1440
 
+#----------------------------- Use Helix tool to upload Partition Override map in Prod -----------------------------------------#
+1. ./gradlew allJar
+2. scp ambry.jar, HardwareLayoutProd.json, PartitionLayoutProd.json, zkLayoutPROD.json to one prod machine. (i.e. lsg1-app14841)
+3. go to prod machine and run following command:
+[yinzhang@lsg1-app14841 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/java -Dlog4j.configuration=file:log4j.properties -cp ambry.jar com.github.ambry.clustermap.HelixBootstrapUpgradeTool --uploadConfig --hardwareLayoutPath HardwareLayoutProd.json --partitionLayoutPath PartitionLayoutProd.json --zkLayoutPath zkLayoutPROD.json --clusterNamePrefix Ambry-
+
+
 #----------------------------- Read quota report in a pretty way -----------------------------------------#
 1. copy the String in json report from go/reflection or ZKInspector
 2. In shell "echo string | jq .", then we can get the report in a nice view.

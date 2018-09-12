@@ -568,3 +568,12 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 
 
 EKG need not complete
+
+#--------------------------- How to compare configs on frontend/server with latest configs -----------------------------------#
+1. run: 
+   app-status -fg prod -t ambry-frontend-main --config --product AmbryLI
+2. get the current config version number: # the version number is 1806287
+   ambry-frontend lva1-app23942.prod.linkedin.com i001 ambry-frontend-main 16.1.141-r1806287 15157:GOOD 
+3. go to ambryli_trunk config directory and run the svn diff:
+   svn diff -r 1806725:1806287 > ~/frontend_config.diff
+

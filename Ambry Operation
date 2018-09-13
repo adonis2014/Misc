@@ -345,14 +345,12 @@ ambry-frontend  i001        urn:li:corpuser:dnikifor  2016-07-27 22:32:46  ambry
 ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry-server-reserve                 ab5e3baf-a709-4297-8827-9e1fdd4b13a2  ACTIVE
 
 #--------------------------------------------- HOW TO CHECK TRACE INFO IN LOG ------------------------------------------------------------------------------#
-(1) [yinzhang-mn1:~ yinzhang]$ ssh -L 15151:localhost:15151 ltx1-app1440.stg.linkedin.com   # run this command with correct host and port
-(2) go to http://localhost:15151/ambry-server/jmx/serverbydomain  # replace serverdomain with frontendbydomain if necessary
-(3) click on "ambry-server.log4j:name=admin"
-(4) Name of the logger: 填写class的名字 比如： com.github.ambry.store.CompactAllPolicyFactory
-(5) new level: 填写log lever的名字 比如 TRACE
+# use the script from Casey to set log level, the set-log-level.sh is in ~/Code/ 
+./set-log-level.sh lva1-app19528.prod.linkedin.com ambry-server com.github.ambry.store.BlobStore DEBUG
 
- // Also we can use the script from Casey to set log level
-./set-log-level.sh lor1-app0179.prod ambry-frontend com.linkedin.ambry.frontend.AccessFilter INFO
+# after debugging, please set the log level back to INFO
+./set-log-level.sh lva1-app19528.prod.linkedin.com ambry-server com.github.ambry.store.BlobStore INFO
+
 (source code of set-log-level.sh is stored at https://gitli.corp.linkedin.com/cgetz-scratch/cgetz-scripts/source/set-log-level.sh)
 #----------------------------------------------------------------------------------------------------------------------------#
  ./gradlew build && ./gradlew idea  # update lib import in idea

@@ -518,7 +518,7 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 [yinzhang@lca1-eng-portal03 ~]$ mssh -t 60 -T 600 -r %%ambry-frontend "zgrep '-GZ9-' /export/content/lid/apps/ambry-frontend/i001/logs/ambry-frontend_public_access.log.2018-08-{17,18}-*" | tee grep-log-accesses.txt
                  # -r : range query; -n : node query; -t : server timeout; -T : global timeou
 [yinzhang@lca1-eng-portal03 ~]$ eh -e %prod-lva1.ambry-server.1 # this could display what the prod-lva1.ambry-server.1 stands for what machines
-[yinzhang@lca1-eng-portal03 ~]$ mssh -t 600 -T 6000 -r %prod-lva1.ambry-server.1 "zgrep AAUQAgB9AAIAAQAAAAAAABEvAAAAJDBkZTEwYTQ2LWYzMjMtNDQ3Ny04ZDEwLTcxOTA1NjBkOTJiMg /export/content/lid/apps/ambry-server/i001/logs/ambry-server_public_access.log"
+[yinzhang@lca1-eng-portal03 ~]$ mssh -t 600 -T 6000 -r %prod-lva1.ambry-server.1 "zgrep AAUQAgB9AAIAAQAAAAAAABEvAAAAJDBkZTEwYTQ2LWYzMjMtNDQ3Ny04ZDEwLTcxOTA1NjBkOTJiMg /export/content/lid/logs/ambry-server/i001/ambry-server_public_access.log"
                                 # range request for one datacenter
                                 
 #--------------------------- download from media url (on local machine)-----------------------------------#

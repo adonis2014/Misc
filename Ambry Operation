@@ -564,7 +564,6 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
     "uris": []
 }
 
-
 EKG need not complete
 
 #--------------------------- How to compare configs on frontend/server with latest configs -----------------------------------#
@@ -575,3 +574,7 @@ EKG need not complete
 3. go to ambryli_trunk config directory and run the svn diff:
    svn diff -r 1806725:1806287 > ~/frontend_config.diff
 
+#-------------------------- Unstick CANARY tag to proceed deployment --------------------------------#
+# Scoping the promotion command to just the canary tagged host fixed the tagging issue.
+# let's say lva1-app30042.prod.linkedin.com is in CANARY state, we want to unstick it:
+lid-client deploy --promote -f prod-lva1 -H lva1-app30042.prod.linkedin.com -t ambry-server-main -v 16.1.140 AmbryLI

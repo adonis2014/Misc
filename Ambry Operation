@@ -580,3 +580,4 @@ EKG need not complete
 lid-client deploy --promote -f prod-lva1 -H lva1-app30042.prod.linkedin.com -t ambry-server-main -v 16.1.140 AmbryLI
 
 heap dump analyzer:   sudo yum install LNKD-yjp2014
+                     pcregrep -oie "\[x-ambry-service-id=.*?]"

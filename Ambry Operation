@@ -504,6 +504,8 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 # example of running the script:
   ./ambry-stats-email --email=yinzhang@linkedin.com --fabric=prod-lsg1 --old-version
 
+# on local machine, the log will be kept in: ./Users/yinzhang/Library/Logs/ingraph.log
+
 #----------------  ingraph dashboards commands  ----------------#
 1. commit the your own ambry-dashboards:
 [yinzhang-mn1:~ yinzhang]$ ingraphs dashboards commit -m "update ingraph" ambry-stats-aggregation-dashboard

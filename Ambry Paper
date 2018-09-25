@@ -192,6 +192,7 @@ in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result f
     这么做的目的是crcInputStream中有一个crc32，当每次读inputStream时（readShort, readLong等等）都会update crc32. 由于InputStream最后包含
     一个crc， 这个crc会和不停update到最后的crc32的值进行比较，以确认数据在网络传输中没有丢失或损坏
     
+    (参见 Blob_Format_V2 in MessageFormatRecord.java)
 /******************************** Helix ***************************************/
 23. Helix Upgrade Tool:
     (1)Partitions are grouped under resources in Helix.

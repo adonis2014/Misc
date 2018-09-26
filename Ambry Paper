@@ -193,6 +193,15 @@ in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result f
     一个crc， 这个crc会和不停update到最后的crc32的值进行比较，以确认数据在网络传输中没有丢失或损坏
     
     (参见 Blob_Format_V2 in MessageFormatRecord.java)
+    
+24. PutMessageFormatInputStream 用来存放Blob的一个完整的message，记录了header，blob key 等，参见20的图
+    其中 buffer 存储了几乎所有的信息（header, blob key, encription key, blob properties, user metadata 和 partial blob record）
+        stream 存储了blob的content
+
+25. MessageInfo 存放关于一个blob在PUT时的所有信息：accountId, containerId, isDeleted, ttlUpdated, and expiration time等等
+    MessageInfo 中的getSize 是get 整个PUT Message的size = buffer.size() + stream.size() + PUTMessage.crcSize
+
+26. MessageFormatWriteSet = PutMessageFormatInputStream + MessageInfo 是最终写入BlobStore的writeSet
 /******************************** Helix ***************************************/
 23. Helix Upgrade Tool:
     (1)Partitions are grouped under resources in Helix.

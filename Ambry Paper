@@ -202,6 +202,8 @@ in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result f
     MessageInfo 中的getSize 是get 整个PUT Message的size = buffer.size() + stream.size() + PUTMessage.crcSize
 
 26. MessageFormatWriteSet = PutMessageFormatInputStream + MessageInfo 是最终写入BlobStore的writeSet
+
+27. 对于PutBlob而言，operationTime = creationTime
 /******************************** Helix ***************************************/
 23. Helix Upgrade Tool:
     (1)Partitions are grouped under resources in Helix.

@@ -588,3 +588,5 @@ heap dump analyzer:   sudo yum install LNKD-yjp2014
 
 #-------------------------- Grep public access log for certain ambry-service id --------------------------------#
 [cgetz@ltx1-app31469 logs]$ grep -i is-secure ambry-frontend_public_access.log | pcregrep -oe '\[x-ambry-service-id=.*?]' | sort | uniq -c | sort -nr
+
+go/router to check traffic shift info

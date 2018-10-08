@@ -78,8 +78,9 @@ Partition[79]
 
 28. 查看total size of certain files
     find ./ -type f -name '*_log' -exec du -ch {} + | grep total$
-29. 统计文件的字符数 （不含文件名）
-    wc -m < abc.txt 
+29. wc -m < abc.txt 统计文件的字符数 （不含文件名）
+    wc -l 统计行数
+    wc -w 统计单词数
 30. cal  # print out the calendar
     date # print out the date
 

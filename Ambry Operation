@@ -3,10 +3,6 @@
 
 HTTP/1.1 201 Created
 Location: /AAMAAQQMAAkAAQAAAAAAAACYAAAAJGFkOWZhODkzLTc4ODAtNGJlZi1iYzdkLTg3ODZiNGI4ODM2NA.csv
-Date: Thu, 01 Mar 2018 00:31:51 GMT
-Content-Length: 0
-x-ambry-creation-time: Thu, 01 Mar 2018 00:31:33 GMT
-Access-Control-Expose-Headers: Location
 #----------------------------------------------------------------------------------------------------------------------------#
 
 2. PUT blob (in PROD)
@@ -14,18 +10,12 @@ Access-Control-Expose-Headers: Location
 
 HTTP/1.1 201 Created
 Location: /AAMAAgQfAAkAAQAAAAAAAAzaAAAAJGViZDk4YWI1LWYwMDItNDZlYi05MGE1LTc3ZmEwOWVjNGJiMA.csv
-Date: Fri, 16 Mar 2018 21:52:58 GMT
-Content-Length: 0
-x-ambry-creation-time: Fri, 16 Mar 2018 21:52:56 GMT
-Access-Control-Expose-Headers: Location
 #----------------------------------------------------------------------------------------------------------------------------#
 
 3. DELETE blob (in PROD)
 [yinzhang@lva1-app18926 ~]$ curl -i -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app18926.prod.linkedin.com:15158/ambry/AAMAAgQfAAkAAQAAAAAAAAzaAAAAJGViZDk4YWI1LWYwMDItNDZlYi05MGE1LTc3ZmEwOWVjNGJiMA.csv
 
 HTTP/1.1 202 Accepted
-Date: Fri, 16 Mar 2018 21:55:17 GMT
-Content-Length: 0
 #----------------------------------------------------------------------------------------------------------------------------#
 
 4. DELETE blob (in EI)
@@ -36,8 +26,6 @@ Content-Length: 0
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
 HTTP/1.1 202 Accepted
-Date: Thu, 01 Mar 2018 22:43:12 GMT
-Content-Length: 0
 #----------------------------------------------------------------------------------------------------------------------------#
 
 5. GET blob (in EI)
@@ -77,37 +65,24 @@ Content-Length: 0
 [yinzhang@lva1-app18926 ~]$ curl -s -i -H "x-li-ambry-client:Internal" http://lva1-app18926.prod.linkedin.com:15158/AAMA______8AAQAAAAAAAAAAAAAAJDlkNGRlMTEzLTE5MWItNDA5MC05OGUzLTQ1ZWYzY2Y4MTE2ZQ.bin/BlobInfo
 
 HTTP/1.1 404 Not Found
-date: Fri, 16 Mar 2018 21:18:36 GMT
-content-length: 0
-x-ambry-error-code: NotFound
-content-type: text/plain; charset=UTF-8
 #----------------------------------------------------------------------------------------------------------------------------#
+8. curl with SSL. Please follow this link: 
+   https://iwww.corp.linkedin.com/wiki/cf/display/ENGS/How+to+curl+ambry+with+SSL
 
-8. Bring down lva1-app6772.prod.linkedin.com which is one replica of partition 0 in prod-lva1:
-lid-client control stop -f prod-lva1 -t ambry-server-main -H lva1-app6772.prod.linkedin.com AmbryLI
-#----------------------------------------------------------------------------------------------------------------------------#
-
-9. Bring back lva1-app6772.prod.linkedin.com:
-[yinzhang@lva1-app18926 ~]$ lid-client control start -f prod-lva1 -t ambry-server-main -H lva1-app6772.prod.linkedin.com AmbryLI
-#----------------------------------------------------------------------------------------------------------------------------#
-
-10. Check Server status:
-[yinzhang@lca1-app0680 ~]$ app-status -t ambry-server-main -f ei-lca1
-
-11. check versions for mp
+9. check versions for specific mp
 [yinzhang-mn1:~ yinzhang]$ mint describe oauth-filter
 
-12. check the dependency for Multiproduct by ligradle.
+10. check the dependency for specific mp by ligradle.
 [yinzhang-mn1:ambryli_trunk yinzhang]$ ligradle :ambry-impl:dependencyInsight --configuration compile --dependency depo-rest-api
 
-13. git push ambryli-utils and ambryli_trunk override
+11. git push ambryli-utils and ambryli_trunk override
     PCLOVERRIDE            # ambryli-utils
     PCVALIDATIONOVERRIDE   # ambryli_trunk  (also used when there is circular dependency)
     
-14. [yinzhang@lca1-eng-portal02 ~]$ app-status -fg prod -t ambry-server-main --use-intended | grep -i CANARY  # check which servers are in canary
+12. [yinzhang@lca1-eng-portal02 ~]$ app-status -fg prod -t ambry-server-main --use-intended | grep -i CANARY  # check which servers are in canary
     [yinzhang@lca1-eng-portal03 ~]$ app-status -fg prod -t ambry-server-main | grep -v 16.1.98 #find node whose version is NOT 16.1.98
 
-15. Hadoop SQL query (go/reportal, perform these queries)
+13. Hadoop SQL query (go/reportal, perform these queries)
     (1) use tracking;   # (use ei_tracking if it's in EI)
         select blobUrn, blobProperties from AmbryOperationEvent 
         where datepartition >= '2017-12-01-00' and datepartition < '2018-01-31-00' and 
@@ -118,196 +93,118 @@ lid-client control stop -f prod-lva1 -t ambry-server-main -H lva1-app6772.prod.l
         where datepartition >= '2017-12-01-00' and datepartition < '2018-01-31-00' and 
         blobProperties.appName = "gaap-engine" and blobProperties.accountId != 315 and operationType = "PUT";
         
-16. The log segments and indexing segments directory on production machine:
+14. The log segments and indexing segments directory on production machine:
     [yinzhang@lca1-app1373 ambrydata]$ pwd
     /mnt/u001/ambrydata
     [yinzhang@lca1-app1373 ambrydata]$ ls 101/
     0_0_18_index  0_0_log  cleanuptoken  StoreDescriptor
     
-19. The error log on production machine is located at: /export/content/lid/apps/ambry-server/i001/
-    Example:
-    [yinzhang@lca1-app1373 ambrydata]$ ls /export/content/lid/apps/ambry-server/i001/
-    agents  appsConfig  bin  boot  components  conf  containerConfig  hooks  lib  logs  predeploy  resources  tmp  var  war  webapps
-    [yinzhang@lca1-app1373 i001]$ cd logs/
-    
 #----------------------------------------------------------------------------------------------------------------------------#
-20. deploy to qei:
+15. deploy to qei:
     mint build && mint build-cfg --fabric qei-lca1 && mint deploy -a ambry-frontend --fabric qei-lca1 --skip-qei-routes --debug-app
  
-21.1 deploy locally:
+    deploy locally:
     mint build && mint build-cfg && mint release && mint release-cfg && mint deploy
     
-21.2 undeploy locally:
+    undeploy locally:
     mint undeploy
 #----------------------------------------------------------------------------------------------------------------------------#
-22. upload to unencrypted container locally.
+16. upload to unencrypted container locally.
     [zemao@zemao-mn2]:~ $ curli -s -i --fabric ei-lca1 -H "x-ambry-target-account-name:ambryClientUnitTest" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:ambry-test" -H "x-ambry-content-type:text" -H "x-ambry-um-description:static upload" -H "x-li-ambry-client:Internal" http://zemao-mn2.linkedin.biz:15158 --data-binary @1m.bin
     get BlobInfo.
     [zemao@zemao-mn2]:~ $ curl -i "http://zemao-mn2.linkedin.biz:15158/AAMAAQBoAAIAAQAAAAAAAAAAAAAAJGY4ZjllMThiLTI3YzctNGIwNy05Nzc5LTEyMTY1YWE3N2M0Yg.bin/BlobInfo" -H "x-li-ambry-client: Internal"
     HTTP/1.1 200 OK
-    Date: Mon, 16 Apr 2018 19:10:19 GMT
-    Last-Modified: Mon, 16 Apr 2018 19:09:47 GMT
-    x-ambry-blob-size: 10
-    x-ambry-service-id: CUrlUpload
-    x-ambry-creation-time: Mon, 16 Apr 2018 19:09:47 GMT
-    x-ambry-encrypted-in-storage: false
-    x-ambry-content-type: text
-    x-ambry-owner-id: ambry-test
-    x-ambry-target-account-name: ambryClientUnitTest
-    x-ambry-target-container-name: container-a
-    x-ambry-private: false
-    x-ambry-um-description: static upload
-    Content-Length: 0
 #----------------------------------------------------------------------------------------------------------------------------#
- 23. upload to encrypted container locally.
+17. upload to encrypted container locally.
      [zemao@zemao-mn2]:~ $ curli -s -i --fabric ei-lca1 -H "x-ambry-target-account-name:ambryClientUnitTest" -H "x-ambry-target-container-name:public-enc" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:ambry-test" -H "x-ambry-content-type:text" -H "x-ambry-um-description:static upload" -H "x-li-ambry-client:Internal" http://zemao-mn2.linkedin.biz:15158 --data-binary @1m.bin
      [zemao@zemao-mn2]:~ $ curl -i "http://zemao-mn2.linkedin.biz:15158/AAMAAQBoAAgAAQAAAAAAAAAAAAAAJGQxMWNmOWMxLWZmNWYtNDAxOC1hYmY1LTAzNmI1MzhkNWU4Yw.bin/BlobInfo" -H "x-li-ambry-client: Internal"
       HTTP/1.1 200 OK
-      Date: Mon, 16 Apr 2018 19:07:56 GMT
-      Last-Modified: Mon, 16 Apr 2018 19:06:26 GMT
-      x-ambry-blob-size: 1048576
-      x-ambry-service-id: CUrlUpload
-      x-ambry-creation-time: Mon, 16 Apr 2018 19:06:26 GMT
-      x-ambry-encrypted-in-storage: true
-      x-ambry-content-type: text
-      x-ambry-owner-id: ambry-test
-      x-ambry-target-account-name: ambryClientUnitTest
-      x-ambry-target-container-name: public-enc
-      x-ambry-private: false
-      x-ambry-um-description: static upload
-      Content-Length: 0
+      
+******************************
+*   Conditional Delete Test  *
+******************************
+  // PUT a blob
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
+  HTTP/1.1 201 Created
+  Location: /AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
 
-[zemao@lca1-eng-portal02 ~]$ curli --fabric prod-lva1 d2://ambry/p/7/005/025/22b/1963b30.png -I -H "x-li-ambry-client:Internal"
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-HTTP/1.1 403 Forbidden
-Content-Type: text/plain;charset=utf-8
-Date: Thu, 03 May 2018 23:55:55 GMT
-x-ambry-error-code: AccessDenied
-x-ambry-failure-reason: (Principal:Principal: {type: SERVICE_PRINCIPAL, applicationName: d2-proxy, instance: i001, fabric: prod-lva1}, Operation:READ) denied by non-compliant ID lix; x-li-ambry-mapped-compliant-id:/AAMB_wQWAAgAAQAAAAAAAAD5AAAAJDM4MjVkZmViLWQ5NGYtNDY2OS1hNDRkLTQ0MjQwM2EwM2ViYw.png
-Content-Length: 0
+  // DELETE a blob with incorrect account name
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:IncorrectCUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
+  HTTP/1.1 412 Precondition Failed
 
-[Conditional Delete Test]
-// PUT a blob
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
-HTTP/1.1 201 Created
-Location: /AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
-Date: Mon, 16 Apr 2018 20:46:33 GMT
-Content-Length: 0
-x-ambry-creation-time: Mon, 16 Apr 2018 20:46:32 GMT
-Access-Control-Expose-Headers: Location
+  // DELETE a blob with incorrect container name
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-b" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
+  HTTP/1.1 412 Precondition Failed
 
-// DELETE a blob with incorrect account name
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:IncorrectCUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
-HTTP/1.1 412 Precondition Failed
-date: Mon, 16 Apr 2018 20:50:04 GMT
-content-length: 0
-x-ambry-error-code: PreconditionFailed
-content-type: text/plain; charset=UTF-8
+  // DELETE a blob with both correct account name and container name
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
+  HTTP/1.1 202 Accepted
 
-// DELETE a blob with incorrect container name
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-b" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
-HTTP/1.1 412 Precondition Failed
-date: Mon, 16 Apr 2018 20:50:52 GMT
-content-length: 0
-x-ambry-error-code: PreconditionFailed
-content-type: text/plain; charset=UTF-8
+  // PUT a blob again
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
+  HTTP/1.1 201 Created
+  Location: /AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
 
-// DELETE a blob with both correct account name and container name
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAydAAAAJGFlNGEwMmEzLTAwNDYtNGQ1YS05ZmQ4LTE0YTJlNGM2ZWEwYw.csv
-HTTP/1.1 202 Accepted
-Date: Mon, 16 Apr 2018 20:51:14 GMT
-Content-Length: 0
+  //DELETE a blob with only container name specified
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
+  HTTP/1.1 400 Bad Request
 
-// PUT a blob again
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
-HTTP/1.1 201 Created
-Location: /AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
-Date: Mon, 16 Apr 2018 20:54:48 GMT
-Content-Length: 0
-x-ambry-creation-time: Mon, 16 Apr 2018 20:54:46 GMT
-Access-Control-Expose-Headers: Location
+  // DELETE a blob with only correct account name
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
+  HTTP/1.1 202 Accepted
 
-//DELETE a blob with only container name specified
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-container-name:container-a" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
-HTTP/1.1 400 Bad Request
-date: Mon, 16 Apr 2018 20:56:57 GMT
-content-length: 0
-x-ambry-failure-reason: Only container name is set in request with no corresponding account name is not allowed.
-x-ambry-error-code: BadRequest
-content-type: text/plain; charset=UTF-8
+  // PUT the blob again
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
+  HTTP/1.1 201 Created
+  Location: /AAMAAgCAAAIAAQAAAAAAAAwgAAAAJDExMWNiNGE5LWM0ZWUtNDEwNy1iY2MwLThhY2VkNTlmYzIzNw.csv
 
-// DELETE a blob with only correct account name
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAABFSAAAAJDllZGVjZWYzLTRkMTItNDFhMS05ZmNhLTBiNzk4ZWMzM2IzNQ.csv
-HTTP/1.1 202 Accepted
-Date: Mon, 16 Apr 2018 20:58:07 GMT
-Content-Length: 0
-
-// PUT the blob again
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-ambry-target-account-name:CUrlTester" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" http://lva1-app8938.prod.linkedin.com:15158 --data-binary @test.csv
-HTTP/1.1 201 Created
-Location: /AAMAAgCAAAIAAQAAAAAAAAwgAAAAJDExMWNiNGE5LWM0ZWUtNDEwNy1iY2MwLThhY2VkNTlmYzIzNw.csv
-Date: Mon, 16 Apr 2018 20:58:35 GMT
-Content-Length: 0
-x-ambry-creation-time: Mon, 16 Apr 2018 20:58:34 GMT
-Access-Control-Expose-Headers: Location
-
-// DELETE the blob with blobId only
-[yinzhang@lva1-app8938 ~]$ curl -i -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAwgAAAAJDExMWNiNGE5LWM0ZWUtNDEwNy1iY2MwLThhY2VkNTlmYzIzNw.csv
-HTTP/1.1 202 Accepted
-Date: Mon, 16 Apr 2018 20:59:51 GMT
-Content-Length: 0
-
+  // DELETE the blob with blobId only
+  [yinzhang@lva1-app8938 ~]$ curl -i -H "x-li-ambry-client:Internal" -X DELETE http://lva1-app8938.prod.linkedin.com:15158/ambry/AAMAAgCAAAIAAQAAAAAAAAwgAAAAJDExMWNiNGE5LWM0ZWUtNDEwNy1iY2MwLThhY2VkNTlmYzIzNw.csv
+  HTTP/1.1 202 Accepted
 #----------------------------------------------------------------------------------------------------------------------------#
 // restart server in perf
 [yinzhang@lca1-eng-portal02 ~]$ lid-client control restart -f ei-ltx1 -t ambry-server-perf AmbryLI
 
 // change the version of server in perf  (version 16.1.42)
-[yinzhang@lca1-eng-portal02 ~]$ lid-client deploy AmbryLI -f ei-lca1 -t ambry-server-perf -v 16.1.42 --skip-hooks --host-concurrency 6
+[yinzhang@lca1-eng-portal02 ~]$ lid-client deploy AmbryLI -f ei-lca1 -t ambry-server-perf -v 16.1.42
 
 // cancel the deploy request 
 lid-client request cancel  -f <FABRIC> --request-ids <Request ID> --message "Deployment stuck for Nuage"
-#----------------------------------------------------------------------------------------------------------------------------#
 
-Perf test for dynamic seal and unseal store:
+*******************************************
+*   dynamic seal and unseal test in Perf  *
+*******************************************
+  (1)keep the dumping the blob until the store is sealed
+  (2)forcely wipe out: log in and delete and reboot the machine . ---> store should be unsealed
+  (3)set the blob's TTL and wait for compaction to reclaim the space. (change the frequency of compaction)
 
-keep the dumping the blob until the store is sealed
-
-forcely wipe out: log in and delete and reboot the machine . ---> store should be unsealed
-set the blob's TTL and wait for compaction to reclaim the space. (change the frequency of compaction)
-
-AmbryLI_trunk/config/app/ambry-server-war/ei-lca1/     # change the threshold in config files on the perf machine
-lid-client deploy --config AmbryLI -f ei-lca1 -t ambry-server-perf --skip-hooks --host-concurrency 6 # deploy the changed config
-ZK endpoints in EI: zk-lca1-shared.stg.linkedin.com, zk-ltx1-shared.stg.linkedin.com  # check the state of store (whether in)
-
-/export/content/lid/logs/ambry-frontend/i001 # vim ambry-frontend.log to check exception and errors
+AmbryLI_trunk/config/app/ambry-server-war/ei-lca1/                  # change the threshold in config files on the perf machine
+lid-client deploy --config AmbryLI -f ei-lca1 -t ambry-server-perf  # deploy the changed config
 
 # wipe out the log segment on a single server
 [yinzhang@ltx1-app1440 0]$ sudo -u app rm 0_0_log
-
 [yinzhang@lca1-eng-portal03 ~]$ lid-client deploy --config AmbryLI -f prod-lsg1 -t ambry-server-main --exclude-hosts lsg1-app9847.prod.linkedin.com
 
 #----------------------------------------------------------------------------------------------------------------------------#
-# cd to config directory
+# edit config and commit
 [yinzhang-mn1:config yinzhang]$ svn st # 等同于 git status
 [yinzhang-mn1:config yinzhang]$ svin review            # create a rb for review
 [yinzhang-mn1:config yinzhang]$ svin review --update   # update the new changes to rb
 [yinzhang-mn1:config yinzhang]$ svin commit            # when the rb is approved by at least one reviewer on ACL
 
 #----------------------------------------------------------------------------------------------------------------------------#
-// (1) 根据 blobId 查看 account and container 信息, using Casey's command
+   (1) 根据 blobId 查看 account and container 信息, using Casey's command
 [yinzhang-mn1:~ yinzhang]$ curl 'http://cgetz-ld2:6789/ambry-account-admin/resources/blobIdMetadata/fg=ei&id=AAMAAQCfAAMAAQAAAAAAAAB4AAAAJDQwNDE3OGI0LWRjNzYtNDRlYi05ODMyLTliYjFjODYyZjE3ZQ.bin'
 {"accountId":159,"accountName":"tscp-assets-war","containerName":"default-public-container","crafted":false,"containerId":3,"version":3}
-// (2) use the account and container to determine prod on Nuage
-// (3) click the "fast access" on Nuage for a particular account
-// (4)then use the following cmd to query via Blob Id on a prod machine
+   (2) use the account and container to determine prod on Nuage
+   (3) click the "fast access" on Nuage for a particular account
+   (4)then use the following cmd to query via Blob Id on a prod machine
 [yinzhang@lva1-app23942 ~]$ curli -s --no-log --fabric prod-lor1 --dv-auth self -i -H "x-li-ambry-client:Internal" d2://ambry/AAMB_wC9AAkAAQAAAAAAAAUWAAAAJGRmYjQwMmU0LWIzNWMtNGQwMy1hZjk3LTU5YWJjODgzOGZkZA.pdf/BlobInfo
-// if cannot find, we can go to go/reportal to query ambry event for specific blob id on Hadoop (a example is as follows)
+   (5)if cannot find, we can go to go/reportal to query ambry event for specific blob id on Hadoop (a example is as follows)
     use tracking;
     select * from AmbryOperationEvent where datepartition >= '2015-04-01-00' and datepartition < '2015-04-03-00' and bloburn='AAEAAQAAAAAAAAJdAAAAJDcyYjg2ZTcyLTBmZWUtNGQ0ZC1hZTU1LTJmMzJjNzQxODc1OA';  
     *** you might need to remove suffix from BlobID to get bloburn ***
-// if the blob id is crafted, we can go to go/pqr to retrieve the original blob id.
+   (6)if the blob id is crafted, we can go to go/pqr to retrieve the original blob id.
 [Here is an example]:
 SELECT ALT_ID_02, ID, ALT_ID_01 from ambry.AMBRY_ID_MAPPER_2 WHERE ALT_ID_01 in 
 ( 'AAMB_wC9AAkAAQAAAAAAAAMSAAAAJDNiZDFhZTdjLWYxYjYtNGYwMi1iMWE3LTdkYWViN2FkMWQ5Ng', 
@@ -333,29 +230,30 @@ scp ambry-clustermap/build/libs/ambry-clustermap-0.1.0.jar ltx1-app1440.stg.link
 [yinzhang@ltx1-app1440 bin]$ cd ../logs
 [yinzhang@ltx1-app1440 logs]$ tail -f ambry-server.log
 
-#--------------------------------------------- HOW TO CHECK TRACE INFO IN LOG ------------------------------------------------------------------------------#
+#--------------------------------------------- Check trace info in log ------------------------------------------------------------------------------#
 # use the script from Casey to set log level, the set-log-level.sh is in ~/Code/ 
 ./set-log-level.sh lva1-app19528.prod.linkedin.com ambry-server com.github.ambry.store.BlobStore DEBUG
 
 # after debugging, please set the log level back to INFO
 ./set-log-level.sh lva1-app19528.prod.linkedin.com ambry-server com.github.ambry.store.BlobStore INFO
-
 (source code of set-log-level.sh is stored at https://gitli.corp.linkedin.com/cgetz-scratch/cgetz-scripts/source/set-log-level.sh)
+
 #----------------------------------------------------------------------------------------------------------------------------#
  ./gradlew build && ./gradlew idea  # update lib import in idea
  ./gradlew assemble                 # only compile not run unit tests
  ./gradlew build && ./gradlew test  # run both unit tests and integration tests
-In closed source, we can run:
- ligradle clean && ligradle build && ligradle idea    # update lib import in idea
-用idea打开后缀是.ipr的工程文件
+  In closed source, we can run:
+   ligradle clean && ligradle build && ligradle idea    # update lib import in idea
+  用idea打开后缀是.ipr的工程文件
+  
 #---------------------------------------- How to Connect ZookInspector to Prod ZK -------------------------------------------#
-(1)// we should tunnel to a prod zookeeper  (这里 lva1-app23942 是任意一台可以access的frontend), following cmd is to run in foreground      
+(1) we should tunnel to a prod zookeeper  (这里 lva1-app23942 是任意一台可以access的frontend), following cmd is to run in foreground      
 [yinzhang-mn1:~ yinzhang]$ ssh -M -S zk-lva1-shared-ctrl-socket -fN -L 12913:zk-lva1-shared.prod.linkedin.com:12913 lva1-app23942.prod.linkedin.com
-(2)// Now, you can use the various zookeeper tooling with localhost:12913 to contact the prod zookeeper.
-   // Also, we can you use another port for different zookeeper
+(2) Now, you can use the various zookeeper tooling with localhost:12913 to contact the prod zookeeper.
+    Also, we can you use another port for different zookeeper
 [yinzhang-mn1:~ yinzhang]$ ssh -M -S zk-lsg1-shared-ctrl-socket -fN -L 12914:zk-lsg1-shared.prod.linkedin.com:12913 lsg1-app0075.prod.linkedin.com
-   // Then, we can use localhost:12914 to talk to zookeeper in prod-lsg1
-(3)// When connection is no longer needed, to kill the tunnel, use the control socket set up in the previous command:
+    Then, we can use localhost:12914 to talk to zookeeper in prod-lsg1
+(3) When connection is no longer needed, to kill the tunnel, use the control socket set up in the previous command:
 [yinzhang-mn1:~ yinzhang]$ ssh -S zk-lva1-shared-ctrl-socket -O exit lva1-app23942.prod.linkedin.com
 
 #---------------------------------------- Check Nuage Request and Approve/Reject --------------------------------------------#
@@ -375,7 +273,10 @@ use following command to edit acl rules:
 
 #------------------------------------------------ Upload/Download URL ---------------------------------------------------------------#
 upload might need signed url; # l1proxy-ats should be included in ACL rules when trying to use cdn url (make sure the content is public first)
-download doesn't need signed url; 
+download url, please follow this link:
+     https://iwww.corp.linkedin.com/wiki/cf/display/ENGS/Fetching+Download+Signed+URLs+from+the+Command+Line
+     
+Note that, the endpoint for upload will be changed from "media-src.linkedin.com/media" to "www.linkedin.com/ambry"
 
 #---------------------------------------- Add/Change the dependency in gradle --------------------------------------------#
 # This is used to import external libraries/pacakges. 
@@ -449,12 +350,12 @@ clustermap.cluster.name=ambry-prod                                              
 
 #----------------------------- How to disbale some graphs on ingraphs -----------------------------------------#
 1. on local machine use following command to checkout yaml file.
-[yinzhang-mn1:dashboards yinzhang]$ ingraphs dashboards checkout ambry-dynamic-clustermanager-dashboard
-Make the current working directory an ingraphs-api checkout? [y/N]: y
+  [yinzhang-mn1:dashboards yinzhang]$ ingraphs dashboards checkout ambry-dynamic-clustermanager-dashboard
+  Make the current working directory an ingraphs-api checkout? [y/N]: y
 2. edit the file and comment the graphs related to Static Cluster
-[yinzhang-mn1:dashboards yinzhang]$ vim ambry-dynamic-clustermanager-dashboard
+  [yinzhang-mn1:dashboards yinzhang]$ vim ambry-dynamic-clustermanager-dashboard
 3. after modification is done, commit the changes
-[yinzhang-mn1:dashboards yinzhang]$ ingraphs dashboards commit ambry-dynamic-clustermanager-dashboard 
+  [yinzhang-mn1:dashboards yinzhang]$ ingraphs dashboards commit ambry-dynamic-clustermanager-dashboard 
 
 #----------------------------- Trigger Stats Aggregation in Prod -----------------------------------------#
 1. ./gradlew allJar
@@ -473,26 +374,26 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 1. copy the String in json report from go/reflection or ZKInspector
 2. In shell "echo string | jq .", then we can get the report in a nice view.
    following is an example (pay attention to the backslash '\'):
-[yinzhang-mn1:~ yinzhang]$ echo "{\"a\" : 1}" | jq .
-{
-  "a": 1
-}
-
-#--------- stats report scripts on server machine ----------------#
-Stats report script for EI/Perf is running on lca1-app0680.stg.linkedin.com
-Fetch report from each node and aggregate stats script is running on lsg1-app14841.prod.linkedin.com 
-The latest version of stats report script is kzooTest.py on lsg1-app14841.prod.linkedin.com
-
+    [yinzhang-mn1:~ yinzhang]$ echo "{\"a\" : 1}" | jq .
+    {
+      "a": 1
+    }
+    
+#--------- set crontab job / install kazoo library ----------------#
 sudo -u app crontab -e
 install kazoo: pip install --user kazoo-2.5.0-py2.py3-none-any.whl
 install kazoo:  /export/apps/python/3.6/bin/pip3 install --user kazoo
 
-# run report script background and ignore the output
-nohup /scheduledTask.sh > /dev/null 2>&1 &
-# example of running the script:
-  ./ambry-stats-email --email=yinzhang@linkedin.com --fabric=prod-lsg1 --old-version
+#--------- stats report scripts on server machine ----------------#
+1. Stats report script for EI/Perf is running on lca1-app0680.stg.linkedin.com
+2. Fetch report from each node and aggregate stats script is running on lsg1-app14841.prod.linkedin.com 
+3. The latest version of stats report script is kzooTest.py on lsg1-app14841.prod.linkedin.com
 
-# on local machine, the log will be kept in: ./Users/yinzhang/Library/Logs/ingraph.log
+  # run report script background and ignore the output
+     nohup /scheduledTask.sh > /dev/null 2>&1 &
+  # example of running the script:
+     ./ambry-stats-email --email=yinzhang@linkedin.com --fabric=prod-lsg1 --old-version
+  # on local machine, the log will be kept in: ./Users/yinzhang/Library/Logs/ingraph.log
 
 #----------------  ingraph dashboards commands  ----------------#
 1. commit the your own ambry-dashboards:
@@ -541,26 +442,25 @@ search certain account_container metric on Ingrapsh -> Controls -> Input regex f
 
 #--------------------------- Check AntiVirus Service or Mediascan Service availability -----------------------------------#
 1. log into one ei ambry-frontend machine. (for example: lca1-app0785.stg.linkedin.com)
-[cgetz@lca1-app0785 logs]$ curli --dv-auth self --fabric ei-lca1 d2://d2Clusters/AntivirusServices
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-169   169  169   169    0     0   1080      0 --:--:-- --:--:-- --:--:-- 33800
-{
-    "partitionConfiguration": {
-        "type": "NONE"
-    },
-    "name": "AntivirusServices",
-    "created": 1458755306756,
-    "lastModified": 1531333125984,
-    "services": [
-        "antivirus",
-        "mediaScan"
-    ],
-    "uris": []
-}
+  [cgetz@lca1-app0785 logs]$ curli --dv-auth self --fabric ei-lca1 d2://d2Clusters/AntivirusServices
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                   Dload  Upload   Total   Spent    Left  Speed
+  169   169  169   169    0     0   1080      0 --:--:-- --:--:-- --:--:-- 33800
+  {
+      "partitionConfiguration": {
+          "type": "NONE"
+      },
+      "name": "AntivirusServices",
+      "created": 1458755306756,
+      "lastModified": 1531333125984,
+      "services": [
+          "antivirus",
+          "mediaScan"
+      ],
+      "uris": []
+  }
 
-EKG need not complete
-We are switching from using "media-src.linkedin.com/media" to "www.linkedin.com/ambry" as the endpoint for upload
+pause on CRT: EKG need not complete
 
 #--------------------------- How to compare configs on frontend/server with latest configs -----------------------------------#
 1. run: 
@@ -570,13 +470,12 @@ We are switching from using "media-src.linkedin.com/media" to "www.linkedin.com/
 3. go to ambryli_trunk config directory and run the svn diff:
    svn diff -r 1806725:1806287 > ~/frontend_config.diff
 
-#-------------------------- Unstick CANARY tag to proceed deployment --------------------------------#
+#-------------------------- Unstick CANARY tag to unblock deployment --------------------------------#
 # Scoping the promotion command to just the canary tagged host fixed the tagging issue.
 # let's say lva1-app30042.prod.linkedin.com is in CANARY state, we want to unstick it:
 lid-client deploy --promote -f prod-lva1 -H lva1-app30042.prod.linkedin.com -t ambry-server-main -v 16.1.140 AmbryLI
 
 heap dump analyzer:  sudo yum install LNKD-yjp2014
-                     pcregrep -oie "\[x-ambry-service-id=.*?]"
 
 #-------------------------- Grep public access log for certain ambry-service id --------------------------------#
 [cgetz@ltx1-app31469 logs]$ grep -i is-secure ambry-frontend_public_access.log | pcregrep -oe '\[x-ambry-service-id=.*?]' | sort | uniq -c | sort -nr

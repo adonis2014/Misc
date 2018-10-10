@@ -90,7 +90,13 @@ Partition[79]
     <ctrl+k>    清除光标后至行尾的内容
     <ctrl+r>    匹配历史命令,搜索之前打过的命令。会有一个提示，根据你输入的关键字进行搜索bash的history当查找到的命令不是你想要的命令，你还可以继续按Ctrl+ R来查找下一个匹配的命令(超级常用......)
    <ctrl + z>   暂停当前进程bg后台运行,fg转到前台 （习惯bg,fg操作，效率大大提升
-   
+
+32. uptime      # find the system uptime
+    14:27  up 17 days,  3:51, 2 users, load averages: 3.00 2.24 2.07
+33. last reboot # find the system reboot history
+    reboot    ~                         Sun Sep 23 10:52 
+    reboot    ~                         Sun Sep  9 10:27 
+    
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

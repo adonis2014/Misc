@@ -333,17 +333,6 @@ scp ambry-clustermap/build/libs/ambry-clustermap-0.1.0.jar ltx1-app1440.stg.link
 [yinzhang@ltx1-app1440 bin]$ cd ../logs
 [yinzhang@ltx1-app1440 logs]$ tail -f ambry-server.log
 
-#----------------------------------------------------------------------------------------------------------------------------#
-# List application slices matching the ambryLi
-[yinzhang@lca1-eng-portal02 ~]$ topology-v3 slice list --product ambryLi                           
-App Name        Instance    Created By                Created At           Product Tag           Config Tags    ID                                    State
---------------  ----------  ------------------------  -------------------  --------------------  -------------  ------------------------------------  -------
-ambry-server    i001        urn:li:corpuser:dnikifor  2016-07-27 21:43:54  ambry-server-main                    f76d7ea9-64ca-4eee-9a7b-1d98bfe18d48  ACTIVE
-ambry-server    i001        urn:li:corpuser:dnikifor  2016-07-27 21:44:21  ambry-server-perf                    3bb7f4c4-d29e-4c85-ba4e-0a1aa0a382f8  ACTIVE
-ambry-frontend  i001        urn:li:corpuser:dnikifor  2016-07-27 22:32:24  ambry-frontend-perf                  494f76c0-6574-416d-8fb2-3dbd4ff6a35e  ACTIVE
-ambry-frontend  i001        urn:li:corpuser:dnikifor  2016-07-27 22:32:46  ambry-frontend-main                  8cd2b15d-22eb-413f-8716-a2c1e282d54a  ACTIVE
-ambry-server    i001        urn:li:corpuser:dnikifor  2016-08-05 23:42:30  ambry-server-reserve                 ab5e3baf-a709-4297-8827-9e1fdd4b13a2  ACTIVE
-
 #--------------------------------------------- HOW TO CHECK TRACE INFO IN LOG ------------------------------------------------------------------------------#
 # use the script from Casey to set log level, the set-log-level.sh is in ~/Code/ 
 ./set-log-level.sh lva1-app19528.prod.linkedin.com ambry-server com.github.ambry.store.BlobStore DEBUG
@@ -480,7 +469,6 @@ Make the current working directory an ingraphs-api checkout? [y/N]: y
 3. go to prod machine and run following command:
 [yinzhang@lsg1-app14841 ~]$ /export/apps/jdk/JDK-1_8_0_121/bin/java -Dlog4j.configuration=file:log4j.properties -cp ambry.jar com.github.ambry.clustermap.HelixBootstrapUpgradeTool --uploadConfig --hardwareLayoutPath HardwareLayoutProd.json --partitionLayoutPath PartitionLayoutProd.json --zkLayoutPath zkLayoutPROD.json --clusterNamePrefix Ambry-
 
-
 #----------------------------- Read quota report in a pretty way -----------------------------------------#
 1. copy the String in json report from go/reflection or ZKInspector
 2. In shell "echo string | jq .", then we can get the report in a nice view.
@@ -583,10 +571,34 @@ EKG need not complete
 # let's say lva1-app30042.prod.linkedin.com is in CANARY state, we want to unstick it:
 lid-client deploy --promote -f prod-lva1 -H lva1-app30042.prod.linkedin.com -t ambry-server-main -v 16.1.140 AmbryLI
 
-heap dump analyzer:   sudo yum install LNKD-yjp2014
+heap dump analyzer:  sudo yum install LNKD-yjp2014
                      pcregrep -oie "\[x-ambry-service-id=.*?]"
 
 #-------------------------- Grep public access log for certain ambry-service id --------------------------------#
 [cgetz@ltx1-app31469 logs]$ grep -i is-secure ambry-frontend_public_access.log | pcregrep -oe '\[x-ambry-service-id=.*?]' | sort | uniq -c | sort -nr
 
-go/router to check traffic shift info
+#-------------------------- useful go links --------------------------------#
+go/router     # to check traffic shift info
+go/buckets    # to check traffic shift
+
+#-------------------------- li commands in slack --------------------------------#
+1. li buckets
+   Bucket Distribution for main:
+    prod-ltx1: 100/100
+    prod-lor1: 0/100
+    prod-lva1: 100/100
+    prod-lsg1: 0/100
+2. li traffic
+   Traffic Distribution of main at 09/27 07:25 PST: 
+    prod-ltx1: 124.20k QPS (39.72%)
+    prod-lor1: 147.07k QPS (47.03%)
+    prod-lva1: 0.00k QPS (0.0%)
+    prod-lsg1: 41.41k QPS (13.24%)
+    Total traffic in main: 312.67k QPS
+3. li ki
+    Currently open GCNs
+    ===============Major GCNs===============
+    GCN-27615: [GLOBAL] Newly created posts/shares are not visible under recent activity and feed 
+    GCN-27616: [prod-lva1] Multiple DB crashed
+    ==============Medium GCNs===============
+    GCN-27614: [Internal] Kafka audit completeness checks failing

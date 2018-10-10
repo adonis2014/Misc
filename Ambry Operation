@@ -536,6 +536,9 @@ nohup /scheduledTask.sh > /dev/null 2>&1 &
 [Metrics]: Replica_Unavailable is found by specify ambry-server as container on ingraphs.
 [Metrics]: check "Show OS metrics" box on ingraph can get more OS related metrics like cpu, memory, network. 
 
+search certain account_container metric on Ingrapsh -> Controls -> Input regex filtering string:
+  Access_Stats_Sensor.Access_Validation_Sensor.CURRENT_(.*)_ambryAcl_Ambry-prod_ContainerBlobs_234_3.rrd
+
 #--------------------------- Check AntiVirus Service or Mediascan Service availability -----------------------------------#
 1. log into one ei ambry-frontend machine. (for example: lca1-app0785.stg.linkedin.com)
 [cgetz@lca1-app0785 logs]$ curli --dv-auth self --fabric ei-lca1 d2://d2Clusters/AntivirusServices

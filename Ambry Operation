@@ -560,6 +560,7 @@ search certain account_container metric on Ingrapsh -> Controls -> Input regex f
 }
 
 EKG need not complete
+We are switching from using "media-src.linkedin.com/media" to "www.linkedin.com/ambry" as the endpoint for upload
 
 #--------------------------- How to compare configs on frontend/server with latest configs -----------------------------------#
 1. run: 

@@ -60,11 +60,13 @@ x-ambry-error-code: NotFound
 Content-Length: 0
 或者可以用http://lva1...(any frontend):15158/BlobId 替代 d2
 #----------------------------------------------------------------------------------------------------------------------------#
+[yinzhang@lva1-app23942 ~]$ id-tool grestin sign # use this to generate cert
 
 7. GET blobInfo (in PROD)
-[yinzhang@lva1-app18926 ~]$ curl -s -i -H "x-li-ambry-client:Internal" http://lva1-app18926.prod.linkedin.com:15158/AAMA______8AAQAAAAAAAAAAAAAAJDlkNGRlMTEzLTE5MWItNDA5MC05OGUzLTQ1ZWYzY2Y4MTE2ZQ.bin/BlobInfo
-
+[yinzhang@lva1-app23942 ~]$ curl -i https://lva1-app23942.prod.linkedin.com:3183/AAUQAQQ3AAgAAQAAAAAAAAS2AAAAJDg2YzcwYTNjLTAyMWYtNDY1Ny04NWM2LTk4NjFjODVjOWZlMw.bin/BlobInfo -H "x-li-ambry-client: Internal" --cert ./identity.cert --key ./identity.key --cacert /etc/riddler/ca-bundle.crt
 HTTP/1.1 404 Not Found
+
+
 #----------------------------------------------------------------------------------------------------------------------------#
 8. curl with SSL. Please follow this link: 
    https://iwww.corp.linkedin.com/wiki/cf/display/ENGS/How+to+curl+ambry+with+SSL

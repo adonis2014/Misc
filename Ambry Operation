@@ -104,7 +104,7 @@ Note that, this is prod frontend machine, port number is 3183
     [yinzhang@lca1-app1373 ambrydata]$ ls 101/
     0_0_18_index  0_0_log  cleanuptoken  StoreDescriptor
     
-#----------------------------------------------------------------------------------------------------------------------------#
+#------------------------------------------------- Deploy to QEI ------------------------------------------------------------#
 15. deploy to qei:
     mint build && mint build-cfg --fabric qei-lca1 && mint deploy -a ambry-frontend --fabric qei-lca1 --skip-qei-routes --debug-app
  
@@ -113,6 +113,13 @@ Note that, this is prod frontend machine, port number is 3183
     
     undeploy locally:
     mint undeploy
+    
+    logs could be found on local machine: /export/content/lid/logs/
+    
+    if deployment failed, remember to clear cache:
+        [yinzhang-mn1:~ yinzhang]$ sudo killall -HUP mDNSResponder
+        [yinzhang-mn1:~ yinzhang]$ sudo dscacheutil -flushcache
+        
 #----------------------------------------------------------------------------------------------------------------------------#
 16. upload to unencrypted container locally.
     [zemao@zemao-mn2]:~ $ curli -s -i --fabric ei-lca1 -H "x-ambry-target-account-name:ambryClientUnitTest" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:ambry-test" -H "x-ambry-content-type:text" -H "x-ambry-um-description:static upload" -H "x-li-ambry-client:Internal" http://zemao-mn2.linkedin.biz:15158 --data-binary @1m.bin
@@ -510,3 +517,20 @@ go/buckets   # to check traffic shift
     GCN-27616: [prod-lva1] Multiple DB crashed
     ==============Medium GCNs===============
     GCN-27614: [Internal] Kafka audit completeness checks failing
+
+[yinzhang-mn1:restli-gateway_trunk yinzhang]$ jps
+2981 
+1992 GradleDaemon
+16568 CmdLineAppRunner
+16105 CmdLineAppRunner
+16954 Jps
+16331 CmdLineAppRunner
+5549 GradleDaemon
+
+we can kill all the processes related to "CmdLineAppRunner"
+
+#-------------------------- remote debug with IDEA --------------------------------#
+1. find the "debug_port" in prod-spec.json
+2. go to "Run" -> "Edit Configuration" -> "Remote" and fill in the port number in "Port" field.
+3. mint build; mint build-cfg -f qei-lca1; mint deploy -f qei-lca1 --debug-app # don't forget the --debug-app
+4. click debug button 

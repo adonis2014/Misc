@@ -534,3 +534,7 @@ we can kill all the processes related to "CmdLineAppRunner"
 2. go to "Run" -> "Edit Configuration" -> "Remote" and fill in the port number in "Port" field.
 3. mint build; mint build-cfg -f qei-lca1; mint deploy -f qei-lca1 --debug-app # don't forget the --debug-app
 4. click debug button 
+
+#-------------------------- server/frontend log grep keywords --------------------------------#
+1. java.lang.OutOfMemoryError: Java heap space
+2. StoreException

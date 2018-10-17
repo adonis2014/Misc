@@ -1,8 +1,7 @@
 1. PUT blob (in EI)
-[yinzhang@lca1-app0680 ~]$ curl -i -H "x-ambry-target-account-name:ambry-internal-store" -H "x-ambry-target-container-name:shared-files" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-owner-id:yinzhang" -H "x-ambry-content-type:text/csv" -H "x-ambry-um-description:gaap-online-tasks-misplaced-blobs" -H "x-li-ambry-client:Internal" http://lca1-app0680.stg.linkedin.com:15158 --data-binary @gaap-online-tasks.csv
-
+yinzhang-mn1:~ yinzhang$ curli -i -H "x-ambry-target-account-name:ambryClientUnitTest" -H "x-ambry-target-container-name:container-a" -H "x-ambry-service-id:CUrlUpload" -H "x-ambry-content-type:text/csv" -H "x-li-ambry-client:Internal" https://ltx1-app1434.stg.linkedin.com:3183 --data-binary @file2M.csv --cert ./identity.cert --key ./identity.key --cacert /etc/riddler/ca-bundle.crt 
 HTTP/1.1 201 Created
-Location: /AAMAAQQMAAkAAQAAAAAAAACYAAAAJGFkOWZhODkzLTc4ODAtNGJlZi1iYzdkLTg3ODZiNGI4ODM2NA.csv
+Location: /AAUQAgBoAAIAAQAAAAAAAABBAAAAJGNjZDc5NGI1LWU2NGYtNGIyMi05ZDVlLTcyYjI0ZGVlMzk0OQ.csv
 #----------------------------------------------------------------------------------------------------------------------------#
 
 2. PUT blob (in PROD)

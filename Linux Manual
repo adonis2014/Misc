@@ -98,6 +98,8 @@ Partition[79]
     reboot    ~                         Sun Sep  9 10:27 
 34. grep -ve '^$' ErrorFile_0 # remove the blank lines
 
+35. create a function and count lines in three files :   total # = file1 + file2 + file3/2
+function count() { first=$(wc -l ChunkFile_$1 SimpleFile_$1 | tail -1 | sed s/total// | tr -d ' '); second=$(wc -l ErrorFile_$1 /dev/null | tail -1 | sed s/total// | tr -d ' ' ); echo $first + $second / 2 | bc; }
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

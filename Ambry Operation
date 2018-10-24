@@ -542,3 +542,7 @@ we can kill all the processes related to "CmdLineAppRunner"
 2. StoreException
 3. java.lang.InternalError: a fault occurred in a recent unsafe memory access operation in compiled Java code (this is due to the disk for log is bad)
 4. java.io.IOException: Could not read complete size from readChannel
+
+
+# download file on local machine from holdem via dali 
+dali fs -cp dali://holdem/user/ambry2/large-blobs/out potential-large-blobs

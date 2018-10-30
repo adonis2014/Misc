@@ -549,3 +549,6 @@ dali fs -cp dali://holdem/user/ambry2/large-blobs/out potential-large-blobs
 # upload file to holdem via dali
 dali --keytab ~/ambry2.headless.keytab --principal ambry2@GRID.LINKEDIN.COM fs -mkdir sdali://holdem/user/ambry2/large-blobs/composite-blob-chunkIds 
 dali --keytab ~/ambry2.headless.keytab --principal ambry2@GRID.LINKEDIN.COM fs -copyFromLocal -f *.dat sdali://holdem/user/ambry2/large-blobs/composite-blob-chunkIds/
+
+#-------------------------- GDPR rewrite file directory on server --------------------------------#
+/export/content/lid/data/ambry-server/gdpr_rewrite_complete

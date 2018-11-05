@@ -154,12 +154,12 @@ in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result f
           - - - - - - - - - - - - - - - - - -
           
 20. Put Message Format
-             - - - - - - - - - - - - - -
-            |     Message Header        |
-             - - - - - - - - - - - - - -
-            |        blob key           |
-             - - - - - - - - - - - - - -
-            |  Blob Properties Record   |
+             - - - - - - - - - - - - - -                    - - - - - - - - - - - - - - - - - - -- - -- - - - - - - - - - - - - -  - - - - - - - - - - - - - - - - - - - -
+            |     Message Header        | ---------------> |  version  | payload size | Blob Encryption |
+             - - - - - - - - - - - - - -                   | (2 bytes) |  (8 bytes)   | Key Relative    |
+            |        blob key           |                  |           |              | Offset          |
+             - - - - - - - - - - - - - -                   |           |              | (4 bytes)       |
+            |  Blob Properties Record   |                   - - - - - - - - - - - - - - - - - - -- - -- - - - - - - -
              - - - - - - - - - - - - - -
             |   User metadata Record    |
              - - - - - - - - - - - - - -

@@ -58,11 +58,14 @@ Date: Thu, 01 Mar 2018 21:40:48 GMT
 x-ambry-error-code: NotFound
 Content-Length: 0
 或者可以用http://lva1...(any frontend):15158/BlobId 替代 d2
+
+8. GET blobInfo (in EI)
+[yinzhang@lor1-app0015 ~]$ curli --fabric prod-lor1 --dv-auth self -I -H 'x-li-ambry-client:Internal' d2://ambry/AAMB_wC9AAkAAQAAAAAAAAp6AAAAJGRmYmU0OWJmLTA2MmItNDdkZi1iMWRhLTVjYTU4NDM2ODY1Nw.bin
 #----------------------------------------------------------------------------------------------------------------------------#
 # use this to generate cert on the machine you issue the request
 [yinzhang@lva1-app23942 ~]$ id-tool grestin sign 
 
-7. GET blobInfo (in PROD)
+9. GET blobInfo (in PROD)
 [yinzhang@lva1-app23942 ~]$ curl -i https://lva1-app23942.prod.linkedin.com:3183/AAUQAQQ3AAgAAQAAAAAAAAS2AAAAJDg2YzcwYTNjLTAyMWYtNDY1Ny04NWM2LTk4NjFjODVjOWZlMw.bin/BlobInfo -H "x-li-ambry-client: Internal" --cert ./identity.cert --key ./identity.key --cacert /etc/riddler/ca-bundle.crt
 HTTP/1.1 404 Not Found
 
@@ -70,7 +73,7 @@ HTTP/1.1 404 Not Found
 
 Note that, this is prod frontend machine, port number is 3183
 #----------------------------------------------------------------------------------------------------------------------------#
-8. curl with SSL. Please follow this link: 
+10. curl with SSL. Please follow this link: 
    https://iwww.corp.linkedin.com/wiki/cf/display/ENGS/How+to+curl+ambry+with+SSL
 
 9. check versions for specific mp

@@ -429,6 +429,7 @@ install kazoo:  /export/apps/python/3.6/bin/pip3 install --user kazoo
 [yinzhang@lca1-eng-portal03 ~]$ eh -e %prod-lva1.ambry-server.1 # this could display what the prod-lva1.ambry-server.1 stands for what machines
 [yinzhang@lca1-eng-portal03 ~]$ mssh -t 600 -T 6000 -r %prod-lva1.ambry-server.1 "zgrep AAUQAgB9AAIAAQAAAAAAABEvAAAAJDBkZTEwYTQ2LWYzMjMtNDQ3Ny04ZDEwLTcxOTA1NjBkOTJiMg /export/content/lid/logs/ambry-server/i001/ambry-server_public_access.log"
                                 # range request for one datacenter
+                                mssh -r %%ambry-server 'ls' # grep all ambry-servers in prod
                                 
 #--------------------------- download from media url (on local machine)-----------------------------------#
 [yinzhang-mn1:~ yinzhang]$ curl https://www.linkedin.com/ambry/?x-li-ambry-ep=AQHgFOBximSeJwAAAWVtqzBirzdpM5lrJaW3ihZs5jXOQAtYdEvzapIJ77bEudtvw3Rk > /tmp/video.bin

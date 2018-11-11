@@ -63,40 +63,6 @@ The router will consist of a set of scaling units. A call that comes to the rout
 which will handle the request and the response for that call. The scaling units work independently of each other. 
 
 [AmbryBlobStorageService]: achieves the mapping b/w the user desired name and the Ambry UUID.
-
-/******************************** Bucketing and Stats Aggregation ***************************************/
-[Bucket(time slot)]: this is used to consolidate the data changes in the store over some time span into a single data point. 
-                     For example, if a 10MB blob is expired at 1:15PM, a 20MB blob is expired at 1:30PM and 
-                     a 35MB blob is expired at 1:50PM then a Bucket could be constructed with a value of -65MB. 
-                     The Bucket will also have a time stamp, in our example the time stamp could be 2:00PM indicating that 
-                     by the end of 2:00PM a total of 65MB worth of blobs have expired. 
-                     Data structures for these buckets are inside ScanResults.
-                     
-[BlobStoreStats]: is responsible for the collection, maintenance and service of valid data size stats. 
-                  The control logic for deciding whether a blob is valid or not also sits in here.
-                  (1)Collection: can the index and create/update appropriate data structures to store relevant stats
-                  (2)Maintenance: Keep stats collected by a previous scan up-to-date by processing new writes and make appropriate changes.
-                  (3)Service: Serving stats requests by using previously collected stats or trigger a new scan if requested stats is not readily available.
-
-[ScanResults]:   a data class that holds all data structure needed by BlobStoreStats in order to serve stats related requests. 
-                 This class contains various helper functions to update its fields and access the data stored in this class. 
-                 This data class is populated during scanning and accessed when serving stats requests.
-
-[StatsEvent]:    this class is used for the purpose of handling new puts and deletes during a scan.
-                 StatsEvent captures/buffers all needed information of PUTs/DELETEs that happen while a scan is in progress. 
-                 Once scan is finished these buffered StatsEvent will then be processed and added to the data structures accordingly.
-
-[participantHealthReport.reportLatency]: the time interval by which the datanode transmits quota report to Helix
-
-[publishPeriodInSecs]: The time period in seconds that configures how often stats are published to local file in JSON format.
-
-[serverQuotaStatsAggregateIntervalInMinutes]: The frequency in mins at which cluster wide quota stats will be aggregated.
-                                              This variable is configured in command as follows:
-                                                    HelixClusterWideAggregationTool --zkLayoutPath PATH_TO_ZK_LAYOUT --clusterName CLUSTER_NAME 
-                                                    --workflowName WORKFLOW_NAME --recurrentIntervalInMinutes 1440
-                                                    
-Cluster-wide aggregation only aggregates the stats within a datacenter. For example, the perf aggregation will execute separately 
-in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result from servers in ltx1. 
                                                     
 /******************************** Blob, BlobStore, Log, Message, Partition, Index, Journal, StoreKey ?= BlobId ***************************************/
 1. BlobType: { DataBlob, MetadataBlob }
@@ -136,7 +102,8 @@ in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result f
 18. Journal:
             journal is always kept in memory working for the active index segment (most recent in memory).
             journal has fixed bound, like a sliding window, which will dequeue the old entries when it is full.
-19. ReplicaTokenFile: 
+19. ReplicaTokenPersistor: background thread to flush token to ReplicaTokenFile (flush period = 300 secs) 
+    ReplicaTokenFile: 
           Only one per disk; record each partition residing on this disk and last checkpoints on its all peers(see following table)
            - - - - - - - - - - - - - - - - - 
           | Partition1 |  Replica2 : 1000   |
@@ -151,6 +118,27 @@ in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result f
           |            |  Replica3 : 4500   |
           |            |  Replica4 : 11000  |
           - - - - - - - - - - - - - - - - - -
+    ReplicaTokenFile Format:
+     -----------------------------------------------------------------------------------------------------
+    |  Version  | Persist File Entry 1 | Persist File Entry 2 |        | Persist File Entry n |   CRC     | 
+    | (2 bytes) |     (n bytes)        |       (n bytes)      | ...... |     (n bytes)        | (8 bytes) |
+     ---------------------|-------------------------------------------------------------------------------
+                          |
+       /----------------------------------------------------------------------------------\  
+      /                      Persist File Entry                                            \
+      ---------------------------------------------------------------------------------------
+     | PartitionId |  Hostname  | ReplicaID  |    Port   | Bytes Read From Store | FindToken |
+     |  (n bytes)  |  (n bytes) | (n bytes)  | (4 bytes) |     (8 bytes)         | (n bytes) |
+      ---------------------------------------------------------------------------------|-----
+                                                                                       |
+                                                                                       |
+                                      ----------------------------------------------------------------------------------------
+                                     |    Size   |  Version  |  Session ID  |   Offset   |  Index Start  Offset  |  Store Key |
+                                     | (8 bytes) | (2 bytes) |  (8 bytes)   |  (8 bytes) |        (8 bytes)      |   n bytes  |
+                                       ---------------------------------------------------------------------------------------
+
+
+
 
 
 Current Blob Id Version 5:
@@ -242,6 +230,16 @@ Current Blob Id Version 5:
 26. MessageFormatWriteSet = PutMessageFormatInputStream + MessageInfo 是最终写入BlobStore的writeSet
 
 27. 对于PutBlob而言，operationTime = creationTime
+
+28.   ReplicaMetadataResponseInfo {
+          private final FindToken token;
+          private final MessageInfoAndMetadataListSerde messageInfoAndMetadataListSerde;
+          private final int messageInfoListSize;
+          private final long remoteReplicaLagInBytes;
+          private final PartitionId partitionId;
+          private final ServerErrorCode errorCode;
+      }
+        
 /******************************** Helix ***************************************/
 23. Helix Upgrade Tool:
     (1)Partitions are grouped under resources in Helix.
@@ -473,6 +471,39 @@ ambry-client:        Used by clients to access Ambry
         <5> Only one compaction is active per disk at any point of time.
         <6> Segmentation is a property that is set when the BlobStore is created and cannot be changed.
 
+/******************************** Bucketing and Stats Aggregation ***************************************/
+[Bucket(time slot)]: this is used to consolidate the data changes in the store over some time span into a single data point. 
+                     For example, if a 10MB blob is expired at 1:15PM, a 20MB blob is expired at 1:30PM and 
+                     a 35MB blob is expired at 1:50PM then a Bucket could be constructed with a value of -65MB. 
+                     The Bucket will also have a time stamp, in our example the time stamp could be 2:00PM indicating that 
+                     by the end of 2:00PM a total of 65MB worth of blobs have expired. 
+                     Data structures for these buckets are inside ScanResults.
+                     
+[BlobStoreStats]: is responsible for the collection, maintenance and service of valid data size stats. 
+                  The control logic for deciding whether a blob is valid or not also sits in here.
+                  (1)Collection: can the index and create/update appropriate data structures to store relevant stats
+                  (2)Maintenance: Keep stats collected by a previous scan up-to-date by processing new writes and make appropriate changes.
+                  (3)Service: Serving stats requests by using previously collected stats or trigger a new scan if requested stats is not readily available.
+
+[ScanResults]:   a data class that holds all data structure needed by BlobStoreStats in order to serve stats related requests. 
+                 This class contains various helper functions to update its fields and access the data stored in this class. 
+                 This data class is populated during scanning and accessed when serving stats requests.
+
+[StatsEvent]:    this class is used for the purpose of handling new puts and deletes during a scan.
+                 StatsEvent captures/buffers all needed information of PUTs/DELETEs that happen while a scan is in progress. 
+                 Once scan is finished these buffered StatsEvent will then be processed and added to the data structures accordingly.
+
+[participantHealthReport.reportLatency]: the time interval by which the datanode transmits quota report to Helix
+
+[publishPeriodInSecs]: The time period in seconds that configures how often stats are published to local file in JSON format.
+
+[serverQuotaStatsAggregateIntervalInMinutes]: The frequency in mins at which cluster wide quota stats will be aggregated.
+                                              This variable is configured in command as follows:
+                                                    HelixClusterWideAggregationTool --zkLayoutPath PATH_TO_ZK_LAYOUT --clusterName CLUSTER_NAME 
+                                                    --workflowName WORKFLOW_NAME --recurrentIntervalInMinutes 1440
+                                                    
+Cluster-wide aggregation only aggregates the stats within a datacenter. For example, the perf aggregation will execute separately 
+in ei-lca1 and ei-ltx1. The aggregated report in ltx1 only contains the result from servers in ltx1. 
 
 /******************** container fabric.src for lsg1 (for backup) ***********************/
 <?xml version="1.0" encoding="UTF-8"?>

@@ -61,6 +61,9 @@ Content-Length: 0
 
 8. GET blobInfo (in EI)
 [yinzhang@lor1-app0015 ~]$ curli --fabric prod-lor1 --dv-auth self -I -H 'x-li-ambry-client:Internal' d2://ambry/AAMB_wC9AAkAAQAAAAAAAAp6AAAAJGRmYmU0OWJmLTA2MmItNDdkZi1iMWRhLTVjYTU4NDM2ODY1Nw.bin
+
+   GET blobInfo (in EI/Perf)
+yinzhang-mn1:~ yinzhang$ curl -i https://ltx1-app1434.stg.linkedin.com:3183/AAQEAgA0AAEAAQAAAAAAAAAaAAAAJGFiYTcyZWQ5LTIwNWUtNGY4ZS04NmY5LWIxMTY4MjZlY2U3Mw.bin/BlobInfo -H "x-li-ambry-client: Internal" --cert ./identity.cert --key ./identity.key --cacert /etc/riddler/ca-bundle.crt
 #----------------------------------------------------------------------------------------------------------------------------#
 # use this to generate cert on the machine you issue the request
 [yinzhang@lva1-app23942 ~]$ id-tool grestin sign 

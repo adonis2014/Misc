@@ -39,7 +39,7 @@ Content-Length: 0
 #----------------------------------------------------------------------------------------------------------------------------#
 
 6. GET blob (in PROD)
-[yinzhang@lva1-app18926 ~]$ curl -s -i -H "x-li-ambry-client:Internal" http://lva1-app18926.prod.linkedin.com:15158/AAMA______8AAQAAAAAAAAAAAAAAJDlkNGRlMTEzLTE5MWItNDA5MC05OGUzLTQ1ZWYzY2Y4MTE2ZQ.bin
+[yinzhang@lva1-app18926 ~]$ curl -s -H "x-li-ambry-client:Internal" http://lva1-app18926.prod.linkedin.com:15158/AAMA______8AAQAAAAAAAAAAAAAAJDlkNGRlMTEzLTE5MWItNDA5MC05OGUzLTQ1ZWYzY2Y4MTE2ZQ.bin
 
 HTTP/1.1 404 Not Found
 date: Fri, 16 Mar 2018 21:17:33 GMT

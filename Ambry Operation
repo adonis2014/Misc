@@ -566,3 +566,16 @@ dali --keytab ~/ambry2.headless.keytab --principal ambry2@GRID.LINKEDIN.COM fs -
 GetChunkId tool and results are on lsg1-app25024.prod.linkedin.com
 Command:
 /export/apps/jdk/JDK-1_8_0_121/bin/java -cp /export/home/eng/yinzhang/ambry.jar com.github.ambry.tools.admin.GetChunkIdTool --hardwareLayout /export/home/eng/yinzhang/HardwareLayoutProd.json --partitionLayout /export/home/eng/yinzhang/PartitionLayoutProd.json --routerPropsFilePath /export/home/eng/yinzhang/RouterConfig --blobIdsFilePath /export/home/eng/yinzhang/BlobIdsFile --chunkBlobFile /export/home/eng/yinzhang/ChunkFile --simpleBlobFile /export/home/eng/yinzhang/SimpleFile --errorFile /export/home/eng/yinzhang/ErrorFile
+
+#-------------------------- Query encrypted simple blob on Hive ---------------------------------#
+USE tracking;
+SELECT
+  bloburn,blobproperties
+FROM
+  AmbryOperationEvent
+WHERE
+  operationType = 'PUT'
+  AND blobproperties.isEncrypted = true
+  AND blobproperties.blobType = 'SIMPLE'
+  AND blobproperties.creationtime >= (1000 * unix_timestamp('2018-11-06 19:30:00'))
+  AND blobproperties.creationtime < (1000 * unix_timestamp('2018-11-06 20:00:00'));

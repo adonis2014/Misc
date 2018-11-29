@@ -579,3 +579,8 @@ WHERE
   AND blobproperties.blobType = 'SIMPLE'
   AND blobproperties.creationtime >= (1000 * unix_timestamp('2018-11-06 19:30:00'))
   AND blobproperties.creationtime < (1000 * unix_timestamp('2018-11-06 20:00:00'));
+  
+#-------------------------- Request ACL on Wherehows for Reportal/Hive ---------------------------------#
+1. search for "AmbryOperationEvent" and choose "/data/tracking/AmbryOperationEvent" (hdfs)
+2. submit request for READ in "ACL Access"
+3. wait for 15 mins and the ACL will take effect

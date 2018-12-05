@@ -584,3 +584,11 @@ WHERE
 1. search for "AmbryOperationEvent" and choose "/data/tracking/AmbryOperationEvent" (hdfs)
 2. submit request for READ in "ACL Access"
 3. wait for 15 mins and the ACL will take effect
+
+#---------------- Misc -------------------#
+Nuage no longer uses groupid for ambry reviewer list.  Now everyone who is on call needs to have RESOURCE_ADMIN role on AmbryLI mp.
+[example]
+"acl-tool role_membership create --resource-urn urn:li:multiProduct:AmbryLI --role RESOURCE_ADMIN --actor rblock"
+
+If any customers ever ask for a prod machine from which to execute a command, we can direct them to "lva1-admin01.prod.linkedin.com"
+you can make requests to other prod machines from

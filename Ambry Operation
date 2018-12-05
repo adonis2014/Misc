@@ -592,3 +592,7 @@ Nuage no longer uses groupid for ambry reviewer list.  Now everyone who is on ca
 
 If any customers ever ask for a prod machine from which to execute a command, we can direct them to "lva1-admin01.prod.linkedin.com"
 you can make requests to other prod machines from
+
+#------------- Dump Index Tool -----------------------#
+Files needed: ambry.jar  DumpIndexConfig  HardwareLayoutProd.json  PartitionLayoutProd.json  log4j.properties
+/export/apps/jdk/JDK-1_8_0_121/bin/java -Dlog4j.configuration=file:log4j.properties -cp /export/home/eng/yinzhang/ambry.jar com.github.ambry.store.DumpIndexTool --propsFile /export/home/eng/yinzhang/DumpIndexConfig 

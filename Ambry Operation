@@ -208,9 +208,10 @@ lid-client deploy --config AmbryLI -f ei-lca1 -t ambry-server-perf  # deploy the
 #----------------------------------------------------------------------------------------------------------------------------#
 # edit config and commit
 [yinzhang-mn1:config yinzhang]$ svn st # 等同于 git status
-[yinzhang-mn1:config yinzhang]$ svin review            # create a rb for review
-[yinzhang-mn1:config yinzhang]$ svin review --update   # update the new changes to rb
-[yinzhang-mn1:config yinzhang]$ svin commit            # when the rb is approved by at least one reviewer on ACL
+[yinzhang-mn1:config yinzhang]$ svin review               # create a rb for review
+[yinzhang-mn1:config yinzhang]$ svin review --update      # update the new changes to rb
+[yinzhang-mn1:config yinzhang]$ svin commit               # when the rb is approved by at least one reviewer on ACL
+[yinzhang-mn1:config yinzhang]$ svn revert --recursive .  # undo all local changes
 
 #----------------------------------------------------------------------------------------------------------------------------#
    (1) 根据 blobId 查看 account and container 信息, using Casey's command

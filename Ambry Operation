@@ -76,8 +76,6 @@ HTTP/1.1 404 Not Found
 
 Note that, this is prod frontend machine, port number is 3183
 #----------------------------------------------------------------------------------------------------------------------------#
-10. curl with SSL. Please follow this link: 
-   https://iwww.corp.linkedin.com/wiki/cf/display/ENGS/How+to+curl+ambry+with+SSL
 
 9. check versions for specific mp
 [yinzhang-mn1:~ yinzhang]$ mint describe oauth-filter
@@ -597,3 +595,9 @@ you can make requests to other prod machines from
 #------------- Dump Index Tool -----------------------#
 Files needed: ambry.jar  DumpIndexConfig  HardwareLayoutProd.json  PartitionLayoutProd.json  log4j.properties
 /export/apps/jdk/JDK-1_8_0_121/bin/java -Dlog4j.configuration=file:log4j.properties -cp /export/home/eng/yinzhang/ambry.jar com.github.ambry.store.DumpIndexTool --propsFile /export/home/eng/yinzhang/DumpIndexConfig 
+
+#--------------  Anti-virus ---------------------#
+There are two cases where we send AV requests. One is for any post requests to a container where antivirus scans are enabled (most things other than vector). The other is when someone does a get request with antivirus scan enabled. So, these are usually the two things to check (post request rate and get blob with media scan request rate)
+Regarding there asks for treeID and other tracing info, Ambry currently does not support passing invocation context to downstreams (as always, this is potentially worth implementing, but we never makes it to our OKRs).
+
+The last time they saw this issue, the increase in antivirus traffic correlated with an increase in media-proxy uploading blobs to ambry

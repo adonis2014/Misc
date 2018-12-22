@@ -71,10 +71,15 @@ yinzhang-mn1:~ yinzhang$ curl -i https://ltx1-app1434.stg.linkedin.com:3183/AAQE
 9. GET blobInfo (in PROD)
 [yinzhang@lva1-app23942 ~]$ curl -i https://lva1-app23942.prod.linkedin.com:3183/AAUQAQQ3AAgAAQAAAAAAAAS2AAAAJDg2YzcwYTNjLTAyMWYtNDY1Ny04NWM2LTk4NjFjODVjOWZlMw.bin/BlobInfo -H "x-li-ambry-client: Internal" --cert ./identity.cert --key ./identity.key --cacert /etc/riddler/ca-bundle.crt
 HTTP/1.1 404 Not Found
-
-[yinzhang@ltx1-app29348 ~]$ curl -i https://ltx1-app29348.prod.linkedin.com:3183/AAUQAQQ3AAgAAQAAAAAAAAS2AAAAJDg2YzcwYTNjLTAyMWYtNDY1Ny04NWM2LTk4NjFjODVjOWZlMw.bin/BlobInfo -H "x-li-ambry-client: Internal" --cert ./identity.cert --key ./identity.key --cacert /etc/riddler/ca-bundle.crt
-
 Note that, this is prod frontend machine, port number is 3183
+
+
+[yinzhang@lsg1-app25024 ~]$ curli --fabric prod-lsg1 --dv-auth self -I -H x-li-ambry-client:Internal d2://ambry/AAMB_wDwAAgAAQAAAAAAAAnjAAAAJDAwMmNiNTg4LWQwNWUtNGY0ZC05ZDI1LTk3NmYyNDFlMzMyMA.bin
+(RECOMMENDED!!  this is a normal prod machine no matter it is frontend or server)
+
+9.1 GET BlobInfo Include_All (in PROD)
+[yinzhang@lsg1-app25024 ~]$ curli --fabric prod-lsg1 --dv-auth self -I -H x-li-ambry-client:Internal d2://ambry/AAMB_wDwAAgAAQAAAAAAAAnjAAAAJDAwMmNiNTg4LWQwNWUtNGY0ZC05ZDI1LTk3NmYyNDFlMzMyMA.bin -H 'x-ambry-get-option:Include_All'
+
 #----------------------------------------------------------------------------------------------------------------------------#
 
 9. check versions for specific mp

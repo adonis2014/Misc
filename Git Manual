@@ -59,3 +59,8 @@ git fetch upstream pull/7324/head:pr-7324 # pr-7324 is your local branch name
    git clean -f // delete untracked files
    git clean -f -d // delete directories
 
+9. Squash the commits on your own branch
+    Step 0: git checkout feature_branch
+    Step 1: git reset --soft master   # Do a soft reset of your origin/feature_branch with your local master branch. This will reset all the extra commits in your feature_branch, but without changing any of your file changes locally.
+    Step 2: git add -A && git commit -m "commit message goes here"  # Add all of the changes in your git repo directory, to the new commit that is going to be created. And commit the same with a message.
+

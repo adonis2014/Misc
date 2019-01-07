@@ -559,6 +559,7 @@ we can kill all the processes related to "CmdLineAppRunner"
 4. java.io.IOException: Could not read complete size from readChannel
 
 
+#-------------------------- Download/Upload files via Dali --------------------------------#
 # download file on local machine from holdem via dali 
 dali fs -cp dali://holdem/user/ambry2/large-blobs/out potential-large-blobs
 # upload file to holdem via dali

@@ -100,6 +100,15 @@ Partition[79]
 
 35. create a function and count lines in three files :   total # = file1 + file2 + file3/2
 function count() { first=$(wc -l ChunkFile_$1 SimpleFile_$1 | tail -1 | sed s/total// | tr -d ' '); second=$(wc -l ErrorFile_$1 /dev/null | tail -1 | sed s/total// | tr -d ' ' ); echo $first + $second / 2 | bc; }
+
+36. screen   # 使得process在log out后仍可以继续运行
+    step1: type "screen" in terminal
+    step2: start the process
+    step3: when process is running, Ctrl+A and D to detach the screen
+    step4: safely log out
+    查看哪些screen被detached：screen -ls
+    恢复screen： screen -r session_id
+    
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding

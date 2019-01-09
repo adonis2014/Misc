@@ -108,7 +108,10 @@ function count() { first=$(wc -l ChunkFile_$1 SimpleFile_$1 | tail -1 | sed s/to
     step4: safely log out
     查看哪些screen被detached：screen -ls
     恢复screen： screen -r session_id
-    
+37. split large files by line number
+    sed -n '27,48p' /var/log/logfile > /var/log/output.txt # 截取27-48行的内容，输出到指定文件
+    # p is for print
+
 /****************************************** File Permission and Directory *************************************************/
 1. ls -al 列出所有文件名和相关属性
     drwxr-xr-x  10   zhangyingyi   staff    340   1 15 19:17    Coding
